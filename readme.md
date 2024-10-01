@@ -2,16 +2,16 @@
 
 ## Create venv
 ```
-python -m venv .venv
+python -m venv venv
 or
-python3 -m venv .venv
+python3 -m venv venv
 ```
 
 ## Activate venv
 ```
-source .venv/Scripts/activate
+source venv/Scripts/activate
 or 
-source .venv/bin/activate
+source venv/bin/activate
 ```
 
 ## Install dependencies
