@@ -15,10 +15,23 @@ source venv/bin/activate
 ```
 
 ## Install dependencies
+### for prod mode
 ```
-pip install -r requirements.txt
+pip install -r requirements/prod.txt
 or 
-pip3 install -r requirements.txt
+pip3 install -r requirements/prod.txt
+```
+### for dev mode
+```
+pip install -r requirements/dev.txt
+or 
+pip3 install -r requirements/dev.txt
+```
+### for test mode
+```
+pip install -r requirements/test.txt
+or 
+pip3 install -r requirements/test.txt
 ```
 
 ## Create local .env file (copy the template file)
