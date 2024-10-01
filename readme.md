@@ -21,9 +21,9 @@ or
 pip3 install -r requirements.txt
 ```
 
-## Create local .env file 
+## Create local .env file (copy the template file)
 ```
-touch .env
+cp .env_template .env
 ```
 ### Create variables SECRET_KEY and DEBUG there
 
