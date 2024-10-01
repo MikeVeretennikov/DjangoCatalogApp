@@ -1,4 +1,4 @@
-# Commands to run the project for windows/unix
+# Commands to run the project for windows/unix 
 
 ## Create venv
 ```
