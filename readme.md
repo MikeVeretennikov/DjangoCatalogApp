@@ -21,6 +21,13 @@ or
 pip3 install -r requirements.txt
 ```
 
+## Create local .env file 
+```
+touch .env
+```
+### Create variables SECRET_KEY and DEBUG there
+
+
 
 ## Cd to lyceum/ and run server
 ```
