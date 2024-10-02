@@ -1,7 +1,7 @@
 ![pipeline](https://gitlab.crja72.ru/django/2024/autumn/course/students/169883-mishaveret-course-1187/badges/master/pipeline.svg)
 
 # Commands to run the project for windows/unix 
-
+ 
 ## Create venv
 ```
 python -m venv venv
