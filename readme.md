@@ -1,5 +1,5 @@
 # Commands to run the project for windows/unix 
-
+![example workflow](https://gitlab.crja72.ru/django/2024/autumn/course/students/169883-mishaveret-course-1187/badges/master/pipeline.svg)
 ## Create venv
 ```
 python -m venv venv
