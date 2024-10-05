@@ -2,7 +2,7 @@
 
 # Commands to run the project for windows/unix 
  
-## Create venv
+## Create venv 
 ```bash
 python -m venv venv
 or
