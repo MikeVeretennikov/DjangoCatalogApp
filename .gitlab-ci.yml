@@ -1,4 +1,5 @@
 stages:
+  - test
   - linting
 
 flake8:
@@ -13,3 +14,10 @@ black:
     image: registry.gitlab.com/pipeline-components/black:latest
     script:
         - black --check .
+
+django-tests:
+    stage: test
+    script:
+      python3 manage.py test
+
+
