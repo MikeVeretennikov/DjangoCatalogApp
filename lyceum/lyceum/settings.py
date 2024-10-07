@@ -17,11 +17,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", default="aboba")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG_ENV = os.getenv("DJANGO_DEBUG", "true").lower()
+DEBUG_ENV = os.getenv("DJANGO_DEBUG", "false").lower()
 DEBUG = DEBUG_ENV in ("true", "yes", "1", "y", "t")
 
 
-ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", default="*").split(", ")
+ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", default="*").split(",")
 
 
 # Application definition
@@ -36,8 +36,12 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "debug_toolbar",
 ]
+
+if DEBUG:
+    INSTALLED_APPS += [
+        "debug_toolbar",
+    ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -47,8 +51,12 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
+
+if DEBUG:
+    MIDDLEWARE += [
+        "debug_toolbar.middleware.DebugToolbarMiddleware",
+    ]
 
 INTERNAL_IPS = [
     "127.0.0.1",
