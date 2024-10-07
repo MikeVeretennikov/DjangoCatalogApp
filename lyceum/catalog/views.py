@@ -7,3 +7,7 @@ def item_list(request):
 
 def item_detail(request, elem):
     return HttpResponse("<body>Подробно элемент</body>")
+
+
+def re_endpoint(request, number):
+    return HttpResponse(f"<body>{number}</body>")
