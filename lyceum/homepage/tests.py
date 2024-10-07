@@ -1,6 +1,6 @@
-from django.test import Client, TestCase
-
 import http
+
+from django.test import Client, TestCase
 
 
 class StaticURLTests(TestCase):
