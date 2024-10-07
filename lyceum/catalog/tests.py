@@ -17,13 +17,25 @@ class DynamicURLTests(TestCase):
         self.assertEqual(response.status_code, 404)
 
     def test_catalog_re_converter_endpoint_correct(self):
-        response = Client().get("/catalog/re/1")
+        response = Client().get("/catalog/re/1/")
         self.assertEqual(response.status_code, 200)
 
     def test_catalog_re_converter_endpoint_incorrect_1(self):
-        response = Client().get("/catalog/re/0")
+        response = Client().get("/catalog/re/0/")
         self.assertEqual(response.status_code, 404)
 
     def test_catalog_re_converter_endpoint_incorrect_2(self):
-        response = Client().get("/catalog/re/-1")
+        response = Client().get("/catalog/re/-1/")
+        self.assertEqual(response.status_code, 404)
+
+    def test_catalog_custom_converter_endpoint_correct(self):
+        response = Client().get("/catalog/converter/1/")
+        self.assertEqual(response.status_code, 200)
+
+    def test_catalog_custom_converter_endpoint_incorrect_1(self):
+        response = Client().get("/catalog/converter/0/")
+        self.assertEqual(response.status_code, 404)
+
+    def test_catalog_custom_converter_endpoint_incorrect_2(self):
+        response = Client().get("/catalog/converter/-1/")
         self.assertEqual(response.status_code, 404)
