@@ -17,11 +17,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", default="aboba")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG_ENV = os.getenv("DJANGO_DEBUG", "false").lower()
+DEBUG_ENV = os.getenv("DJANGO_DEBUG", default="false").lower()
 DEBUG = DEBUG_ENV in ("true", "yes", "1", "y", "t")
 
 
 ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", default="*").split(",")
+
+
+ALLOW_REVERSE_ENV = os.getenv("DJANGO_ALLOW_REVERSE", default="true").lower()
+ALLOW_REVERSE = ALLOW_REVERSE_ENV in ("true", "yes", "1", "y", "t")
 
 
 # Application definition
