@@ -1,7 +1,7 @@
 import http
 
-from django.test import Client, TestCase
 from django.conf import settings
+from django.test import Client, TestCase
 
 
 class StaticURLTests(TestCase):
