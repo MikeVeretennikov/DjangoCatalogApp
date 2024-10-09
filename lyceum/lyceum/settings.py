@@ -62,6 +62,11 @@ if DEBUG:
         "debug_toolbar.middleware.DebugToolbarMiddleware",
     ]
 
+if ALLOW_REVERSE:
+    MIDDLEWARE += [
+        "lyceum.middleware.ReverseResponseMiddleware",
+    ]
+
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
