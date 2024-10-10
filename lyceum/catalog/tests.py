@@ -1,7 +1,6 @@
 import http
 
 from django.test import Client, TestCase
-
 from parameterized import parameterized
 
 
