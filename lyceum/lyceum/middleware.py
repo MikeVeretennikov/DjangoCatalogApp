@@ -16,9 +16,10 @@ class ReverseResponseMiddleware:
             ReverseResponseMiddleware.count += 1
 
         if settings.ALLOW_REVERSE and ReverseResponseMiddleware.count >= 10:
+
             content = response.content.decode()
             new_content = reverse_russian_words(content)
-            response.content = new_content
+            response.content = new_content.encode("utf-8")
 
             ReverseResponseMiddleware.count = 0
 
@@ -32,7 +33,6 @@ def reverse_russian_words(sentence):
 
     russian_words_pattern = r"[а-яА-ЯёЁ]+"
 
-    # Замена каждого найденного слова на его перевернутый вариант
     reversed_sentence = re.sub(
         russian_words_pattern,
         lambda match: reverse_word(match.group()),
