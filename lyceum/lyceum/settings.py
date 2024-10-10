@@ -27,7 +27,6 @@ ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", default="*").split(",")
 ALLOW_REVERSE_ENV = os.getenv("DJANGO_ALLOW_REVERSE", default="true").lower()
 ALLOW_REVERSE = ALLOW_REVERSE_ENV in ("true", "yes", "1", "y", "t")
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -59,8 +58,9 @@ MIDDLEWARE = [
 ]
 
 if DEBUG:
-    MIDDLEWARE += []
-
+    MIDDLEWARE += [
+        "debug_toolbar.middleware.DebugToolbarMiddleware",
+    ]
 
 INTERNAL_IPS = [
     "127.0.0.1",
