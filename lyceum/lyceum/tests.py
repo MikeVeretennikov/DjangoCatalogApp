@@ -9,7 +9,7 @@ class ReverseResponseMiddlewareTests(TestCase):
 
         for _ in range(10):
             responses.append(Client().get("/coffee/").content.decode())
-        self.assertIn("<body>Я кинйач</body>", responses)
+        self.assertIn("Я кинйач", responses)
 
     @override_settings(ALLOW_REVERSE=False)
     def test_correct_off_reverse_behaviour(self):
@@ -17,4 +17,4 @@ class ReverseResponseMiddlewareTests(TestCase):
 
         for _ in range(10):
             responses.append(Client().get("/coffee/").content.decode())
-        self.assertNotIn("<body>Я кинйач</body>", responses)
+        self.assertNotIn("Я кинйач", responses)

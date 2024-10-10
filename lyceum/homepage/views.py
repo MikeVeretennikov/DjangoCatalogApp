@@ -8,6 +8,4 @@ def index(request):
 
 
 def coffee(request):
-    return HttpResponse(
-        "<body>Я чайник</body>", status=http.HTTPStatus.IM_A_TEAPOT
-    )
+    return HttpResponse("Я чайник", status=http.HTTPStatus.IM_A_TEAPOT)
