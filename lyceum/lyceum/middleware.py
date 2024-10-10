@@ -4,8 +4,20 @@ from django.conf import settings
 
 
 @staticmethod
-def reverse_russian_words(content):
-    return re.sub(r"[А-яёЁ]+", lambda m: m.group()[::-1], content)
+def reverse_russian_words(sentence):
+
+    def reverse_word(word):
+        return word[::-1]
+
+    russian_words_pattern = r"\b[а-яА-ЯёЁ]+\b"
+
+    reversed_sentence = re.sub(
+        russian_words_pattern,
+        lambda match: reverse_word(match.group()),
+        sentence,
+    )
+
+    return reversed_sentence
 
 
 class ReverseResponseMiddleware:
