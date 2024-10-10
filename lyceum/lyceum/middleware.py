@@ -1,3 +1,5 @@
+import re
+
 from django.conf import settings
 
 
@@ -14,20 +16,27 @@ class ReverseResponseMiddleware:
             ReverseResponseMiddleware.count += 1
 
         if settings.ALLOW_REVERSE and ReverseResponseMiddleware.count >= 10:
-            content = response.content.decode().split("<body>", 1)[1]
-            content = content.split("</body>")[0]
-            new_content = reverse_all_russian_words(content)
-            response.content = "<body>" + new_content + "</body>"
+            content = response.content.decode()
+            new_content = reverse_russian_words(content)
+            response.content = new_content
 
             ReverseResponseMiddleware.count = 0
 
         return response
 
 
-def reverse_all_russian_words(str):
-    words = str.split()
-    new_words = []
-    for word in words:
-        new_words.append(word[::-1])
+def reverse_russian_words(sentence):
 
-    return " ".join(new_words)
+    def reverse_word(word):
+        return word[::-1]
+
+    russian_words_pattern = r"[а-яА-ЯёЁ]+"
+
+    # Замена каждого найденного слова на его перевернутый вариант
+    reversed_sentence = re.sub(
+        russian_words_pattern,
+        lambda match: reverse_word(match.group()),
+        sentence,
+    )
+
+    return reversed_sentence
