@@ -1,3 +1,5 @@
+import http
+
 from django.http import HttpResponse
 
 
@@ -6,4 +8,4 @@ def index(request):
 
 
 def coffee(request):
-    return HttpResponse("<body>Я чайник</body>", status=418)
+    return HttpResponse("Я чайник", status=http.HTTPStatus.IM_A_TEAPOT)
