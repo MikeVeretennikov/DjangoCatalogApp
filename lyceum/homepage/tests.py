@@ -16,9 +16,9 @@ class StaticURLTests(TestCase):
             responses.append(Client().get("/coffee/").content.decode())
 
         if settings.ALLOW_REVERSE:
-            self.assertIn("Я кинйач", responses)
+            self.assertIn("<body>Я кинйач</body>", responses)
         else:
-            self.assertIn("Я чайник", responses)
+            self.assertIn("<body>Я чайник</body>", responses)
 
     def test_coffee_endpoint_correct_status_code(self):
         response = Client().get("/coffee/")
