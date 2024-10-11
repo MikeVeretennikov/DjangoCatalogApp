@@ -20,7 +20,7 @@ ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", default="*").split(",")
 
 
 ALLOW_REVERSE_ENV = os.getenv("DJANGO_ALLOW_REVERSE", default="true").lower()
-ALLOW_REVERSE = ALLOW_REVERSE_ENV in ("true", "yes", "1", "y", "t")
+ALLOW_REVERSE = ALLOW_REVERSE_ENV in ("true", "yes", "1", "y", "t", "")
 
 
 INSTALLED_APPS = [
@@ -35,10 +35,6 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
 ]
 
-if DEBUG:
-    INSTALLED_APPS += [
-        "debug_toolbar",
-    ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -52,6 +48,9 @@ MIDDLEWARE = [
 ]
 
 if DEBUG:
+    INSTALLED_APPS += [
+        "debug_toolbar",
+    ]
     MIDDLEWARE += [
         "debug_toolbar.middleware.DebugToolbarMiddleware",
     ]
