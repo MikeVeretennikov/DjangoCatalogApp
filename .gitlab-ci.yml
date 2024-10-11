@@ -26,5 +26,3 @@ django-tests:
       - pip install -r requirements/test.txt
       - cd lyceum
       - python manage.py test
-
-
