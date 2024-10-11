@@ -23,47 +23,68 @@ class CatalogEndpointURLTests(TestCase):
 class CatalogReEndpointURLTests(TestCase):
     @parameterized.expand(
         [
-            ("1", http.HTTPStatus.OK),
-            ("001", http.HTTPStatus.OK),
-            ("99999999", http.HTTPStatus.OK),
+            ("1"),
+            ("01"),
+            ("010"),
+            ("10"),
+            ("100"),
+            ("001"),
+            ("99999999"),
         ]
     )
-    def test_catalog_re_converter_endpoint_correct(self, path, expected):
+    def test_catalog_re_converter_endpoint_correct(self, path):
         response = Client().get(f"/catalog/re/{path}/")
-        self.assertEqual(response.status_code, expected)
+        self.assertEqual(response.status_code, http.HTTPStatus.OK)
 
     @parameterized.expand(
         [
-            ("0", http.HTTPStatus.NOT_FOUND),
-            ("-1", http.HTTPStatus.NOT_FOUND),
-            ("-99999999", http.HTTPStatus.NOT_FOUND),
+            ("0"),
+            ("-1"),
+            ("-99999999"),
+            ("-0"),
+            ("10.1"),
+            ("0.123"),
+            ("0,123"),
+            ("1a23"),
+            ("a123"),
+            ("123a"),
         ]
     )
-    def test_catalog_re_converter_endpoint_incorrect(self, path, expected):
+    def test_catalog_re_converter_endpoint_incorrect(self, path):
         response = Client().get(f"/catalog/re/{path}/")
-        self.assertEqual(response.status_code, expected)
+        self.assertEqual(response.status_code, http.HTTPStatus.NOT_FOUND)
 
 
 class CatalogConverterEndpointURLTests(TestCase):
     @parameterized.expand(
         [
-            ("1", http.HTTPStatus.OK),
-            ("001", http.HTTPStatus.OK),
-            ("99999999", http.HTTPStatus.OK),
-            ("100", http.HTTPStatus.OK),
+            ("1"),
+            ("01"),
+            ("010"),
+            ("10"),
+            ("100"),
+            ("001"),
+            ("99999999"),
         ]
     )
-    def test_catalog_re_converter_endpoint_correct(self, path, expected):
+    def test_catalog_re_converter_endpoint_correct(self, path):
         response = Client().get(f"/catalog/converter/{path}/")
-        self.assertEqual(response.status_code, expected)
+        self.assertEqual(response.status_code, http.HTTPStatus.OK)
 
     @parameterized.expand(
         [
-            ("0", http.HTTPStatus.NOT_FOUND),
-            ("-1", http.HTTPStatus.NOT_FOUND),
-            ("-99999999", http.HTTPStatus.NOT_FOUND),
+            ("0"),
+            ("-1"),
+            ("-99999999"),
+            ("-0"),
+            ("10.1"),
+            ("0.123"),
+            ("0,123"),
+            ("1a23"),
+            ("a123"),
+            ("123a"),
         ]
     )
-    def test_catalog_re_converter_endpoint_incorrect(self, path, expected):
+    def test_catalog_re_converter_endpoint_incorrect(self, path):
         response = Client().get(f"/catalog/converter/{path}/")
-        self.assertEqual(response.status_code, expected)
+        self.assertEqual(response.status_code, http.HTTPStatus.NOT_FOUND)
