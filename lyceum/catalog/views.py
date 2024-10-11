@@ -9,9 +9,5 @@ def item_detail(request, elem):
     return HttpResponse("<body>Подробно элемент</body>")
 
 
-def re_endpoint(request, number):
-    return HttpResponse(f"<body>{number}</body>")
-
-
-def converter_endpoint(request, number):
+def regex_endpoint(request, number):
     return HttpResponse(f"<body>{number}</body>")
