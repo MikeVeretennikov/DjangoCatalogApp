@@ -6,17 +6,12 @@ import dotenv
 
 dotenv.load_dotenv()
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", default="aboba")
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG_ENV = os.getenv("DJANGO_DEBUG", default="false").lower()
 DEBUG = DEBUG_ENV in ("true", "yes", "1", "y", "t")
 
@@ -27,7 +22,6 @@ ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", default="*").split(",")
 ALLOW_REVERSE_ENV = os.getenv("DJANGO_ALLOW_REVERSE", default="true").lower()
 ALLOW_REVERSE = ALLOW_REVERSE_ENV in ("true", "yes", "1", "y", "t")
 
-# Application definition
 
 INSTALLED_APPS = [
     "about.apps.AboutConfig",
@@ -87,9 +81,6 @@ TEMPLATES = [
 WSGI_APPLICATION = "lyceum.wsgi.application"
 
 
-# Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
@@ -97,9 +88,6 @@ DATABASES = {
     }
 }
 
-
-# Password validation
-# https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -121,9 +109,6 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# Internationalization
-# https://docs.djangoproject.com/en/4.2/topics/i18n/
-
 LANGUAGE_CODE = "en-us"
 
 TIME_ZONE = "UTC"
@@ -133,12 +118,7 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.2/howto/static-files/
-
 STATIC_URL = "static/"
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
