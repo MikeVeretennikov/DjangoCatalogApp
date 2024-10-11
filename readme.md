@@ -1,4 +1,13 @@
+# Online catalog educational project on Django
 ![pipeline](https://gitlab.crja72.ru/django/2024/autumn/course/students/169883-mishaveret-course-1187/badges/main/pipeline.svg)
+
+# Make sure you have these basic dependencies
+* python >3
+
+# Clone repository
+```bash
+git clone https://gitlab.crja72.ru/django/2024/autumn/course/students/169883-mishaveret-course-1187
+```
 
 # Commands to run the project for windows/unix 
  
