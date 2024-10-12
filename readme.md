@@ -2,7 +2,7 @@
 ![pipeline](https://gitlab.crja72.ru/django/2024/autumn/course/students/169883-mishaveret-course-1187/badges/main/pipeline.svg)
 
 # Make sure you have these basic dependencies
-* python >3
+* python >3.9
 
 # Clone repository
 ```bash
