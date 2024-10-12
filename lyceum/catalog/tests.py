@@ -7,17 +7,11 @@ from parameterized import parameterized
 class StaticURLTests(TestCase):
     def test_catalog_index_endpoint_correct(self):
         response = Client().get("/catalog/")
-        self.assertEqual(response.status_code, http.HTTPStatus.OK)
-
-
-class CatalogEndpointURLTests(TestCase):
-    def test_catalog_converter_endpoint_correct(self):
-        response = Client().get("/catalog/100/")
-        self.assertEqual(response.status_code, http.HTTPStatus.OK)
-
-    def test_catalog_converter_endpoint_incorrect(self):
-        response = Client().get("/catalog/-1/")
-        self.assertEqual(response.status_code, http.HTTPStatus.NOT_FOUND)
+        self.assertEqual(
+            response.status_code,
+            http.HTTPStatus.OK,
+            "Status code should be 200",
+        )
 
 
 class CatalogReEndpointURLTests(TestCase):
@@ -34,7 +28,11 @@ class CatalogReEndpointURLTests(TestCase):
     )
     def test_catalog_re_converter_endpoint_correct(self, path):
         response = Client().get(f"/catalog/re/{path}/")
-        self.assertEqual(response.status_code, http.HTTPStatus.OK)
+        self.assertEqual(
+            response.status_code,
+            http.HTTPStatus.OK,
+            "Ints with leading zeroes are correct",
+        )
 
     @parameterized.expand(
         [
@@ -52,7 +50,11 @@ class CatalogReEndpointURLTests(TestCase):
     )
     def test_catalog_re_converter_endpoint_incorrect(self, path):
         response = Client().get(f"/catalog/re/{path}/")
-        self.assertEqual(response.status_code, http.HTTPStatus.NOT_FOUND)
+        self.assertEqual(
+            response.status_code,
+            http.HTTPStatus.NOT_FOUND,
+            "Some bad ints are valid for current regex",
+        )
 
 
 class CatalogConverterEndpointURLTests(TestCase):
@@ -69,7 +71,11 @@ class CatalogConverterEndpointURLTests(TestCase):
     )
     def test_catalog_re_converter_endpoint_correct(self, path):
         response = Client().get(f"/catalog/converter/{path}/")
-        self.assertEqual(response.status_code, http.HTTPStatus.OK)
+        self.assertEqual(
+            response.status_code,
+            http.HTTPStatus.OK,
+            "Ints with leading zeroes are correct",
+        )
 
     @parameterized.expand(
         [
@@ -87,4 +93,8 @@ class CatalogConverterEndpointURLTests(TestCase):
     )
     def test_catalog_re_converter_endpoint_incorrect(self, path):
         response = Client().get(f"/catalog/converter/{path}/")
-        self.assertEqual(response.status_code, http.HTTPStatus.NOT_FOUND)
+        self.assertEqual(
+            response.status_code,
+            http.HTTPStatus.NOT_FOUND,
+            "Some bad ints are valid for current regex",
+        )

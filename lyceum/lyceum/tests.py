@@ -15,7 +15,9 @@ class ReverseResponseMiddlewareTests(TestCase):
 
         reverse_count = len([i for i in responses if i == "Я кинйач"])
 
-        self.assertGreaterEqual(reverse_count, 3)
+        self.assertGreaterEqual(
+            reverse_count, 3, "When ALLOW_REVERSE is True, MW should  work"
+        )
 
     @override_settings(ALLOW_REVERSE=False)
     def test_correct_off_reverse_behaviour(self):
@@ -26,7 +28,9 @@ class ReverseResponseMiddlewareTests(TestCase):
 
         reverse_count = len([i for i in responses if i == "Я кинйач"])
 
-        self.assertEqual(reverse_count, 0)
+        self.assertEqual(
+            reverse_count, 0, "When ALLOW_REVERSE is False, MW should not work"
+        )
 
     def test_correct_default_reverse_behaviour(self):
         responses = []
@@ -36,7 +40,12 @@ class ReverseResponseMiddlewareTests(TestCase):
 
         reverse_count = len([i for i in responses if i == "Я кинйач"])
 
-        self.assertGreaterEqual(reverse_count, 3)
+        self.assertGreaterEqual(
+            reverse_count,
+            3,
+            "When ALLOW_REVERSE is not given, default value"
+            "True should be used, MW should work",
+        )
 
 
 class RegexReverseRussianWordsTests(TestCase):
@@ -52,4 +61,9 @@ class RegexReverseRussianWordsTests(TestCase):
         ]
     )
     def test_reverse_only_russian_words(self, word, expected):
-        self.assertEqual(reverse_russian_words(word), expected)
+        self.assertEqual(
+            reverse_russian_words(word),
+            expected,
+            "Word with only russian letters and some symbols"
+            "is the only right form of a russian word",
+        )

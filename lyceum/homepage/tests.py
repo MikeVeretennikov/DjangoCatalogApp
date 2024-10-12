@@ -7,7 +7,11 @@ from django.test import Client, TestCase
 class StaticURLTests(TestCase):
     def test_homepage_endpoint_correct(self):
         response = Client().get("/")
-        self.assertEqual(response.status_code, http.HTTPStatus.OK)
+        self.assertEqual(
+            response.status_code,
+            http.HTTPStatus.OK,
+            "Status code should be 200",
+        )
 
     def test_coffee_endpoint_correct_text(self):
         responses = []
@@ -16,10 +20,19 @@ class StaticURLTests(TestCase):
             responses.append(Client().get("/coffee/").content.decode())
 
         if settings.ALLOW_REVERSE:
-            self.assertIn("Я кинйач", responses)
+            self.assertIn(
+                "Я кинйач",
+                responses,
+                "Text should be 'Я чайник' reversed"
+                "because ALLOW_REVERSE is True",
+            )
         else:
-            self.assertIn("Я чайник", responses)
+            self.assertIn("Я чайник", responses, "Text should be 'Я чайник'")
 
     def test_coffee_endpoint_correct_status_code(self):
         response = Client().get("/coffee/")
-        self.assertEqual(response.status_code, http.HTTPStatus.IM_A_TEAPOT)
+        self.assertEqual(
+            response.status_code,
+            http.HTTPStatus.IM_A_TEAPOT,
+            "Status code should be 418",
+        )
