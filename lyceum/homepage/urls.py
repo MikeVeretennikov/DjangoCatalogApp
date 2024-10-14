@@ -4,6 +4,6 @@ import homepage.views
 
 
 urlpatterns = [
-    path("", homepage.views.index),
-    path("coffee/", homepage.views.coffee),
+    path("", homepage.views.index, name="homepage-index-page"),
+    path("coffee/", homepage.views.coffee, name="homepage-coffee-page"),
 ]
