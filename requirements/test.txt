@@ -1,7 +1,5 @@
 -r prod.txt
 
-
-django-debug-toolbar==4.4.6
 flake8-import-order==0.18.2
 flake8-quotes==3.4.0
 parameterized==0.9.0
