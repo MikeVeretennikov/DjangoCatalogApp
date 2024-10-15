@@ -31,8 +31,8 @@ class Tag(core.models.AbstractModel):
     )
 
     class Meta:
-        verbose_name = "тэг"
-        verbose_name_plural = "тэги"
+        verbose_name = "тег"
+        verbose_name_plural = "теги"
 
     def __str__(self):
         return self.name
