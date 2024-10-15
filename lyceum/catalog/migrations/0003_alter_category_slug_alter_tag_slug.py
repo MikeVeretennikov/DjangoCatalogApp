@@ -8,18 +8,42 @@ import re
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('catalog', '0002_alter_category_options_alter_item_options_and_more'),
+        ("catalog", "0002_alter_category_options_alter_item_options_and_more"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='category',
-            name='slug',
-            field=models.SlugField(help_text='введите слаг', max_length=200, unique=True, validators=[django.core.validators.RegexValidator(re.compile('^[-a-zA-Z0-9_]+\\Z'), 'Enter a valid “slug” consisting of letters, numbers, underscores or hyphens.', 'invalid')], verbose_name='Слаг'),
+            model_name="category",
+            name="slug",
+            field=models.SlugField(
+                help_text="введите слаг",
+                max_length=200,
+                unique=True,
+                validators=[
+                    django.core.validators.RegexValidator(
+                        re.compile("^[-a-zA-Z0-9_]+\\Z"),
+                        "Enter a valid “slug” consisting of letters, numbers, underscores or hyphens.",
+                        "invalid",
+                    )
+                ],
+                verbose_name="Слаг",
+            ),
         ),
         migrations.AlterField(
-            model_name='tag',
-            name='slug',
-            field=models.SlugField(help_text='введите слаг', max_length=200, unique=True, validators=[django.core.validators.RegexValidator(re.compile('^[-a-zA-Z0-9_]+\\Z'), 'Enter a valid “slug” consisting of letters, numbers, underscores or hyphens.', 'invalid')], verbose_name='Слаг'),
+            model_name="tag",
+            name="slug",
+            field=models.SlugField(
+                help_text="введите слаг",
+                max_length=200,
+                unique=True,
+                validators=[
+                    django.core.validators.RegexValidator(
+                        re.compile("^[-a-zA-Z0-9_]+\\Z"),
+                        "Enter a valid “slug” consisting of letters, numbers, underscores or hyphens.",
+                        "invalid",
+                    )
+                ],
+                verbose_name="Слаг",
+            ),
         ),
     ]

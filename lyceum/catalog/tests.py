@@ -18,17 +18,7 @@ class CatalogStaticURLTests(TestCase):
 
 
 class CatalogReEndpointURLTests(TestCase):
-    @parameterized.expand(
-        [
-            ("1"),
-            ("01"),
-            ("010"),
-            ("10"),
-            ("100"),
-            ("001"),
-            ("99999999"),
-        ]
-    )
+    @parameterized.expand(["1", "01", "010", "10", "100", "001", "99999999"])
     def test_catalog_re_converter_endpoint_correct(self, path):
         response = Client().get(f"/catalog/re/{path}/")
         self.assertEqual(
@@ -39,17 +29,17 @@ class CatalogReEndpointURLTests(TestCase):
 
     @parameterized.expand(
         [
-            ("0"),
-            ("-1"),
-            ("-99999999"),
-            ("-0"),
-            ("10.1"),
-            ("0.123"),
-            ("0,123"),
-            ("1a23"),
-            ("a123"),
-            ("123a"),
-        ]
+            "0",
+            "-1",
+            "-99999999",
+            "-0",
+            "10.1",
+            "0.123",
+            "0,123",
+            "1a23",
+            "a123",
+            "123a",
+        ],
     )
     def test_catalog_re_converter_endpoint_incorrect(self, path):
         response = Client().get(f"/catalog/re/{path}/")
@@ -63,14 +53,14 @@ class CatalogReEndpointURLTests(TestCase):
 class CatalogConverterEndpointURLTests(TestCase):
     @parameterized.expand(
         [
-            ("1"),
-            ("01"),
-            ("010"),
-            ("10"),
-            ("100"),
-            ("001"),
-            ("99999999"),
-        ]
+            "1",
+            "01",
+            "010",
+            "10",
+            "100",
+            "001",
+            "99999999",
+        ],
     )
     def test_catalog_re_converter_endpoint_correct(self, path):
         response = Client().get(f"/catalog/converter/{path}/")
@@ -82,17 +72,17 @@ class CatalogConverterEndpointURLTests(TestCase):
 
     @parameterized.expand(
         [
-            ("0"),
-            ("-1"),
-            ("-99999999"),
-            ("-0"),
-            ("10.1"),
-            ("0.123"),
-            ("0,123"),
-            ("1a23"),
-            ("a123"),
-            ("123a"),
-        ]
+            "0",
+            "-1",
+            "-99999999",
+            "-0",
+            "10.1",
+            "0.123",
+            "0,123",
+            "1a23",
+            "a123",
+            "123a",
+        ],
     )
     def test_catalog_re_converter_endpoint_incorrect(self, path):
         response = Client().get(f"/catalog/converter/{path}/")
@@ -116,7 +106,9 @@ class CatalogModelItemTests(TestCase):
         )
 
         cls.tag = catalog.models.Tag.objects.create(
-            is_published=True, name="test_tag", slug="test-tag-slug"
+            is_published=True,
+            name="test_tag",
+            slug="test-tag-slug",
         )
 
     def test_item_create(self):
@@ -161,19 +153,25 @@ class CatalogModelCatalogTests(TestCase):
         )
 
         cls.tag = catalog.models.Tag.objects.create(
-            is_published=True, name="test_tag", slug="test-tag-slug"
+            is_published=True,
+            name="test_tag",
+            slug="test-tag-slug",
         )
 
     def test_category_create(self):
         category_count = catalog.models.Category.objects.count()
 
         category = catalog.models.Category(
-            is_published=True, name="name", slug="text-slug", weight=100
+            is_published=True,
+            name="name",
+            slug="text-slug",
+            weight=100,
         )
         category.full_clean()
         category.save()
         self.assertEqual(
-            catalog.models.Category.objects.count(), category_count + 1
+            catalog.models.Category.objects.count(),
+            category_count + 1,
         )
 
     def test_validator_error_slug_category_create(self):
@@ -181,13 +179,17 @@ class CatalogModelCatalogTests(TestCase):
 
         with self.assertRaises(django.core.exceptions.ValidationError):
             category = catalog.models.Category(
-                is_published=True, name="name", slug="абоба)", weight=100
+                is_published=True,
+                name="name",
+                slug="абоба)",
+                weight=100,
             )
             category.full_clean()
             category.save()
 
         self.assertEqual(
-            catalog.models.Category.objects.count(), category_count
+            catalog.models.Category.objects.count(),
+            category_count,
         )
 
     def test_validator_error_weight_category_create(self):
@@ -196,13 +198,17 @@ class CatalogModelCatalogTests(TestCase):
 
         with self.assertRaises(django.core.exceptions.ValidationError):
             category = catalog.models.Category(
-                is_published=True, name="name", slug="text-slug", weight=-100
+                is_published=True,
+                name="name",
+                slug="text-slug",
+                weight=-100,
             )
             category.full_clean()
             category.save()
 
         self.assertEqual(
-            catalog.models.Category.objects.count(), category_count
+            catalog.models.Category.objects.count(),
+            category_count,
         )
 
 
@@ -219,7 +225,9 @@ class CatalogModelTagTests(TestCase):
         )
 
         cls.tag = catalog.models.Tag.objects.create(
-            is_published=True, name="test_tag", slug="test-tag-slug"
+            is_published=True,
+            name="test_tag",
+            slug="test-tag-slug",
         )
 
     def test_tag_create(self):
@@ -258,13 +266,19 @@ class CatalogValidatorPerfectInTextTests(TestCase):
             "роскошно!",
             "Превосходно",
             "превосходно!",
-        ]
+        ],
     )
     def test_validator_correct(self, text):
         catalog.models.validate_perfect_in_text(text)
 
     @parameterized.expand(
-        ["!Роскошно", "!роскошно", "роскошноо", "!Превосходно", "!превосходно"]
+        [
+            "!Роскошно",
+            "!роскошно",
+            "роскошноо",
+            "!Превосходно",
+            "!превосходно",
+        ],
     )
     def test_validator_incorrect(self, text):
         with self.assertRaises(django.core.exceptions.ValidationError):

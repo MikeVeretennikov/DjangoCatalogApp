@@ -23,7 +23,7 @@ class ReverseResponseMiddleware:
         if ReverseResponseMiddleware.count >= 10:
             ReverseResponseMiddleware.count = 0
             response.content = reverse_russian_words(
-                response.content.decode("utf-8")
+                response.content.decode("utf-8"),
             ).encode("utf-8")
 
         return response

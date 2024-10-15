@@ -10,14 +10,14 @@ import core.models
 def validate_perfect_in_text(word):
     if not (re.match(r"\b(роскошно|превосходно)\b", word, re.IGNORECASE)):
         raise django.core.exceptions.ValidationError(
-            "В тексте должно быть слово 'превосходно' или 'роскошно'"
+            "В тексте должно быть слово 'превосходно' или 'роскошно'",
         )
 
 
 def validate_int_from_1_to_32767(num):
     if not (0 < num <= 32767) or type(num) is not int:
         raise django.core.exceptions.ValidationError(
-            "Число должно быть от 1 до 32767 включительно"
+            "Число должно быть от 1 до 32767 включительно",
         )
 
 

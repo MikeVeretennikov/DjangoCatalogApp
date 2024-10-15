@@ -8,7 +8,9 @@ class AbstractModel(django.db.models.Model):
         help_text="введите опубликовано ли",
     )
     name = django.db.models.CharField(
-        max_length=150, verbose_name="Название", help_text="введите название"
+        max_length=150,
+        verbose_name="Название",
+        help_text="введите название",
     )
 
     class Meta:
