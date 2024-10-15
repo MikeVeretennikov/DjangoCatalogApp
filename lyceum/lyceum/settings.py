@@ -26,6 +26,7 @@ ALLOW_REVERSE = ALLOW_REVERSE_ENV in ("true", "yes", "1", "y", "t", "")
 INSTALLED_APPS = [
     "about.apps.AboutConfig",
     "catalog.apps.CatalogConfig",
+    "core.apps.CoreConfig",
     "homepage.apps.HomepageConfig",
     "django.contrib.admin",
     "django.contrib.auth",
@@ -108,7 +109,8 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE = "ru"
+
 
 TIME_ZONE = "UTC"
 

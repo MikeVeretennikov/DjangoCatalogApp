@@ -1,0 +1,143 @@
+[
+{
+  "model": "catalog.tag",
+  "pk": 1,
+  "fields": {
+    "is_published": true,
+    "name": "Газировка",
+    "slug": "beverages-soda"
+  }
+},
+{
+  "model": "catalog.tag",
+  "pk": 2,
+  "fields": {
+    "is_published": true,
+    "name": "Алкоголь",
+    "slug": "beverages-alcohol"
+  }
+},
+{
+  "model": "catalog.tag",
+  "pk": 3,
+  "fields": {
+    "is_published": true,
+    "name": "Негазированное",
+    "slug": "beverages-not-soda"
+  }
+},
+{
+  "model": "catalog.tag",
+  "pk": 4,
+  "fields": {
+    "is_published": true,
+    "name": "Лапша быстрого приготовления",
+    "slug": "foods-fast-noddle"
+  }
+},
+{
+  "model": "catalog.tag",
+  "pk": 5,
+  "fields": {
+    "is_published": true,
+    "name": "Острое",
+    "slug": "spicy"
+  }
+},
+{
+  "model": "catalog.category",
+  "pk": 1,
+  "fields": {
+    "is_published": true,
+    "name": "Напитки",
+    "slug": "catalog-beverages",
+    "weight": 500
+  }
+},
+{
+  "model": "catalog.category",
+  "pk": 2,
+  "fields": {
+    "is_published": true,
+    "name": "Приправы",
+    "slug": "species",
+    "weight": 50
+  }
+},
+{
+  "model": "catalog.category",
+  "pk": 3,
+  "fields": {
+    "is_published": true,
+    "name": "Крупы и макароны",
+    "slug": "foods",
+    "weight": 500
+  }
+},
+{
+  "model": "catalog.item",
+  "pk": 1,
+  "fields": {
+    "is_published": true,
+    "name": "Кока-Кола",
+    "text": "Превосходно газированный безалкогольный напиток",
+    "category": 1,
+    "tags": [
+      1
+    ]
+  }
+},
+{
+  "model": "catalog.item",
+  "pk": 2,
+  "fields": {
+    "is_published": true,
+    "name": "Спрайт",
+    "text": "Роскошно газированный безалкогольный напиток",
+    "category": 1,
+    "tags": [
+      1
+    ]
+  }
+},
+{
+  "model": "catalog.item",
+  "pk": 3,
+  "fields": {
+    "is_published": true,
+    "name": "Доширак",
+    "text": "Превосходно говяжий доширак",
+    "category": 3,
+    "tags": [
+      4,
+      5
+    ]
+  }
+},
+{
+  "model": "catalog.item",
+  "pk": 4,
+  "fields": {
+    "is_published": true,
+    "name": "Пиво",
+    "text": "Роскошное светлое пиво",
+    "category": 1,
+    "tags": [
+      2
+    ]
+  }
+},
+{
+  "model": "catalog.item",
+  "pk": 5,
+  "fields": {
+    "is_published": true,
+    "name": "Чай lipton",
+    "text": "Лимонный сладкий превосходно холодный чай",
+    "category": 1,
+    "tags": [
+      3
+    ]
+  }
+}
+]
