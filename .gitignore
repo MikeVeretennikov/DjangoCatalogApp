@@ -5,6 +5,7 @@
 __pycache__/
 db.sqlite3
 media
+migrations
 
 # Backup files # 
 *.bak 
@@ -31,6 +32,11 @@ media
 .idea/**/dynamic.xml
 .idea/**/uiDesigner.xml
 .idea/**/dbnavigator.xml
+
+# Only for Development only
+**/migrations/**
+!**/migrations
+!**/migrations/__init__.py
 
 # Gradle
 .idea/**/gradle.xml
