@@ -26,7 +26,7 @@ class Tag(core.models.AbstractModel):
         max_length=200,
         unique=True,
         validators=[django.core.validators.validate_slug],
-        verbose_name="Слаг",
+        verbose_name="слаг",
         help_text="введите слаг",
     )
 
@@ -43,12 +43,12 @@ class Category(core.models.AbstractModel):
         max_length=200,
         unique=True,
         validators=[django.core.validators.validate_slug],
-        verbose_name="Слаг",
+        verbose_name="слаг",
         help_text="введите слаг",
     )
     weight = django.db.models.PositiveSmallIntegerField(
         default=100,
-        verbose_name="Вес",
+        verbose_name="вес",
         validators=[validate_int_from_1_to_32767],
         help_text="введите вес",
     )
@@ -63,7 +63,7 @@ class Category(core.models.AbstractModel):
 
 class Item(core.models.AbstractModel):
     text = django.db.models.TextField(
-        verbose_name="Текст",
+        verbose_name="текст",
         validators=[validate_perfect_in_text],
         help_text="введите текст",
     )
