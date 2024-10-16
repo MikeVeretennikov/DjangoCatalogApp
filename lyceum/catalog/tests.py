@@ -316,3 +316,57 @@ class CatalogValidatorPerfectInTextTests(TestCase):
             msg=text,
         ):
             catalog.models.validate_perfect_in_text(text)
+
+
+class CatalogClassValidatorMustContaintTests(TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.validator = catalog.models.ValidateMustContain(
+            "роскошно",
+            "превосходно",
+        )
+
+    @parameterized.expand(
+        [
+            "Роскошно",
+            "роскошно!",
+            "роскошно\\",
+            "роскошно.",
+            "роскошно",
+            "все очень роскошно",
+            "Превосходно",
+            "превосходно!",
+            "!роскошно\\",
+            ",,,,,,роскошно...",
+            "   роскоШно   ",
+            "'роскошно'",
+            "(роскошно)",
+            "...роскошно...роскsadfsошно",
+            "роскошно'",
+            "роскошно!авыа",
+            "аываыо!роскошно",
+            "sdfsdfsdf sп прев а превосходно авыаываываыва123",
+        ],
+    )
+    def test_validator_correct(self, text):
+        CatalogClassValidatorMustContaintTests.validator(text)
+
+    @parameterized.expand(
+        [
+            "рРоскошно",
+            "ороскошно",
+            "роскошноо",
+            "пПревосходно",
+            "Ппревосходно",
+            "превороскошноабоба",
+            "роскопревосходноабоба",
+        ],
+    )
+    def test_validator_incorrect(self, text):
+        with self.assertRaises(
+            django.core.exceptions.ValidationError,
+            msg=text,
+        ):
+            CatalogClassValidatorMustContaintTests.validator(text)

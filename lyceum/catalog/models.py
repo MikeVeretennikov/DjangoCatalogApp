@@ -7,17 +7,35 @@ import django.db.models
 import core.models
 
 
-def validate_perfect_in_text(word):
+def validate_perfect_in_text(text):
     if not (
         re.match(
             r".*\b(роскошно|превосходно)\b.*",
-            word,
+            text,
             re.IGNORECASE,
         )
     ):
         raise django.core.exceptions.ValidationError(
             "В тексте должно быть слово 'превосходно' или 'роскошно'",
         )
+
+
+class ValidateMustContain:
+    def __init__(self, *args):
+        self.args = args
+
+    def __call__(self, text):
+        pattern = r".*\b(" + "|".join(self.args) + r")\b.*"
+        if not (
+            re.match(
+                pattern,
+                text,
+                re.IGNORECASE,
+            )
+        ):
+            raise django.core.exceptions.ValidationError(
+                "В тексте должно быть слово 'превосходно' или 'роскошно'",
+            )
 
 
 def validate_int_from_1_to_32767(num):
@@ -70,7 +88,7 @@ class Category(core.models.AbstractModel):
 class Item(core.models.AbstractModel):
     text = django.db.models.TextField(
         verbose_name="текст",
-        validators=[validate_perfect_in_text],
+        validators=[ValidateMustContain("роскошно", "превосходно")],
         help_text="введите текст",
     )
     category = django.db.models.ForeignKey(
