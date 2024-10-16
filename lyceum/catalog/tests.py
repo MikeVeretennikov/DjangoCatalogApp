@@ -264,8 +264,15 @@ class CatalogValidatorPerfectInTextTests(TestCase):
         [
             "Роскошно",
             "роскошно!",
+            "роскошно\\",
+            "роскошно.",
+            "роскошно",
+            "роскошно",
             "Превосходно",
             "превосходно!",
+            "!роскошно\\",
+            ",,,,,,роскошно...",
+            "   роскоШно   ",
         ],
     )
     def test_validator_correct(self, text):
@@ -273,13 +280,17 @@ class CatalogValidatorPerfectInTextTests(TestCase):
 
     @parameterized.expand(
         [
-            "!Роскошно",
-            "!роскошно",
+            "рРоскошно",
+            "ороскошно",
             "роскошноо",
-            "!Превосходно",
-            "!превосходно",
+            "пПревосходно",
+            "Ппревосходно",
+            "превороскошноабоба",
+            "роскопревосходноабоба",
         ],
     )
     def test_validator_incorrect(self, text):
-        with self.assertRaises(django.core.exceptions.ValidationError):
+        with self.assertRaises(
+            django.core.exceptions.ValidationError, msg=text
+        ):
             catalog.models.validate_perfect_in_text(text)
