@@ -125,12 +125,26 @@ class CatalogModelItemTests(TestCase):
         item.tags.add(CatalogModelItemTests.tag)
         self.assertEqual(catalog.models.Item.objects.count(), item_count + 1)
 
-    def test_validator_error_item_create(self):
+    def test_validator_error_no_perfect_item_create(self):
         item_count = catalog.models.Item.objects.count()
         with self.assertRaises(django.core.exceptions.ValidationError):
             self.item = catalog.models.Item(
                 name="name",
                 text="text",
+                category=self.category,
+            )
+
+            self.item.full_clean()
+            self.item.save()
+            self.item.tags.add(CatalogModelItemTests.tag)
+        self.assertEqual(catalog.models.Item.objects.count(), item_count)
+
+    def test_validator_error_not_string_item_create(self):
+        item_count = catalog.models.Item.objects.count()
+        with self.assertRaises(django.core.exceptions.ValidationError):
+            self.item = catalog.models.Item(
+                name="name",
+                text=123,
                 category=self.category,
             )
 
@@ -267,23 +281,19 @@ class CatalogValidatorPerfectInTextTests(TestCase):
             "роскошно\\",
             "роскошно.",
             "роскошно",
-            # "роскошно",
-            # "Превосходно",
-            # "превосходно!",
-            # "!роскошно\\",
-            # ",,,,,,роскошно...",
-            # "   роскоШно   ",
-            # "'роскошно'",
-            # "(роскошно)",
-            # '"роскошно"',
-            # "_роскошно_",
-            # "-роскошно-",
-            # "_ роскошно_",
-            # "...роскошно...роскsadfsошно",
-            # "123роскошно123",
-            # "роскошно\"",
-            # "роскошно!авыа",
-            # "аываыо!роскошно",
+            "все очень роскошно",
+            "Превосходно",
+            "превосходно!",
+            "!роскошно\\",
+            ",,,,,,роскошно...",
+            "   роскоШно   ",
+            "'роскошно'",
+            "(роскошно)",
+            "...роскошно...роскsadfsошно",
+            "роскошно'",
+            "роскошно!авыа",
+            "аываыо!роскошно",
+            "sdfsdfsdf sп прев а превосходно авыаываываыва123",
         ],
     )
     def test_validator_correct(self, text):
