@@ -10,7 +10,7 @@ import core.models
 def validate_perfect_in_text(word):
     if not (
         re.match(
-            r"[!.,]*(роскошно|превосходно)[!.,]*\b",
+            r"[^\w]*(роскошно|превосходно)[^\w]*\b",
             word,
             re.IGNORECASE,
         )

@@ -283,7 +283,7 @@ class CatalogValidatorPerfectInTextTests(TestCase):
             # "123роскошно123",
             # "роскошно\"",
             # "роскошно!авыа",
-            # "аываыо!роскошно"
+            # "аываыо!роскошно",
         ],
     )
     def test_validator_correct(self, text):
