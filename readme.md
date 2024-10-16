@@ -51,5 +51,5 @@ python3 manage.py runserver
 ```
 
 
-
-![ER diaram](https://gitlab.crja72.ru/django/2024/autumn/course/students/169883-mishaveret-course-1187/-/blob/main/ER.jpg?ref_type=heads)
+# Database diagram
+![ER diagram](https://gitlab.crja72.ru/django/2024/autumn/course/students/169883-mishaveret-course-1187/-/raw/main/ER.jpg?raw=True)
