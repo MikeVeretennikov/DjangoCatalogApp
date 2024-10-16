@@ -291,6 +291,6 @@ class CatalogValidatorPerfectInTextTests(TestCase):
     )
     def test_validator_incorrect(self, text):
         with self.assertRaises(
-            django.core.exceptions.ValidationError, msg=text
+            django.core.exceptions.ValidationError, msg=text,
         ):
             catalog.models.validate_perfect_in_text(text)
