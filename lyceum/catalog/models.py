@@ -8,7 +8,13 @@ import core.models
 
 
 def validate_perfect_in_text(word):
-    if not (re.match(r"\W*(роскошно|превосходно)\W*\b", word, re.IGNORECASE)):
+    if not (
+        re.match(
+            r"[_|\W]*(роскошно|превосходно)[_|\W]*\b",
+            word,
+            re.IGNORECASE,
+        )
+    ):
         raise django.core.exceptions.ValidationError(
             "В тексте должно быть слово 'превосходно' или 'роскошно'",
         )
