@@ -371,3 +371,32 @@ class CatalogClassValidatorMustContaintTests(TestCase):
             msg=text,
         ):
             CatalogClassValidatorMustContaintTests.validator(text)
+
+
+class CatalogNormalizeTests(TestCase):
+    @parameterized.expand(
+        [("абоба", "абоба"), ("аБО.,-_!?бА", "абоба"), ("AbOBa", "авова")],
+    )
+    def test_normalize_correct(self, input, expected):
+        self.assertEqual(catalog.models.normalize(input), expected)
+
+
+class CatalogNormalizationValidationTests(TestCase):
+    def test_collision(self):
+        tag = catalog.models.Tag(
+            is_published=True,
+            name="KомпрOм_аt.",
+            slug="test-tag-slug",
+        )
+        tag.full_clean()
+        tag.save()
+        item_count = catalog.models.Tag.objects.count()
+        tag2 = catalog.models.Tag(
+            is_published=True,
+            name="компромат",
+            slug="test-tag-slug2",
+        )
+        with self.assertRaises(django.core.exceptions.ValidationError):
+            tag2.full_clean()
+            tag2.save()
+        self.assertEqual(item_count, catalog.models.Tag.objects.count())
