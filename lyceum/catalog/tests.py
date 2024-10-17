@@ -5,6 +5,7 @@ from django.test import Client, TestCase
 from parameterized import parameterized
 
 import catalog.models
+import catalog.validators
 
 
 class CatalogStaticURLTests(TestCase):
@@ -265,12 +266,12 @@ class CatalogModelTagTests(TestCase):
 class CatalogValidatorPositiveIntTests(TestCase):
     @parameterized.expand([1, 1241, 32767])
     def test_correct_intpositive_validator(self, num):
-        catalog.models.validate_int_from_1_to_32767(num)
+        catalog.validators.validate_int_from_1_to_32767(num)
 
     @parameterized.expand([-1, 0, 32768, -32676, 199.3])
     def test_incorrect_intpositive_validator(self, num):
         with self.assertRaises(django.core.exceptions.ValidationError):
-            catalog.models.validate_int_from_1_to_32767(num)
+            catalog.validators.validate_int_from_1_to_32767(num)
 
 
 class CatalogValidatorPerfectInTextTests(TestCase):
@@ -297,7 +298,7 @@ class CatalogValidatorPerfectInTextTests(TestCase):
         ],
     )
     def test_validator_correct(self, text):
-        catalog.models.validate_perfect_in_text(text)
+        catalog.validators.validate_perfect_in_text(text)
 
     @parameterized.expand(
         [
@@ -315,7 +316,7 @@ class CatalogValidatorPerfectInTextTests(TestCase):
             django.core.exceptions.ValidationError,
             msg=text,
         ):
-            catalog.models.validate_perfect_in_text(text)
+            catalog.validators.validate_perfect_in_text(text)
 
 
 class CatalogClassValidatorMustContaintTests(TestCase):
@@ -323,7 +324,7 @@ class CatalogClassValidatorMustContaintTests(TestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.validator = catalog.models.ValidateMustContain(
+        cls.validator = catalog.validators.ValidateMustContain(
             "роскошно",
             "превосходно",
         )

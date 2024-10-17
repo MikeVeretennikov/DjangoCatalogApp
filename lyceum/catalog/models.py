@@ -1,48 +1,9 @@
-import re
-
 import django.core.exceptions
 import django.core.validators
 import django.db.models
 
+import catalog.validators
 import core.models
-
-
-def validate_perfect_in_text(text):
-    if not (
-        re.match(
-            r".*\b(роскошно|превосходно)\b.*",
-            text,
-            re.IGNORECASE,
-        )
-    ):
-        raise django.core.exceptions.ValidationError(
-            "В тексте должно быть слово 'превосходно' или 'роскошно'",
-        )
-
-
-class ValidateMustContain:
-    def __init__(self, *args):
-        self.args = args
-
-    def __call__(self, text):
-        pattern = r".*\b(" + "|".join(self.args) + r")\b.*"
-        if not (
-            re.match(
-                pattern,
-                text,
-                re.IGNORECASE,
-            )
-        ):
-            raise django.core.exceptions.ValidationError(
-                "В тексте должно быть слово 'превосходно' или 'роскошно'",
-            )
-
-
-def validate_int_from_1_to_32767(num):
-    if not (0 < num <= 32767) or type(num) is not int:
-        raise django.core.exceptions.ValidationError(
-            "Число должно быть от 1 до 32767 включительно",
-        )
 
 
 class Tag(core.models.AbstractModel):
@@ -73,7 +34,7 @@ class Category(core.models.AbstractModel):
     weight = django.db.models.PositiveSmallIntegerField(
         default=100,
         verbose_name="вес",
-        validators=[validate_int_from_1_to_32767],
+        validators=[catalog.validators.validate_int_from_1_to_32767],
         help_text="введите вес",
     )
 
@@ -88,7 +49,9 @@ class Category(core.models.AbstractModel):
 class Item(core.models.AbstractModel):
     text = django.db.models.TextField(
         verbose_name="текст",
-        validators=[ValidateMustContain("роскошно", "превосходно")],
+        validators=[
+            catalog.validators.ValidateMustContain("роскошно", "превосходно"),
+        ],
         help_text="введите текст",
     )
     category = django.db.models.ForeignKey(
