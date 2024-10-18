@@ -10,7 +10,13 @@ import core.models
 
 def normalize(text):
     text = text.lower()
-    text = re.sub(r"(-|\.|,|-|!|\?|\(|\)|\\|%|#|@|^|&|_|\*|\+|\$| )", "", text)
+    first_part = r"(-|\.|,|-|!|\?|\(|\)|\\|%|#|@|^|&|_|\*|\+|"
+    second_part = r"\$|\"|'|\;|\:|\[|\]|\{|\}| )"
+    text = re.sub(
+        first_part + second_part,
+        "",
+        text,
+    )
     new_text = ""
     for char in text:
         if char == "a":
@@ -29,6 +35,8 @@ def normalize(text):
             new_text += "у"
         elif char == "m":
             new_text += "м"
+        elif char == "e":
+            new_text += "е"
         else:
             new_text += char
     return new_text
