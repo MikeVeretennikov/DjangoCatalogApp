@@ -375,14 +375,35 @@ class CatalogClassValidatorMustContaintTests(TestCase):
 
 class CatalogNormalizeTests(TestCase):
     @parameterized.expand(
-        [("абоба", "абоба"), ("аБО.,-_!?бА", "абоба"), ("AbOBa", "авова")],
+        [
+            (
+                "абоба",
+                "абоба",
+            ),  # contains english letters, must become russian
+            ("аБО.,-_!?бА", "абоба"),
+            (
+                "AbOBa",
+                "авова",
+            ),  # contains english letters, must become russian
+            ("aбOбa123))__!@#", "абоба123"),
+            (
+                "MmmeeETtt",
+                "мммеееттт",
+            ),  # contains english letters, must become russian
+        ],
     )
     def test_normalize_correct(self, input, expected):
         self.assertEqual(catalog.models.normalize(input), expected)
 
+    @parameterized.expand(
+        [("bBb", "бБб"), ("абоба123", "абоба")],
+    )
+    def test_normalize_incorrect(self, input, expected):
+        self.assertNotEqual(catalog.models.normalize(input), expected)
+
 
 class CatalogNormalizationValidationTests(TestCase):
-    def test_collision(self):
+    def test_normalization_name_collision(self):
         tag = catalog.models.Tag(
             is_published=True,
             name="KомпрOм_аt.",
@@ -391,12 +412,31 @@ class CatalogNormalizationValidationTests(TestCase):
         tag.full_clean()
         tag.save()
         item_count = catalog.models.Tag.objects.count()
-        tag2 = catalog.models.Tag(
+        not_unique_tag = catalog.models.Tag(
             is_published=True,
             name="компромат",
             slug="test-tag-slug2",
         )
         with self.assertRaises(django.core.exceptions.ValidationError):
-            tag2.full_clean()
-            tag2.save()
+            not_unique_tag.full_clean()
+            not_unique_tag.save()
         self.assertEqual(item_count, catalog.models.Tag.objects.count())
+
+    def test_no_normalization_name_collision(self):
+        tag = catalog.models.Tag(
+            is_published=True,
+            name="KомпрOм_аt.",
+            slug="test-tag-slug",
+        )
+        tag.full_clean()
+        tag.save()
+        item_count = catalog.models.Tag.objects.count()
+        unique_tag = catalog.models.Tag(
+            is_published=True,
+            name="компроматы",
+            slug="test-tag-slug2",
+        )
+
+        unique_tag.full_clean()
+        unique_tag.save()
+        self.assertEqual(item_count + 1, catalog.models.Tag.objects.count())

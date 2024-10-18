@@ -12,8 +12,9 @@ def normalize(text):
     text = text.lower()
     first_part = r"(-|\.|,|-|!|\?|\(|\)|\\|%|#|@|^|&|_|\*|\+|"
     second_part = r"\$|\"|'|\;|\:|\[|\]|\{|\}| )"
+    pattern = first_part + second_part
     text = re.sub(
-        first_part + second_part,
+        pattern,
         "",
         text,
     )
