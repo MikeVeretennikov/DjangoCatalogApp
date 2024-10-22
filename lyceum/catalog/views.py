@@ -1,5 +1,4 @@
 from django.http import HttpResponse
-
 import django.shortcuts
 
 
@@ -26,7 +25,9 @@ def item_list(request):
         },
     ]
     return django.shortcuts.render(
-        request, template, context={"content": context}
+        request,
+        template,
+        context={"content": context},
     )
 
 
@@ -53,7 +54,9 @@ def item_detail(request, elem):
         },
     ]
     return django.shortcuts.render(
-        request, template, context={"item": context[elem - 1]}
+        request,
+        template,
+        context={"item": context[elem - 1]},
     )
 
 

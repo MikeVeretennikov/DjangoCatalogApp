@@ -47,7 +47,8 @@ def normalize(text):
 
 class ImageModel(django.db.models.Model):
     image = django.db.models.ImageField(
-        upload_to="uploads/", verbose_name="изображение"
+        upload_to="uploads/",
+        verbose_name="изображение",
     )
 
     def get_image_300x300(self):
@@ -163,7 +164,10 @@ class Item(core.models.AbstractModel):
     tags = django.db.models.ManyToManyField(Tag)
 
     main_image = django.db.models.ForeignKey(
-        ImageModel, on_delete=django.db.models.CASCADE, null=True
+        ImageModel,
+        on_delete=django.db.models.CASCADE,
+        null=True,
+        blank=True,
     )
 
     class Meta:

@@ -26,11 +26,14 @@ def index(request):
         },
     ]
     return django.shortcuts.render(
-        request, template, context={"content": context}
+        request,
+        template,
+        context={"content": context},
     )
 
 
 def coffee(request):
     return django.http.HttpResponse(
-        "Я чайник", status=http.HTTPStatus.IM_A_TEAPOT
+        "Я чайник",
+        status=http.HTTPStatus.IM_A_TEAPOT,
     )
