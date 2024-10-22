@@ -18,6 +18,6 @@ django.contrib.admin.site.register(catalog.models.Category)
 django.contrib.admin.site.register(catalog.models.Tag)
 
 
-@django.contrib.admin.register(catalog.models.ImageModel)
+@django.contrib.admin.register(catalog.models.MainImage)
 class ImageAdmin(django.contrib.admin.ModelAdmin):
-    list_display = (catalog.models.ImageModel.image_tmb,)
+    list_display = (catalog.models.MainImage.image_tmb,)

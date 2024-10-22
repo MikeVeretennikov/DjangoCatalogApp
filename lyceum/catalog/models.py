@@ -45,7 +45,7 @@ def normalize(text):
     return new_text
 
 
-class ImageModel(django.db.models.Model):
+class MainImage(django.db.models.Model):
     image = django.db.models.ImageField(
         upload_to="uploads/",
         verbose_name="изображение",
@@ -163,11 +163,21 @@ class Item(core.models.AbstractModel):
     )
     tags = django.db.models.ManyToManyField(Tag)
 
-    main_image = django.db.models.ForeignKey(
-        ImageModel,
+    main_image = django.db.models.OneToOneField(
+        MainImage,
+        verbose_name="главное изображение",
         on_delete=django.db.models.CASCADE,
         null=True,
         blank=True,
+    )
+
+    images = django.db.models.ForeignKey(
+        MainImage,
+        on_delete=django.db.models.CASCADE,
+        verbose_name="изображения",
+        null=True,
+        blank=True,
+        related_name="images",
     )
 
     class Meta:

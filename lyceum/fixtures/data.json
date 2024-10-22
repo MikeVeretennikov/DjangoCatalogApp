@@ -1,5 +1,12 @@
 [
 {
+  "model": "catalog.mainimage",
+  "pk": 2,
+  "fields": {
+    "image": "uploads/pomidor_W2foxNt.jpg"
+  }
+},
+{
   "model": "catalog.tag",
   "pk": 1,
   "fields": {
@@ -123,6 +130,8 @@
     "name": "Кола",
     "text": "2131232 превосходно",
     "category": 1,
+    "main_image": null,
+    "images": null,
     "tags": [
       1
     ]
@@ -136,6 +145,8 @@
     "name": "орешки",
     "text": "превосходно орешки",
     "category": 5,
+    "main_image": null,
+    "images": null,
     "tags": [
       2,
       4
@@ -150,6 +161,8 @@
     "name": "Доширак",
     "text": "роскошно..",
     "category": 3,
+    "main_image": null,
+    "images": null,
     "tags": [
       1
     ]
@@ -163,21 +176,10 @@
     "name": "огурец",
     "text": "превосходно",
     "category": 1,
+    "main_image": null,
+    "images": null,
     "tags": [
       4
-    ]
-  }
-},
-{
-  "model": "catalog.item",
-  "pk": 5,
-  "fields": {
-    "is_published": true,
-    "name": "помидор",
-    "text": "роскошно",
-    "category": 1,
-    "tags": [
-      3
     ]
   }
 }
