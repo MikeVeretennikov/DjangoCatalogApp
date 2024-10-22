@@ -2,6 +2,8 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import include, path
 
+import django.conf.urls.static
+
 
 urlpatterns = [
     path("", include("homepage.urls")),
@@ -15,3 +17,7 @@ if settings.DEBUG:
     import debug_toolbar
 
     urlpatterns += (path("__debug__/", include(debug_toolbar.urls)),)
+
+    urlpatterns += django.conf.urls.static.static(
+        settings.MEDIA_URL, document_root=settings.MEDIA_ROOT
+    )

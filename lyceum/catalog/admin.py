@@ -16,3 +16,8 @@ class ItemAdmin(django.contrib.admin.ModelAdmin):
 
 django.contrib.admin.site.register(catalog.models.Category)
 django.contrib.admin.site.register(catalog.models.Tag)
+
+
+@django.contrib.admin.register(catalog.models.ImageModel)
+class ImageAdmin(django.contrib.admin.ModelAdmin):
+    list_display = (catalog.models.ImageModel.image_tmb,)

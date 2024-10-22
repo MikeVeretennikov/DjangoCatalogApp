@@ -3,6 +3,8 @@ import re
 import django.core.exceptions
 import django.core.validators
 import django.db.models
+import django.utils.safestring
+import sorl.thumbnail
 
 import catalog.validators
 import core.models
@@ -41,6 +43,33 @@ def normalize(text):
         else:
             new_text += char
     return new_text
+
+
+class ImageModel(django.db.models.Model):
+    image = django.db.models.ImageField(
+        upload_to="uploads/", verbose_name="изображение"
+    )
+
+    def get_image_300x300(self):
+        return sorl.thumbnail.get_thumbnail(self.image, "300", quality=51)
+
+    def image_tmb(self):
+        if self.image:
+            print(self.image.url)
+            return django.utils.safestring.mark_safe(
+                f"<img src='{self.image.url}' width='50'>",
+            )
+        return "Нет изображения"
+
+    image_tmb.short_description = "превью"
+    image_tmb.allow_tags = True
+
+    class Meta:
+        verbose_name = "изображение"
+        verbose_name_plural = "изображения"
+
+    def __str__(self):
+        return self.image.name
 
 
 class Tag(core.models.AbstractModel):
@@ -126,12 +155,16 @@ class Item(core.models.AbstractModel):
         help_text="введите текст",
     )
     category = django.db.models.ForeignKey(
-        "category",
+        Category,
         on_delete=django.db.models.CASCADE,
         default=None,
         related_name="catalog_items",
     )
     tags = django.db.models.ManyToManyField(Tag)
+
+    main_image = django.db.models.ForeignKey(
+        ImageModel, on_delete=django.db.models.CASCADE, null=True
+    )
 
     class Meta:
         verbose_name = "товар"
