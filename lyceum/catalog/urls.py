@@ -5,21 +5,23 @@ import catalog.views
 
 register_converter(catalog.converters.PositiveIntegerConverter, "posint")
 
+app_name = "catalog"
+
 urlpatterns = [
-    path("", catalog.views.item_list, name="catalog-index-page"),
+    path("", catalog.views.item_list, name="index-page"),
     re_path(
         r"^re/(?P<number>0*[1-9][0-9]*)/",
         catalog.views.regex_endpoint,
-        name="catalog-re-converter-page",
+        name="re-converter-page",
     ),
     path(
         "converter/<posint:number>/",
         catalog.views.regex_endpoint,
-        name="catalog-custom-converter-page",
+        name="custom-converter-page",
     ),
     path(
         "<int:elem>/",
         catalog.views.item_detail,
-        name="catalog-default-converter-page",
+        name="default-converter-page",
     ),
 ]

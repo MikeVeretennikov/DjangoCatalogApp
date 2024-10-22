@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+  <br>
+  
+  <div class="row m-2">
+    
+    {% for item in content %}
+    <div class="card me-2" style="width: 12rem;">
+      <img class="card-img-top" src="{% static 'img/' %}{{ item.image }}">
+      <div class="card-body">
+        <h5 class="card-title">{{ item.name }}</h5>
+        <p class="card-text">{{ item.description }}</p>
+        <a href="{% url 'catalog:default-converter-page' item.id %}" class="btn btn-primary">Подробнее</a>
+      </div>
+    </div>
+    {% endfor %}
+
+  </div>
+{% endblock content %}

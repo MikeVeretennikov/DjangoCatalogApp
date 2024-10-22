@@ -1,0 +1,31 @@
+{% load static %}
+
+<header>
+  <nav class="navbar navbar-light bg-light">
+    
+      {% with request.resolver_match.view_name as view_name %}
+      <ul class="nav justify-content-center">
+
+        <a href="{% url 'homepage:index-page' %}">
+          <img src="{% static 'files/favicon-48x48.png' %}"  class="d-inline-block align-right" alt="">
+        </a>
+
+        <li class="nav-item">
+          <a class="nav-link {% if view_name == 'homepage:index-page' %}disabled{% endif %}" href="{% url 'homepage:index-page' %}">На главную</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if view_name == 'about:index-page' %}disabled{% endif %}" href="{% url 'about:index-page' %}">О проекте</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if view_name == 'catalog:index-page' %}disabled{% endif %}" href="{% url 'catalog:index-page' %}">Список товаров</a>
+        </li>
+      </ul>
+      {% endwith %}
+
+
+  </nav>
+  
+
+  
+
+</header>

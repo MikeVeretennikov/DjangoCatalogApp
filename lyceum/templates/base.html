@@ -1,0 +1,44 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+
+    <link rel="icon" type="image" href="{% static 'files/favicon.ico' %}" sizes="48x48" />
+    <link rel="icon" type="image/svg+xml" href="{% static 'files/favicon.svg' %}" />
+    <link rel="shortcut icon" href="{% static 'files/favicon.ico' %}" />
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'files/apple-touch-icon.png' %}" />
+    <link rel="manifest" href="{% static 'files/site.webmanifest' %}" />
+
+    <title>Django проект</title>
+
+
+  </head>
+
+  <body>
+
+
+    {% include "includes/header.html" %}
+
+  <main>
+    
+    <div class="m-1">
+      <img style="max-width: 15%;" src="{% static 'img/raccoon.jpg' %}">
+    </div>
+    
+
+    {% block content %}Контента нет{% endblock %}
+
+  </main>
+
+  {% include "includes/footer.html" %}
+
+  </body>     
+
+</html>

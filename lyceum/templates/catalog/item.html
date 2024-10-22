@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content%}
+
+<div class="card me-2" style="width: 12rem;">
+
+  <img class="card-img-top" src="{% static 'img/' %}{{ item.image }}">
+  <div class="card-body">
+    <h5 class="card-title">{{ item.name }}</h5>
+    <p class="card-text">{{ item.description }}</p>
+  </div>
+</div> 
+{% endblock %}
