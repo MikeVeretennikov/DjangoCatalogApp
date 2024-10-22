@@ -56,7 +56,6 @@ class MainImage(django.db.models.Model):
 
     def image_tmb(self):
         if self.image:
-            print(self.image.url)
             return django.utils.safestring.mark_safe(
                 f"<img src='{self.image.url}' width='50'>",
             )

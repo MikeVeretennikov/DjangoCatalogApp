@@ -392,14 +392,14 @@ class CatalogNormalizeTests(TestCase):
             ),  # contains english letters, must become russian
         ],
     )
-    def test_normalize_correct(self, input, expected):
-        self.assertEqual(catalog.models.normalize(input), expected)
+    def test_normalize_correct(self, text, expected):
+        self.assertEqual(catalog.models.normalize(text), expected)
 
     @parameterized.expand(
         [("bBb", "бБб"), ("абоба123", "абоба")],
     )
-    def test_normalize_incorrect(self, input, expected):
-        self.assertNotEqual(catalog.models.normalize(input), expected)
+    def test_normalize_incorrect(self, text, expected):
+        self.assertNotEqual(catalog.models.normalize(text), expected)
 
 
 class CatalogNormalizationValidationTests(TestCase):
