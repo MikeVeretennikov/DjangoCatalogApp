@@ -1,23 +1,28 @@
-import django.contrib.admin
+from django.contrib import admin
 
-import catalog.models
+from catalog import models
+
+# class ImageInline(admin.TabularInline):
+#     model = models.MainImage
+#     fields = ("main_image", )
 
 
-@django.contrib.admin.register(catalog.models.Item)
-class ItemAdmin(django.contrib.admin.ModelAdmin):
+@admin.register(models.Item)
+class ItemAdmin(admin.ModelAdmin):
     list_display = (
-        catalog.models.Item.name.field.name,
-        catalog.models.Item.is_published.field.name,
+        models.Item.name.field.name,
+        models.Item.is_published.field.name,
     )
-    list_editable = (catalog.models.Item.is_published.field.name,)
-    list_display_links = [catalog.models.Item.name.field.name]
-    filter_horizontal = (catalog.models.Item.tags.field.name,)
+    list_editable = (models.Item.is_published.field.name,)
+    list_display_links = [models.Item.name.field.name]
+    filter_horizontal = (models.Item.tags.field.name,)
+    # inlines = [ImageInline]
 
 
-django.contrib.admin.site.register(catalog.models.Category)
-django.contrib.admin.site.register(catalog.models.Tag)
+admin.site.register(models.Category)
+admin.site.register(models.Tag)
 
 
-@django.contrib.admin.register(catalog.models.MainImage)
-class ImageAdmin(django.contrib.admin.ModelAdmin):
-    list_display = (catalog.models.MainImage.image_tmb,)
+@admin.register(models.MainImage)
+class ImageAdmin(admin.ModelAdmin):
+    list_display = (models.MainImage.image_tmb,)

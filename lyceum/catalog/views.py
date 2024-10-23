@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseNotFound
 import django.shortcuts
 
 
@@ -53,6 +53,8 @@ def item_detail(request, elem):
             "image": "borjomi.jpg",
         },
     ]
+    if elem > len(context):
+        return HttpResponseNotFound()
     return django.shortcuts.render(
         request,
         template,

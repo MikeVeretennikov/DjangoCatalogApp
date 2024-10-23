@@ -2,6 +2,7 @@ import http
 
 import django.core.exceptions
 from django.test import Client, TestCase
+from django.urls import reverse
 from parameterized import parameterized
 
 import catalog.models
@@ -48,6 +49,19 @@ class CatalogReEndpointURLTests(TestCase):
             response.status_code,
             http.HTTPStatus.NOT_FOUND,
             "Some bad ints are valid for current regex",
+        )
+
+    @parameterized.expand(
+        ["4", "5", "1000"],
+    )
+    def test_catalog_endpoint_not_found(self, pk):
+        response = Client().get(
+            reverse("catalog:default-converter-page", args=[pk]),
+        )
+        self.assertEqual(
+            response.status_code,
+            http.HTTPStatus.NOT_FOUND,
+            "There is no item with such id",
         )
 
 
