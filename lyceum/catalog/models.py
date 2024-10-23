@@ -45,33 +45,6 @@ def normalize(text):
     return new_text
 
 
-class MainImage(django.db.models.Model):
-    image = django.db.models.ImageField(
-        upload_to="uploads/",
-        verbose_name="изображение",
-    )
-
-    def get_image_300x300(self):
-        return sorl.thumbnail.get_thumbnail(self.image, "300", quality=51)
-
-    def image_tmb(self):
-        if self.image:
-            return django.utils.safestring.mark_safe(
-                f"<img src='{self.image.url}' width='50'>",
-            )
-        return "Нет изображения"
-
-    image_tmb.short_description = "превью"
-    image_tmb.allow_tags = True
-
-    class Meta:
-        verbose_name = "изображение"
-        verbose_name_plural = "изображения"
-
-    def __str__(self):
-        return self.image.name
-
-
 class Tag(core.models.AbstractModel):
     slug = django.db.models.SlugField(
         max_length=200,
@@ -163,7 +136,7 @@ class Item(core.models.AbstractModel):
     tags = django.db.models.ManyToManyField(Tag)
 
     main_image = django.db.models.OneToOneField(
-        MainImage,
+        "Image",
         verbose_name="главное изображение",
         on_delete=django.db.models.CASCADE,
         null=True,
@@ -171,7 +144,7 @@ class Item(core.models.AbstractModel):
     )
 
     images = django.db.models.ForeignKey(
-        MainImage,
+        "Image",
         on_delete=django.db.models.CASCADE,
         verbose_name="изображения",
         null=True,
@@ -185,3 +158,42 @@ class Item(core.models.AbstractModel):
 
     def __str__(self):
         return self.name
+
+
+class Image(django.db.models.Model):
+    image = django.db.models.ImageField(
+        upload_to="uploads/",
+        verbose_name="изображение",
+    )
+
+    item_id = django.db.models.ForeignKey(
+        "Item",
+        on_delete=django.db.models.CASCADE,
+        null=True,
+        blank=True,
+        verbose_name="id айтема",
+        to_field="id",
+    )
+
+    def get_image_300x300(self):
+        return sorl.thumbnail.get_thumbnail(self.image, "300", quality=51)
+
+    def image_tmb(self):
+        if self.image:
+            return django.utils.safestring.mark_safe(
+                f"<img src='{self.image.url}' width='50'>",
+            )
+        return "Нет изображения"
+
+    image_tmb.short_description = "превью"
+    image_tmb.allow_tags = True
+
+    class Meta:
+        verbose_name = "изображение"
+        verbose_name_plural = "изображения"
+
+    def __str__(self):
+        return self.image.name
+
+
+__all__ = ["normalize", "Tag", "Category", "Item", "Image"]

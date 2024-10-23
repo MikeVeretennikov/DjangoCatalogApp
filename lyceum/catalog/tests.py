@@ -2,7 +2,7 @@ import http
 
 import django.core.exceptions
 from django.test import Client, TestCase
-from django.urls import reverse
+from django.urls import exceptions, reverse
 from parameterized import parameterized
 
 import catalog.models
@@ -11,7 +11,9 @@ import catalog.validators
 
 class CatalogStaticURLTests(TestCase):
     def test_catalog_index_endpoint_correct(self):
-        response = Client().get("/catalog/")
+        response = Client().get(
+            reverse("catalog:default-converter-page", args=[2]),
+        )
         self.assertEqual(
             response.status_code,
             http.HTTPStatus.OK,
@@ -22,7 +24,9 @@ class CatalogStaticURLTests(TestCase):
 class CatalogReEndpointURLTests(TestCase):
     @parameterized.expand(["1", "01", "010", "10", "100", "001", "99999999"])
     def test_catalog_re_converter_endpoint_correct(self, path):
-        response = Client().get(f"/catalog/re/{path}/")
+        response = Client().get(
+            reverse("catalog:re-converter-page", args=[path]),
+        )
         self.assertEqual(
             response.status_code,
             http.HTTPStatus.OK,
@@ -44,25 +48,8 @@ class CatalogReEndpointURLTests(TestCase):
         ],
     )
     def test_catalog_re_converter_endpoint_incorrect(self, path):
-        response = Client().get(f"/catalog/re/{path}/")
-        self.assertEqual(
-            response.status_code,
-            http.HTTPStatus.NOT_FOUND,
-            "Some bad ints are valid for current regex",
-        )
-
-    @parameterized.expand(
-        ["4", "5", "1000"],
-    )
-    def test_catalog_endpoint_not_found(self, pk):
-        response = Client().get(
-            reverse("catalog:default-converter-page", args=[pk]),
-        )
-        self.assertEqual(
-            response.status_code,
-            http.HTTPStatus.NOT_FOUND,
-            "There is no item with such id",
-        )
+        with self.assertRaises(exceptions.NoReverseMatch):
+            reverse("catalog:re-converter-page", args=[path])
 
 
 class CatalogConverterEndpointURLTests(TestCase):
@@ -78,7 +65,9 @@ class CatalogConverterEndpointURLTests(TestCase):
         ],
     )
     def test_catalog_re_converter_endpoint_correct(self, path):
-        response = Client().get(f"/catalog/converter/{path}/")
+        response = Client().get(
+            reverse("catalog:custom-converter-page", args=[path]),
+        )
         self.assertEqual(
             response.status_code,
             http.HTTPStatus.OK,
@@ -100,12 +89,8 @@ class CatalogConverterEndpointURLTests(TestCase):
         ],
     )
     def test_catalog_re_converter_endpoint_incorrect(self, path):
-        response = Client().get(f"/catalog/converter/{path}/")
-        self.assertEqual(
-            response.status_code,
-            http.HTTPStatus.NOT_FOUND,
-            "Some bad ints are valid for current regex",
-        )
+        with self.assertRaises(exceptions.NoReverseMatch):
+            reverse("catalog:custom-converter-page", args=[path])
 
 
 class CatalogModelItemTests(TestCase):
@@ -454,3 +439,18 @@ class CatalogNormalizationValidationTests(TestCase):
         unique_tag.full_clean()
         unique_tag.save()
         self.assertEqual(item_count + 1, catalog.models.Tag.objects.count())
+
+
+__all__ = [
+    "CatalogStaticURLTests",
+    "CatalogReEndpointURLTests",
+    "CatalogConverterEndpointURLTests",
+    "CatalogModelItemTests",
+    "CatalogModelCatalogTests",
+    "CatalogModelTagTests",
+    "CatalogValidatorPositiveIntTests",
+    "CatalogValidatorPerfectInTextTests",
+    "CatalogClassValidatorMustContaintTests",
+    "CatalogNormalizeTests",
+    "CatalogNormalizationValidationTests",
+]

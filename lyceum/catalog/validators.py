@@ -41,3 +41,10 @@ def validate_int_from_1_to_32767(num):
         raise django.core.exceptions.ValidationError(
             "Число должно быть от 1 до 32767 включительно",
         )
+
+
+__all__ = [
+    "validate_perfect_in_text",
+    "ValidateMustContain",
+    "validate_int_from_1_to_32767",
+]

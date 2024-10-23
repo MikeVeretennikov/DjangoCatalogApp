@@ -11,3 +11,6 @@ class StaticURLTests(TestCase):
             http.HTTPStatus.OK,
             "Status code should be 200",
         )
+
+
+__all__ = ["StaticURLTests"]
