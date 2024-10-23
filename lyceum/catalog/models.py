@@ -141,6 +141,7 @@ class Item(core.models.AbstractModel):
         on_delete=django.db.models.CASCADE,
         null=True,
         blank=True,
+        related_name="item",
     )
 
     images = django.db.models.ForeignKey(

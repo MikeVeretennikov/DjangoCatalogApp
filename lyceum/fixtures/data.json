@@ -4,7 +4,7 @@
   "pk": 1,
   "fields": {
     "is_published": true,
-    "name": "Вредное",
+    "name": "вредное",
     "slug": "vrednoe",
     "normalized_name": "вредное"
   }
@@ -14,39 +14,9 @@
   "pk": 2,
   "fields": {
     "is_published": true,
-    "name": "Орешки!",
-    "slug": "oreshki",
-    "normalized_name": "орешки"
-  }
-},
-{
-  "model": "catalog.tag",
-  "pk": 3,
-  "fields": {
-    "is_published": true,
-    "name": "тест",
-    "slug": "test",
-    "normalized_name": "тест"
-  }
-},
-{
-  "model": "catalog.tag",
-  "pk": 4,
-  "fields": {
-    "is_published": true,
-    "name": "сладkиеоРешk__и",
-    "slug": "sladkie-oreshki",
-    "normalized_name": "сладкиеорешки"
-  }
-},
-{
-  "model": "catalog.tag",
-  "pk": 5,
-  "fields": {
-    "is_published": true,
-    "name": "ПечeнЬkи",
-    "slug": "pechenki",
-    "normalized_name": "печеньки"
+    "name": "полезное",
+    "slug": "poleznoe",
+    "normalized_name": "полезное"
   }
 },
 {
@@ -54,10 +24,10 @@
   "pk": 1,
   "fields": {
     "is_published": true,
-    "name": "Водичка",
-    "slug": "vodichka",
+    "name": "овощи",
+    "slug": "ovoshi",
     "weight": 100,
-    "normalized_name": "водичка"
+    "normalized_name": "овощи"
   }
 },
 {
@@ -65,10 +35,10 @@
   "pk": 2,
   "fields": {
     "is_published": true,
-    "name": "!воДиЧкAЮ,...",
-    "slug": "vodichka-new",
+    "name": "напитки",
+    "slug": "napitky",
     "weight": 100,
-    "normalized_name": "водичкаю"
+    "normalized_name": "напитки"
   }
 },
 {
@@ -76,120 +46,18 @@
   "pk": 3,
   "fields": {
     "is_published": true,
-    "name": "лAпша",
-    "slug": "lapwa",
+    "name": "мясо",
+    "slug": "miaso",
     "weight": 100,
-    "normalized_name": "лапша"
+    "normalized_name": "мясо"
   }
 },
 {
-  "model": "catalog.category",
-  "pk": 4,
-  "fields": {
-    "is_published": true,
-    "name": "СухAрИkи",
-    "slug": "suhariki",
-    "weight": 100,
-    "normalized_name": "сухарики"
-  }
-},
-{
-  "model": "catalog.category",
-  "pk": 5,
-  "fields": {
-    "is_published": true,
-    "name": "aл_+_++_+_!%;\";коГ)\\oлЬ",
-    "slug": "alcohol",
-    "weight": 100,
-    "normalized_name": "ал;\";коголь"
-  }
-},
-{
-  "model": "catalog.category",
-  "pk": 6,
-  "fields": {
-    "is_published": true,
-    "name": "алкоголь",
-    "slug": "a",
-    "weight": 100,
-    "normalized_name": "алкоголь"
-  }
-},
-{
-  "model": "catalog.item",
+  "model": "catalog.mainimage",
   "pk": 1,
   "fields": {
-    "is_published": true,
-    "name": "Кола",
-    "text": "2131232 превосходно",
-    "category": 1,
-    "main_image": null,
-    "images": null,
-    "tags": [
-      1
-    ]
-  }
-},
-{
-  "model": "catalog.item",
-  "pk": 2,
-  "fields": {
-    "is_published": true,
-    "name": "орешки",
-    "text": "превосходно орешки",
-    "category": 5,
-    "main_image": 1,
-    "images": 1,
-    "tags": [
-      2,
-      4
-    ]
-  }
-},
-{
-  "model": "catalog.item",
-  "pk": 3,
-  "fields": {
-    "is_published": true,
-    "name": "Доширак",
-    "text": "роскошно..",
-    "category": 3,
-    "main_image": null,
-    "images": null,
-    "tags": [
-      1
-    ]
-  }
-},
-{
-  "model": "catalog.item",
-  "pk": 4,
-  "fields": {
-    "is_published": true,
-    "name": "огурец",
-    "text": "превосходно",
-    "category": 1,
-    "main_image": null,
-    "images": null,
-    "tags": [
-      4
-    ]
-  }
-},
-{
-  "model": "catalog.image",
-  "pk": 1,
-  "fields": {
-    "image": "uploads/141849.png",
+    "image": "uploads/pomidor.jpg",
     "item_id": null
-  }
-},
-{
-  "model": "catalog.image",
-  "pk": 2,
-  "fields": {
-    "image": "uploads/h6up57sp4z07z1nsdx8cq5e5514m4bwv.jpg",
-    "item_id": 2
   }
 }
 ]
