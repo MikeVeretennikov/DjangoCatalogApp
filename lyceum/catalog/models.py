@@ -136,7 +136,7 @@ class Item(core.models.AbstractModel):
     tags = django.db.models.ManyToManyField(Tag)
 
     main_image = django.db.models.OneToOneField(
-        "Image",
+        "MainImage",
         verbose_name="главное изображение",
         on_delete=django.db.models.CASCADE,
         null=True,
@@ -144,7 +144,7 @@ class Item(core.models.AbstractModel):
     )
 
     images = django.db.models.ForeignKey(
-        "Image",
+        "MainImage",
         on_delete=django.db.models.CASCADE,
         verbose_name="изображения",
         null=True,
@@ -160,7 +160,7 @@ class Item(core.models.AbstractModel):
         return self.name
 
 
-class Image(django.db.models.Model):
+class MainImage(django.db.models.Model):
     image = django.db.models.ImageField(
         upload_to="uploads/",
         verbose_name="изображение",
@@ -196,4 +196,4 @@ class Image(django.db.models.Model):
         return self.image.name
 
 
-__all__ = ["normalize", "Tag", "Category", "Item", "Image"]
+__all__ = ["normalize", "Tag", "Category", "Item", "MainImage"]

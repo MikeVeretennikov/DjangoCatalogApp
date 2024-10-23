@@ -4,7 +4,7 @@ from catalog import models
 
 
 class ImageInline(admin.TabularInline):
-    model = models.Image
+    model = models.MainImage
 
 
 @admin.register(models.Item)
@@ -23,9 +23,9 @@ admin.site.register(models.Category)
 admin.site.register(models.Tag)
 
 
-@admin.register(models.Image)
+@admin.register(models.MainImage)
 class ImageAdmin(admin.ModelAdmin):
-    list_display = (models.Image.image_tmb,)
+    list_display = (models.MainImage.image_tmb,)
 
 
 __all__ = ["ImageInline", "ItemAdmin", "ImageAdmin"]
