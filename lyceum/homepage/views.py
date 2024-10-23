@@ -37,3 +37,6 @@ def coffee(request):
         "Я чайник",
         status=http.HTTPStatus.IM_A_TEAPOT,
     )
+
+
+__all__ = ["index", "coffee"]

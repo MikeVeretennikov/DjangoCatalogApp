@@ -71,3 +71,6 @@ class RegexReverseRussianWordsTests(TestCase):
             "Word with only russian letters and some symbols"
             "is the only right form of a russian word",
         )
+
+
+__all__ = ["ReverseResponseMiddlewareTests", "ReverseResponseMiddlewareTests"]

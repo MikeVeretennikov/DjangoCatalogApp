@@ -36,3 +36,6 @@ class StaticURLTests(TestCase):
             http.HTTPStatus.IM_A_TEAPOT,
             "Status code should be 418",
         )
+
+
+__all__ = ["StaticURLTests"]

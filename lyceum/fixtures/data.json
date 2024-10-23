@@ -1,12 +1,5 @@
 [
 {
-  "model": "catalog.mainimage",
-  "pk": 2,
-  "fields": {
-    "image": "uploads/pomidor_W2foxNt.jpg"
-  }
-},
-{
   "model": "catalog.tag",
   "pk": 1,
   "fields": {
@@ -145,8 +138,8 @@
     "name": "орешки",
     "text": "превосходно орешки",
     "category": 5,
-    "main_image": null,
-    "images": null,
+    "main_image": 1,
+    "images": 1,
     "tags": [
       2,
       4
@@ -181,6 +174,22 @@
     "tags": [
       4
     ]
+  }
+},
+{
+  "model": "catalog.image",
+  "pk": 1,
+  "fields": {
+    "image": "uploads/141849.png",
+    "item_id": null
+  }
+},
+{
+  "model": "catalog.image",
+  "pk": 2,
+  "fields": {
+    "image": "uploads/h6up57sp4z07z1nsdx8cq5e5514m4bwv.jpg",
+    "item_id": 2
   }
 }
 ]

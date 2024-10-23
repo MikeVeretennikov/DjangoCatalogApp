@@ -16,3 +16,6 @@ class AbstractModel(django.db.models.Model):
 
     class Meta:
         abstract = True
+
+
+__all__ = ["AbstractModel"]

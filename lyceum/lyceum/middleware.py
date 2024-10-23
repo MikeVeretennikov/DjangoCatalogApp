@@ -27,3 +27,6 @@ class ReverseResponseMiddleware:
             ).encode("utf-8")
 
         return response
+
+
+__all__ = ["ReverseResponseMiddleware", "reverse_russian_words"]
