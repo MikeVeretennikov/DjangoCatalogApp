@@ -5,6 +5,9 @@ import django.core.validators
 import django.db.models
 import django.utils.safestring
 import sorl.thumbnail
+import tinymce
+import tinymce.models
+
 
 import catalog.validators
 import core.models
@@ -120,7 +123,7 @@ class Category(core.models.AbstractModel):
 
 
 class Item(core.models.AbstractModel):
-    text = django.db.models.TextField(
+    text = tinymce.models.HTMLField(
         verbose_name="текст",
         validators=[
             catalog.validators.ValidateMustContain("роскошно", "превосходно"),
