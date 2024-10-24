@@ -2,11 +2,12 @@ import http
 
 from django.conf import settings
 from django.test import Client, TestCase
+from django.urls import reverse
 
 
 class StaticURLTests(TestCase):
     def test_homepage_endpoint_correct(self):
-        response = Client().get("/")
+        response = Client().get(reverse("homepage:index-page"))
         self.assertEqual(
             response.status_code,
             http.HTTPStatus.OK,
@@ -17,7 +18,9 @@ class StaticURLTests(TestCase):
         responses = []
 
         for _ in range(10):
-            responses.append(Client().get("/coffee/").content.decode())
+            responses.append(
+                Client().get(reverse("homepage:coffee-page")).content.decode(),
+            )
 
         if settings.ALLOW_REVERSE:
             self.assertIn(
@@ -30,7 +33,7 @@ class StaticURLTests(TestCase):
             self.assertIn("Я чайник", responses, "Text should be 'Я чайник'")
 
     def test_coffee_endpoint_correct_status_code(self):
-        response = Client().get("/coffee/")
+        response = Client().get(reverse("homepage:coffee-page"))
         self.assertEqual(
             response.status_code,
             http.HTTPStatus.IM_A_TEAPOT,
