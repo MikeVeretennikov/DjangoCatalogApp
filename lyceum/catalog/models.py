@@ -1,5 +1,6 @@
 import re
 
+import django.conf
 import django.core.exceptions
 import django.core.validators
 import django.db.models
@@ -138,24 +139,6 @@ class Item(core.models.AbstractModel):
     )
     tags = django.db.models.ManyToManyField(Tag)
 
-    main_image = django.db.models.OneToOneField(
-        "MainImage",
-        verbose_name="главное изображение",
-        on_delete=django.db.models.CASCADE,
-        null=True,
-        blank=True,
-        related_name="item",
-    )
-
-    images = django.db.models.ForeignKey(
-        "MainImage",
-        on_delete=django.db.models.CASCADE,
-        verbose_name="изображения",
-        null=True,
-        blank=True,
-        related_name="images",
-    )
-
     class Meta:
         verbose_name = "товар"
         verbose_name_plural = "товары"
@@ -166,11 +149,11 @@ class Item(core.models.AbstractModel):
 
 class MainImage(django.db.models.Model):
     image = django.db.models.ImageField(
-        upload_to="uploads/",
+        upload_to=django.conf.settings.UPLOAD_TO_PATH,
         verbose_name="изображение",
     )
 
-    item_id = django.db.models.ForeignKey(
+    item = django.db.models.OneToOneField(
         "Item",
         on_delete=django.db.models.CASCADE,
         null=True,
@@ -198,6 +181,33 @@ class MainImage(django.db.models.Model):
 
     def __str__(self):
         return self.image.name
+
+
+class GalleryImage(django.db.models.Model):
+    images = django.db.models.ImageField(
+        upload_to=django.conf.settings.UPLOAD_TO_PATH,
+        verbose_name="изображения",
+        default=None,
+    )
+
+    item = django.db.models.ForeignKey(
+        "Item",
+        on_delete=django.db.models.CASCADE,
+        null=True,
+        blank=True,
+        verbose_name="id айтема",
+        to_field="id",
+    )
+
+    def get_image_300x300(self):
+        return sorl.thumbnail.get_thumbnail(self.image, "300", quality=51)
+
+    class Meta:
+        verbose_name = "изображения"
+        verbose_name_plural = "изображения"
+
+    def __str__(self):
+        return self.images.name
 
 
 __all__ = []

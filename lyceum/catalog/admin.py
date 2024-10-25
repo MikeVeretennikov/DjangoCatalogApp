@@ -3,8 +3,12 @@ from django.contrib import admin
 from catalog import models
 
 
-class ImageInline(admin.TabularInline):
+class MainImageInline(admin.TabularInline):
     model = models.MainImage
+
+
+class GalleryImageInline(admin.TabularInline):
+    model = models.GalleryImage
 
 
 @admin.register(models.Item)
@@ -16,8 +20,7 @@ class ItemAdmin(admin.ModelAdmin):
     list_editable = (models.Item.is_published.field.name,)
     list_display_links = [models.Item.name.field.name]
     filter_horizontal = (models.Item.tags.field.name,)
-    inlines = [ImageInline]
-    exclude = (models.Item.images.field.name,)
+    inlines = [MainImageInline, GalleryImageInline]
 
 
 admin.site.register(models.Category)
