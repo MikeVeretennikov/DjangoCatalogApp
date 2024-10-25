@@ -17,15 +17,11 @@ class ItemAdmin(admin.ModelAdmin):
     list_display_links = [models.Item.name.field.name]
     filter_horizontal = (models.Item.tags.field.name,)
     inlines = [ImageInline]
+    exclude = (models.Item.images.field.name,)
 
 
 admin.site.register(models.Category)
 admin.site.register(models.Tag)
-
-
-@admin.register(models.MainImage)
-class ImageAdmin(admin.ModelAdmin):
-    list_display = (models.MainImage.image_tmb,)
 
 
 __all__ = []
