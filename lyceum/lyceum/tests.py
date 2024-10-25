@@ -73,4 +73,4 @@ class RegexReverseRussianWordsTests(TestCase):
         )
 
 
-__all__ = ["ReverseResponseMiddlewareTests", "ReverseResponseMiddlewareTests"]
+__all__ = []

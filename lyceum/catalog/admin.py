@@ -28,4 +28,4 @@ class ImageAdmin(admin.ModelAdmin):
     list_display = (models.MainImage.image_tmb,)
 
 
-__all__ = ["ImageInline", "ItemAdmin", "ImageAdmin"]
+__all__ = []

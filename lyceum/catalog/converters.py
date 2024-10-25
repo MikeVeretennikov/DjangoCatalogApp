@@ -8,4 +8,4 @@ class PositiveIntegerConverter:
         return "%s" % value
 
 
-__all__ = ["PositiveIntegerConverter"]
+__all__ = []

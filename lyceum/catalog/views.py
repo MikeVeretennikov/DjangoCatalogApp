@@ -47,4 +47,4 @@ def regex_endpoint(request, number):
     return HttpResponse(f"<body>{number}</body>")
 
 
-__all__ = ["item_list", "item_detail", "regex_endpoint"]
+__all__ = []

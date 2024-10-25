@@ -41,4 +41,4 @@ class StaticURLTests(TestCase):
         )
 
 
-__all__ = ["StaticURLTests"]
+__all__ = []

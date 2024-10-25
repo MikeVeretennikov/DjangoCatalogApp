@@ -200,4 +200,4 @@ class MainImage(django.db.models.Model):
         return self.image.name
 
 
-__all__ = ["normalize", "Tag", "Category", "Item", "MainImage"]
+__all__ = []

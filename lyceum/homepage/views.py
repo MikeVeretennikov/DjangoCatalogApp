@@ -39,4 +39,4 @@ def coffee(request):
     )
 
 
-__all__ = ["index", "coffee"]
+__all__ = []

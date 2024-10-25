@@ -441,16 +441,4 @@ class CatalogNormalizationValidationTests(TestCase):
         self.assertEqual(item_count + 1, catalog.models.Tag.objects.count())
 
 
-__all__ = [
-    "CatalogStaticURLTests",
-    "CatalogReEndpointURLTests",
-    "CatalogConverterEndpointURLTests",
-    "CatalogModelItemTests",
-    "CatalogModelCatalogTests",
-    "CatalogModelTagTests",
-    "CatalogValidatorPositiveIntTests",
-    "CatalogValidatorPerfectInTextTests",
-    "CatalogClassValidatorMustContaintTests",
-    "CatalogNormalizeTests",
-    "CatalogNormalizationValidationTests",
-]
+__all__ = []

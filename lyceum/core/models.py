@@ -18,4 +18,4 @@ class AbstractModel(django.db.models.Model):
         abstract = True
 
 
-__all__ = ["AbstractModel"]
+__all__ = []

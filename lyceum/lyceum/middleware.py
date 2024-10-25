@@ -29,4 +29,4 @@ class ReverseResponseMiddleware:
         return response
 
 
-__all__ = ["ReverseResponseMiddleware", "reverse_russian_words"]
+__all__ = []
