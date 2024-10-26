@@ -139,6 +139,16 @@ class Item(core.models.AbstractModel):
     )
     tags = django.db.models.ManyToManyField(Tag)
 
+    def image_tmb(self):
+        if self.main_image:
+            return django.utils.safestring.mark_safe(
+                f"<img src='{self.main_image.image.url}' width='50'>",
+            )
+        return "Нет изображения"
+
+    image_tmb.short_description = "превью"
+    image_tmb.allow_tags = True
+
     class Meta:
         verbose_name = "товар"
         verbose_name_plural = "товары"
@@ -160,20 +170,11 @@ class MainImage(django.db.models.Model):
         blank=True,
         verbose_name="id айтема",
         to_field="id",
+        related_name="main_image",
     )
 
     def get_image_300x300(self):
         return sorl.thumbnail.get_thumbnail(self.image, "300", quality=51)
-
-    def image_tmb(self):
-        if self.image:
-            return django.utils.safestring.mark_safe(
-                f"<img src='{self.image.url}' width='50'>",
-            )
-        return "Нет изображения"
-
-    image_tmb.short_description = "превью"
-    image_tmb.allow_tags = True
 
     class Meta:
         verbose_name = "изображение"
@@ -198,9 +199,6 @@ class GalleryImage(django.db.models.Model):
         verbose_name="id айтема",
         to_field="id",
     )
-
-    def get_image_300x300(self):
-        return sorl.thumbnail.get_thumbnail(self.image, "300", quality=51)
 
     class Meta:
         verbose_name = "изображения"

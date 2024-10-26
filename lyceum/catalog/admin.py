@@ -16,6 +16,7 @@ class ItemAdmin(admin.ModelAdmin):
     list_display = (
         models.Item.name.field.name,
         models.Item.is_published.field.name,
+        models.Item.image_tmb,
     )
     list_editable = (models.Item.is_published.field.name,)
     list_display_links = [models.Item.name.field.name]
