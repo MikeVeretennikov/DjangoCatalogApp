@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 
 <header>
   <nav class="navbar navbar-light bg-light">
@@ -11,13 +12,13 @@
         </a>
 
         <li class="nav-item">
-          <a class="nav-link {% if view_name == 'homepage:index-page' %}disabled{% endif %}" href="{% url 'homepage:index-page' %}">Главная</a>
+          <a class="nav-link {% if view_name == 'homepage:index-page' %}disabled{% endif %}" href="{% url 'homepage:index-page' %}">{% trans 'MainPageHeading' %}</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link {% if view_name == 'about:index-page' %}disabled{% endif %}" href="{% url 'about:index-page' %}">О проекте</a>
+          <a class="nav-link {% if view_name == 'about:index-page' %}disabled{% endif %}" href="{% url 'about:index-page' %}">{% trans 'AboutProjectHeading' %}</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link {% if view_name == 'catalog:index-page' %}disabled{% endif %}" href="{% url 'catalog:index-page' %}">Список товаров</a>
+          <a class="nav-link {% if view_name == 'catalog:index-page' %}disabled{% endif %}" href="{% url 'catalog:index-page' %}">{% trans 'CatalogHeading' %}</a>
         </li>
       </ul>
       {% endwith %}

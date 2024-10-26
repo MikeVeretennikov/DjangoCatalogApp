@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% load static %}
+{% load i18n %}
 
 {% block content %}
   <br>
@@ -13,7 +14,7 @@
       <div class="card-body">
         <h5 class="card-title">{{ item.name }}</h5>
         <p class="card-text">{{ item.description }}</p>
-        <a href="{% url 'catalog:default-converter-page' item.id %}" class="btn btn-primary">Подробнее</a>
+        <a href="{% url 'catalog:default-converter-page' item.id %}" class="btn btn-primary">{% trans "MoreButton" %}</a>
       </div>
     </div>
     {% endfor %}

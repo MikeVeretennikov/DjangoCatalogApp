@@ -1,6 +1,7 @@
 import os
 from pathlib import Path
 
+from django.utils.translation import gettext_lazy as _
 import dotenv
 
 
@@ -113,13 +114,14 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 LANGUAGE_CODE = "ru"
-
-
 TIME_ZONE = "UTC"
-
 USE_I18N = True
-
 USE_TZ = True
+LANGUAGES = [
+    ("en", _("English")),
+    ("ru", _("Russian")),
+]
+LOCALE_PATHS = [os.path.join(BASE_DIR, "locale")]
 
 
 STATIC_URL = "static/"
