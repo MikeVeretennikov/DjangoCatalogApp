@@ -5,6 +5,8 @@
 __pycache__/
 media
 static
+# Tranlsation
+django.mo
 
 # Backup files # 
 *.bak 
