@@ -10,14 +10,7 @@
   <div class="row m-2">
     
     {% for item in content %}
-    <div class="card card_main me-2">
-      <img class="card-img-top" src="{% static 'img/' %}{{ item.image }}">
-      <div class="card-body">
-        <h5 class="card-title">{{ item.name }}</h5>
-        <p class="card-text">{{ item.description }}</p>
-        <a href="{% url 'catalog:default-converter-page' item.id %}" class="btn btn-primary">{% trans "MoreButton" %}</a>
-      </div>
-    </div>
+    {% include "includes/item_card.html" with name=item.name description=item.description image=item.image %}
     {% endfor %}
 
   </div>

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-26 18:48+0300\n"
+"POT-Creation-Date: 2024-10-27 11:20+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,13 +19,18 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
 "(n%100>=11 && n%100<=14)? 2 : 3);\n"
+
 #: .\lyceum\settings.py:121
 msgid "English"
-msgstr ""
+msgstr "Английский"
 
 #: .\lyceum\settings.py:122
-msgid "Russian"
-msgstr ""
+msgid "Русский"
+msgstr "Русский"
+
+#: .\templates\catalog\item_list.html:17 .\templates\homepage\main.html:18
+msgid "MoreButton"
+msgstr "Подробнее"
 
 #: .\templates\includes\header.html:15
 msgid "MainPageHeading"
@@ -38,10 +43,3 @@ msgstr "О проекте"
 #: .\templates\includes\header.html:21
 msgid "CatalogHeading"
 msgstr "Список товаров"
-
-#: .\templates\homepage\main.html:18
-#: .\templates\catalog\item_list.html:17
-msgid "MoreButton"
-msgstr "Подробнее"
-
-

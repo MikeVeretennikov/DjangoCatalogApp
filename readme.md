@@ -50,6 +50,24 @@ cd lyceum
 python3 manage.py runserver
 ```
 
+# Internalization 
+### cd to root/lyceum and make locale dir
+```bash
+cd lyceum
+mkdir locale
+```
+### make translation files for your languages specifying -l param
+```bash
+django-admin makemessages -l en
+django-admin makemessages -l ru
+```
+### compile bin files for translation
+```bash
+django-admin compilemessages -l en
+django-admin compilemessages -l ru
+```
+### in the created files django.po specify translation for tags "msgstr" 
+
 
 # Database diagram
 ![ER diagram](https://gitlab.crja72.ru/django/2024/autumn/course/students/169883-mishaveret-course-1187/-/raw/main/ER.jpg?raw=True)

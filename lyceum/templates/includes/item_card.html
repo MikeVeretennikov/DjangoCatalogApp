@@ -1,0 +1,12 @@
+{% load static %}
+{% load i18n %}
+
+
+<div class="card card_main me-2">
+  <img class="card-img-top" src="{% static 'img/' %}{{ image }}">
+  <div class="card-body">
+    <h5 class="card-title">{{ name }}</h5>
+    <p class="card-text">{{ description }}</p>
+    <a href="{% url 'catalog:default-converter-page' item.id %}" class="btn btn-primary">{% trans "MoreButton" %}</a>
+  </div>
+</div>
