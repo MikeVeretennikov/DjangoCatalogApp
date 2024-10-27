@@ -2,6 +2,13 @@
 
 <footer>
   <div class="navbar navbar-light bg-light fixed-bottom">
-    <p> © 2024 Mike Veretennikov </p>
+    
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+       var currentYear = new Date().getFullYear();
+       document.getElementById('currentYear').textContent = currentYear;
+      });
+      </script>
+    <p> © <span id="currentYear">{% now "Y" %}</span> Mike Veretennikov </p>
   </div>
 </footer>
