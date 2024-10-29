@@ -70,3 +70,15 @@ class CatalogURLTests(TestCase):
         self.assertIsInstance(item.is_published, bool)
         self.assertEqual(item.is_published, True)
         self.assertIsInstance(item.category, catalog.models.Category)
+
+    def test_item_detail_found(self):
+        response = Client().get(
+            reverse("catalog:default-converter-page", args=[1])
+        )
+        self.assertEqual(response.status_code, 200)
+
+    def test_item_detail_not_found(self):
+        response = Client().get(
+            reverse("catalog:default-converter-page", args=[5])
+        )
+        self.assertEqual(response.status_code, 404)
