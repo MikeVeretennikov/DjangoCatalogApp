@@ -73,12 +73,12 @@ class CatalogURLTests(TestCase):
 
     def test_item_detail_found(self):
         response = Client().get(
-            reverse("catalog:default-converter-page", args=[1])
+            reverse("catalog:default-converter-page", args=[1]),
         )
         self.assertEqual(response.status_code, 200)
 
     def test_item_detail_not_found(self):
         response = Client().get(
-            reverse("catalog:default-converter-page", args=[5])
+            reverse("catalog:default-converter-page", args=[5]),
         )
         self.assertEqual(response.status_code, 404)
