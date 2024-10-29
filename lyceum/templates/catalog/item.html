@@ -4,11 +4,38 @@
 
 {% block content%}
 
-<div class="card card_main me-2">
-
+<div class="card m-3 card_main ">
+  <img class="card-img-top" src="{{ item.main_image.image.url }}">
   <div class="card-body">
-    <h5 class="card-title">Какой-то товар</h5>
-    <p class="card-text"></p>
+    
+    <h5 class="card-title">{{ item.name }}</h5>
+    <h7 class="card-title">Категория</h5>
+
+    <ul>
+      <li>{{ item.category.name }}</li>
+    </ul>
+    
+    <p class="card-text">{{ item.text|safe }}</p>
+    
+    <h7 class="card-title">Теги</h5>
+
+    <ul>
+    {% for tag in item.tags.all %}
+        <li>{{ tag }}</li>
+    {% endfor %}
+    
+    </ul>
+
+    <div class="row">
+      
+      {% for image in item.images.all %}
+          <img class="col-3" src="{{ image.image.url }}">
+      {% endfor%}
+      
+    </div>
+  
   </div>
-</div> 
+</div>
+
+
 {% endblock %}

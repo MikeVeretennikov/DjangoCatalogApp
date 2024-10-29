@@ -1,4 +1,3 @@
-from django.http import HttpResponse
 import django.shortcuts
 import django.urls
 
@@ -10,7 +9,7 @@ def item_list(request):
     items = (
         catalog.models.Item.objects.only("name", "text", "category", "tags")
         .filter(is_published=True)
-        .prefetch_related("category", "tags")
+        .prefetch_related("category", "tags", "main_image")
         .order_by("category__name")
     )
     context = {
@@ -33,8 +32,6 @@ def item_detail(request, pk):
         template,
         context,
     )
-
-
 
 
 __all__ = []

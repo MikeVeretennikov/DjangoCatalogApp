@@ -190,7 +190,7 @@ class MainImage(django.db.models.Model):
 
 
 class GalleryImage(django.db.models.Model):
-    images = django.db.models.ImageField(
+    image = django.db.models.ImageField(
         upload_to=django.conf.settings.UPLOAD_TO_PATH,
         verbose_name="изображения",
         default=None,
@@ -203,6 +203,7 @@ class GalleryImage(django.db.models.Model):
         blank=True,
         verbose_name="id айтема",
         to_field="id",
+        related_name="images",
     )
 
     class Meta:
@@ -210,7 +211,7 @@ class GalleryImage(django.db.models.Model):
         verbose_name_plural = "изображения"
 
     def __str__(self):
-        return self.images.name
+        return self.image.name
 
 
 __all__ = []
