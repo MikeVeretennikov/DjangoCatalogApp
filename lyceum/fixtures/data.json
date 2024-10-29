@@ -20,6 +20,26 @@
   }
 },
 {
+  "model": "catalog.tag",
+  "pk": 3,
+  "fields": {
+    "is_published": true,
+    "name": "сладкое",
+    "slug": "sladkoe",
+    "normalized_name": "сладкое"
+  }
+},
+{
+  "model": "catalog.tag",
+  "pk": 4,
+  "fields": {
+    "is_published": true,
+    "name": "соленое",
+    "slug": "solenoe",
+    "normalized_name": "соленое"
+  }
+},
+{
   "model": "catalog.category",
   "pk": 1,
   "fields": {
@@ -53,11 +73,148 @@
   }
 },
 {
+  "model": "catalog.category",
+  "pk": 4,
+  "fields": {
+    "is_published": true,
+    "name": "приправы",
+    "slug": "pripravy",
+    "weight": 100,
+    "normalized_name": "приправы"
+  }
+},
+{
+  "model": "catalog.category",
+  "pk": 5,
+  "fields": {
+    "is_published": true,
+    "name": "орехи",
+    "slug": "orehi",
+    "weight": 100,
+    "normalized_name": "орехи"
+  }
+},
+{
+  "model": "catalog.item",
+  "pk": 1,
+  "fields": {
+    "is_published": true,
+    "name": "помидор",
+    "text": "<p>роскошно</p>",
+    "category": 1,
+    "is_on_main": false,
+    "tags": [
+      1,
+      2
+    ]
+  }
+},
+{
+  "model": "catalog.item",
+  "pk": 2,
+  "fields": {
+    "is_published": true,
+    "name": "мясо",
+    "text": "<p><strong>превосходно очень вкусно&nbsp;<em>обалденно&nbsp;</em></strong>аааа</p>",
+    "category": 3,
+    "is_on_main": true,
+    "tags": [
+      2
+    ]
+  }
+},
+{
+  "model": "catalog.item",
+  "pk": 3,
+  "fields": {
+    "is_published": true,
+    "name": "огурец",
+    "text": "<p>роскошно</p>",
+    "category": 1,
+    "is_on_main": false,
+    "tags": [
+      2
+    ]
+  }
+},
+{
+  "model": "catalog.item",
+  "pk": 4,
+  "fields": {
+    "is_published": true,
+    "name": "орешки",
+    "text": "<p>роскошно</p>",
+    "category": 5,
+    "is_on_main": true,
+    "tags": [
+      1,
+      2,
+      4
+    ]
+  }
+},
+{
   "model": "catalog.mainimage",
   "pk": 1,
   "fields": {
     "image": "uploads/pomidor.jpg",
-    "item_id": null
+    "item": null
+  }
+},
+{
+  "model": "catalog.mainimage",
+  "pk": 2,
+  "fields": {
+    "image": "uploads/pomidor_YCHIDHY.jpg",
+    "item": null
+  }
+},
+{
+  "model": "catalog.mainimage",
+  "pk": 3,
+  "fields": {
+    "image": "uploads/h6up57sp4z07z1nsdx8cq5e5514m4bwv_jjJ45Nu.jpg",
+    "item": null
+  }
+},
+{
+  "model": "catalog.mainimage",
+  "pk": 4,
+  "fields": {
+    "image": "uploads/images.jpg",
+    "item": 2
+  }
+},
+{
+  "model": "catalog.mainimage",
+  "pk": 5,
+  "fields": {
+    "image": "uploads/pomidor_T8CGbjI.jpg",
+    "item": 1
+  }
+},
+{
+  "model": "catalog.galleryimage",
+  "pk": 3,
+  "fields": {
+    "image": "uploads/meat2.webp",
+    "item": 2
+  }
+},
+{
+  "model": "catalog.galleryimage",
+  "pk": 4,
+  "fields": {
+    "image": "uploads/meat.jpeg",
+    "item": 2
+  }
+},
+{
+  "model": "catalog.galleryimage",
+  "pk": 5,
+  "fields": {
+    "image": "uploads/meat3.jpg",
+    "item": 2
   }
 }
 ]
