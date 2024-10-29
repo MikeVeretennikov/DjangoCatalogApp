@@ -9,18 +9,8 @@ app_name = "catalog"
 
 urlpatterns = [
     path("", catalog.views.item_list, name="index-page"),
-    re_path(
-        r"^re/(?P<number>0*[1-9][0-9]*)/",
-        catalog.views.regex_endpoint,
-        name="re-converter-page",
-    ),
     path(
-        "converter/<posint:number>/",
-        catalog.views.regex_endpoint,
-        name="custom-converter-page",
-    ),
-    path(
-        "<int:elem>/",
+        "<int:pk>/",
         catalog.views.item_detail,
         name="default-converter-page",
     ),

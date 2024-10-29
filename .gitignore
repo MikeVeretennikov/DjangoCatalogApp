@@ -7,6 +7,7 @@ media
 static
 migrations/__pycache__/
 */__pycache__/
+*/catalog/scripts/
 # Tranlsation
 django.mo
 

@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     "sorl.thumbnail",
     "django_cleanup.apps.CleanupConfig",
     "tinymce",
+    "django_extensions",
 ]
 
 

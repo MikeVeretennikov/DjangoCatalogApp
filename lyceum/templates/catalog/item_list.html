@@ -7,9 +7,11 @@
   <br>
   
   <div class="row m-2">
-    
-    {% for item in content %}
-    {% include "includes/item_card.html" with name=item.name description=item.description image=item.image %}
+   
+    {% for item in items %}
+
+      {% include "includes/item_card.html" with item=item %}
+      
     {% endfor %}
 
   </div>

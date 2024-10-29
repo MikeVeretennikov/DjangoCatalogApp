@@ -2,33 +2,22 @@ import http
 
 import django.shortcuts
 
+import catalog.models
+
 
 def index(request):
     template = "homepage/main.html"
-    context = [
-        {
-            "id": 1,
-            "name": "Кубик рубика",
-            "description": "Хороший тренажер мозга",
-            "image": "rubic.jpg",
-        },
-        {
-            "id": 2,
-            "name": "Клавиатура",
-            "description": "Бюджетная механическая клавиатура",
-            "image": "keyboard.jpg",
-        },
-        {
-            "id": 3,
-            "name": "Боржоми",
-            "description": "Поздно Вася пить боржоми когда почки отказали",
-            "image": "borjomi.jpg",
-        },
-    ]
+    items = (
+        catalog.models.Item.objects.only("name", "text", "category", "tags")
+        .filter(is_on_main=True)
+        .prefetch_related("category", "tags")
+        .order_by("name")
+    )
+    context = {"items": items}
     return django.shortcuts.render(
         request,
         template,
-        context={"content": context},
+        context,
     )
 
 

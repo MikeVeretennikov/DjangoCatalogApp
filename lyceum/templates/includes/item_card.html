@@ -3,10 +3,27 @@
 
 
 <div class="card card_main me-2">
-  <img class="card-img-top" src="{% static 'img/' %}{{ image }}">
+  <img class="card-img-top" src="{{ item.image.url }}">
   <div class="card-body">
-    <h5 class="card-title">{{ name }}</h5>
-    <p class="card-text">{{ description }}</p>
+    
+    <h5 class="card-title">{{ item.name }}</h5>
+    <h7 class="card-title">Категория</h5>
+
+    <ul>
+      <li>{{ item.category.name }}</li>
+    </ul>
+    
+    <p class="card-text">{{ item.text|safe|truncatechars_html:":10" }}</p>
+    
+    <h7 class="card-title">Теги</h5>
+
+    <ul>
+    {% for tag in item.tags.all %}
+        <li>{{ tag }}</li>
+    {% endfor %}
+    </ul>
+
     <a href="{% url 'catalog:default-converter-page' item.id %}" class="btn btn-primary">{% trans "MoreButton" %}</a>
+  
   </div>
 </div>

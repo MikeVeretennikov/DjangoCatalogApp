@@ -138,6 +138,11 @@ class Item(core.models.AbstractModel):
         related_name="catalog_items",
     )
     tags = django.db.models.ManyToManyField(Tag)
+    is_on_main = django.db.models.BooleanField(
+        verbose_name="принадлежит к главной странице",
+        default=False,
+        help_text="введите принадлежит ли к главной странице товар",
+    )
 
     def image_tmb(self):
         if self.main_image:
