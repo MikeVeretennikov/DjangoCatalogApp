@@ -60,7 +60,7 @@ class Tag(core.models.AbstractModel):
 
     normalized_name = django.db.models.CharField(
         max_length=150,
-        unique=True,
+        unique=False,
         blank=True,
         default=None,
     )
@@ -100,7 +100,7 @@ class Category(core.models.AbstractModel):
 
     normalized_name = django.db.models.CharField(
         max_length=150,
-        unique=True,
+        unique=False,
         blank=True,
         default=None,
     )
