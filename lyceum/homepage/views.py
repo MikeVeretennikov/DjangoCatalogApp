@@ -8,10 +8,14 @@ import catalog.models
 def index(request):
     template = "homepage/main.html"
     items = (
-        catalog.models.Item.objects.only("name", "text", "category", "tags")
-        .filter(is_on_main=True)
-        .select_related("category")
-        .prefetch_related("tags", "main_image")
+        catalog.models.Item.objects.only("name", "text", "category")
+        .filter(
+            is_on_main=True,
+            is_published=True,
+            category__is_published=True,
+        )
+        .select_related("category", "main_image")
+        .prefetch_related("tags")
         .order_by("name")
     )
     context = {"items": items}
