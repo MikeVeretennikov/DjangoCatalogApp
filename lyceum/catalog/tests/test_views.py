@@ -32,23 +32,33 @@ class CatalogURLTests(TestCase):
             slug="test-false",
         )
 
-        cls.unpublished_item_is_on_main = catalog.models.Item.objects.create(
+        cls.unpublished_item_is_not_on_main = (
+            catalog.models.Item.objects.create(
+                name="тестовый айтем с is_on_main=False, is_published=False",
+                category=cls.unpublished_category,
+                text="роскошно",
+                is_on_main=False,
+                is_published=False,
+            )
+        )
+        cls.published_item_is_on_main = catalog.models.Item.objects.create(
+            name="тестовый айтем с is_on_main=True, is_published=True",
+            category=cls.published_category,
+            text="роскошно",
+            is_on_main=True,
+            is_published=True,
+        )
+
+        cls.published_item_is_on_main_2 = catalog.models.Item.objects.create(
             name="тестовый айтем с is_on_main=True, is_published=False",
             category=cls.published_category,
             text="роскошно",
             is_on_main=True,
             is_published=False,
         )
-        cls.published_item_is_not_on_main = catalog.models.Item.objects.create(
-            name="тестовый айтем с is_on_main=False, is_published=True",
-            category=cls.unpublished_category,
-            text="роскошно",
-            is_on_main=False,
-            is_published=True,
-        )
 
-        cls.published_item_is_not_on_main.tags.add(cls.published_tag)
-        cls.unpublished_item_is_on_main.tags.add(cls.unpublished_tag)
+        cls.unpublished_item_is_not_on_main.tags.add(cls.unpublished_tag)
+        cls.published_item_is_on_main.tags.add(cls.published_tag)
 
     def test_catalog_correct_context(self):
         response = Client().get(reverse("catalog:index-page"))
@@ -63,6 +73,7 @@ class CatalogURLTests(TestCase):
 
     def test_catalog_correct_context_content(self):
         response = Client().get(reverse("catalog:index-page"))
+
         self.assertEqual(len(response.context["items"]), 1)
         item = response.context["items"].first()
         self.assertIsInstance(item.name, str)

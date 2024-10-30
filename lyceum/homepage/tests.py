@@ -52,8 +52,16 @@ class HomepageURLTests(TestCase):
             is_published=True,
         )
 
-        cls.unpublished_item_is_not_on_main.tags.add(cls.published_tag)
-        cls.published_item_is_on_main.tags.add(cls.unpublished_tag)
+        cls.published_item_is_on_main = catalog.models.Item.objects.create(
+            name="тестовый 2 айтем с is_on_main=True, is_published=True",
+            category=cls.published_category,
+            text="роскошно",
+            is_on_main=True,
+            is_published=True,
+        )
+
+        cls.unpublished_item_is_not_on_main.tags.add(cls.unpublished_tag)
+        cls.published_item_is_on_main.tags.add(cls.published_tag)
 
     def test_homepage_correct_context(self):
         response = Client().get(reverse("homepage:index-page"))
@@ -69,7 +77,7 @@ class HomepageURLTests(TestCase):
     def test_homepage_correct_context_content(self):
         response = Client().get(reverse("homepage:index-page"))
 
-        self.assertEqual(len(response.context["items"]), 1)
+        self.assertEqual(len(response.context["items"]), 2)
         item = response.context["items"].first()
         self.assertIsInstance(item.name, str)
         self.assertIsInstance(item.is_on_main, bool)
