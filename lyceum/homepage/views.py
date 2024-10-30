@@ -10,7 +10,8 @@ def index(request):
     items = (
         catalog.models.Item.objects.only("name", "text", "category", "tags")
         .filter(is_on_main=True)
-        .prefetch_related("category", "tags", "main_image")
+        .select_related("category")
+        .prefetch_related("tags", "main_image")
         .order_by("name")
     )
     context = {"items": items}

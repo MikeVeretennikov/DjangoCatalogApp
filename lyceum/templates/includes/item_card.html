@@ -13,7 +13,7 @@
       <li>{{ item.category.name }}</li>
     </ul>
     
-    <p class="card-text">{{ item.text|safe|truncatechars_html:":10" }}</p>
+    <p class="card-text">{{ item.text|safe|truncatewords_html:10 }}</p>
     
     <h7 class="card-title">Теги</h5>
 

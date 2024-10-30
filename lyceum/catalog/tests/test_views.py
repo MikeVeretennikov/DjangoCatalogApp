@@ -82,3 +82,6 @@ class CatalogURLTests(TestCase):
             reverse("catalog:default-converter-page", args=[5]),
         )
         self.assertEqual(response.status_code, 404)
+
+
+__all__ = []
