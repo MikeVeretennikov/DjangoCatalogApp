@@ -1,3 +1,6 @@
+import http
+
+import django.conf
 import django.db.models.query
 from django.test import Client, TestCase
 from django.urls import reverse
@@ -70,6 +73,32 @@ class HomepageURLTests(TestCase):
         self.assertEqual(item.is_on_main, True)
         self.assertIsInstance(item.is_published, bool)
         self.assertIsInstance(item.category, catalog.models.Category)
+
+    def test_coffee_endpoint_correct_text(self):
+        responses = []
+
+        for _ in range(10):
+            responses.append(
+                Client().get(reverse("homepage:coffee-page")).content.decode(),
+            )
+
+        if django.conf.settings.ALLOW_REVERSE:
+            self.assertIn(
+                "Я кинйач",
+                responses,
+                "Text should be 'Я чайник' reversed"
+                "because ALLOW_REVERSE is True",
+            )
+        else:
+            self.assertIn("Я чайник", responses, "Text should be 'Я чайник'")
+
+    def test_coffee_endpoint_correct_status_code(self):
+        response = Client().get(reverse("homepage:coffee-page"))
+        self.assertEqual(
+            response.status_code,
+            http.HTTPStatus.IM_A_TEAPOT,
+            "Status code should be 418",
+        )
 
 
 __all__ = []

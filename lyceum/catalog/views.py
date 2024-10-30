@@ -9,8 +9,8 @@ def item_list(request):
     items = (
         catalog.models.Item.objects.only("name", "text", "category", "tags")
         .filter(is_published=True)
-        .select_related("category")
-        .prefetch_related("tags", "main_image")
+        .select_related("category", "main_image")
+        .prefetch_related("tags")
         .order_by("category__name")
     )
     context = {

@@ -135,9 +135,14 @@ class Item(core.models.AbstractModel):
         Category,
         on_delete=django.db.models.CASCADE,
         default=None,
-        related_name="catalog_items",
+        related_name="items",
+        related_query_name="item",
     )
-    tags = django.db.models.ManyToManyField(Tag)
+    tags = django.db.models.ManyToManyField(
+        Tag,
+        related_name="items",
+        related_query_name="item",
+    )
     is_on_main = django.db.models.BooleanField(
         verbose_name="принадлежит к главной странице",
         default=False,
