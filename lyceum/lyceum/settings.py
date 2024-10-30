@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     "sorl.thumbnail",
     "django_cleanup.apps.CleanupConfig",
     "tinymce",
-    "django_extensions",
 ]
 
 
@@ -128,7 +127,7 @@ LANGUAGES = [
     ("ru", _("Русский")),
 ]
 
-LOCALE_PATHS = [os.path.join(BASE_DIR, "locale")]
+LOCALE_PATHS = [BASE_DIR / "locale"]
 
 
 STATIC_URL = "static/"
