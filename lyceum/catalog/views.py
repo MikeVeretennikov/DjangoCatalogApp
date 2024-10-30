@@ -40,7 +40,15 @@ def item_detail(request, pk):
     item = django.shortcuts.get_object_or_404(
         catalog.models.Item.objects.only("name", "text", "category")
         .select_related("category", "main_image")
-        .prefetch_related("tags", "images"),
+        .prefetch_related(
+            django.db.models.Prefetch(
+                "tags",
+                queryset=catalog.models.Tag.objects.filter(
+                    is_published=True,
+                ).only("name"),
+            ),
+        )
+        .prefetch_related("images"),
         pk=pk,
     )
     context = {"item": item}
