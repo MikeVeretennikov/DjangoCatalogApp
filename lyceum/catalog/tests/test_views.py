@@ -73,7 +73,6 @@ class CatalogURLTests(TestCase):
 
     def test_catalog_correct_context_content(self):
         response = Client().get(reverse("catalog:index-page"))
-
         self.assertEqual(len(response.context["items"]), 1)
         item = response.context["items"].first()
         self.assertIsInstance(item.name, str)
@@ -81,6 +80,11 @@ class CatalogURLTests(TestCase):
         self.assertIsInstance(item.is_published, bool)
         self.assertEqual(item.is_published, True)
         self.assertIsInstance(item.category, catalog.models.Category)
+
+    def test_correct_prefetch_context(self):
+        response = Client().get(reverse("catalog:index-page"))
+        item = response.context["items"].all()[0]
+        self.assertIn("_prefetched_objects_cache", item.__dict__)
 
     def test_item_detail_found(self):
         response = Client().get(

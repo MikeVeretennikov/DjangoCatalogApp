@@ -74,6 +74,11 @@ class HomepageURLTests(TestCase):
             django.db.models.query.QuerySet,
         )
 
+    def test_correct_prefetch_context(self):
+        response = Client().get(reverse("homepage:index-page"))
+        item = response.context["items"].all()[0]
+        self.assertIn("_prefetched_objects_cache", item.__dict__)
+
     def test_homepage_correct_context_content(self):
         response = Client().get(reverse("homepage:index-page"))
 
