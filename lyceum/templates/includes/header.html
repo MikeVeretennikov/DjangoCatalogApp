@@ -20,6 +20,13 @@
         <li class="nav-item">
           <a class="nav-link {% if view_name == 'catalog:index-page' %}disabled{% endif %}" href="{% url 'catalog:index-page' %}">{% trans 'CatalogHeading' %}</a>
         </li>
+        
+        {% if user.is_authenticated and user.is_staff %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'admin:index' %}">Админка</a>
+          </li>
+        {% endif %}
+
       </ul>
       {% endwith %}
 
