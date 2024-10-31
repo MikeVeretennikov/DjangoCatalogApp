@@ -6,6 +6,9 @@
 
 <div class="card m-3 card_main ">
   <img class="card-img-top" src="{{ item.main_image.image.url }}">
+
+  <a href="{% url 'download:download' item.main_image.image %}" class="btn btn-primary m-2">Скачать основную картинку</a>
+
   <div class="card-body">
     
     <h5 class="card-title">{{ item.name }}</h5>

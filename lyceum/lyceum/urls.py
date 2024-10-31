@@ -11,6 +11,7 @@ urlpatterns = [
     path("catalog/", include("catalog.urls")),
     path("admin/", admin.site.urls),
     path("tinymce/", include("tinymce.urls")),
+    path("download/<path:path>", include("download.urls")),
 ]
 
 
