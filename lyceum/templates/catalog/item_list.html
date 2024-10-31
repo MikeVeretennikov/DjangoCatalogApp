@@ -8,9 +8,15 @@
   
   <div class="row m-2">
 
-    {% for item in items %}
+    {% for item in items.all %}
 
-      {% include "includes/item_card.html" with item=item %}
+      {% ifchanged item.category %}
+
+        <h3>{{ item.category }}</h3>
+        
+      {% endifchanged %}
+
+      {% include "includes/item_card.html" with item=item %} 
       
     {% endfor %}
 

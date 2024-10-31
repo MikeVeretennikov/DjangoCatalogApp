@@ -98,5 +98,9 @@ class CatalogURLTests(TestCase):
         )
         self.assertEqual(response.status_code, 404)
 
+    # def test_published_item_manager(self):
+    #     response = Client().get(reverse("catalog:index-page"))
+    #     items = response.context["items"]
+    #     print(items)
 
 __all__ = []

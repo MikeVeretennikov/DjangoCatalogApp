@@ -125,6 +125,48 @@ class Category(core.models.AbstractModel):
             )
 
 
+class OnMainManager(django.db.models.Manager):
+    def get_queryset(self):
+        return (
+            super()
+            .get_queryset()
+            .filter(
+                is_on_main=True, category__is_published=True, is_published=True,
+            )
+            .select_related("category", "main_image")
+            .prefetch_related(
+                django.db.models.Prefetch(
+                    "tags",
+                    queryset=catalog.models.Tag.objects.filter(
+                        is_published=True,
+                    ).only("name"),
+                ),
+            )
+            .only("name", "category", "text")
+            .order_by("name")
+        )
+
+
+class PublishedManager(django.db.models.Manager):
+    def get_queryset(self):
+        return (
+            super()
+            .get_queryset()
+            .filter(category__is_published=True, is_published=True)
+            .select_related("category", "main_image")
+            .prefetch_related(
+                django.db.models.Prefetch(
+                    "tags",
+                    queryset=catalog.models.Tag.objects.filter(
+                        is_published=True,
+                    ).only("name"),
+                ),
+            )
+            .only("name", "category", "text")
+            .order_by("category__name", "name")
+        )
+
+
 class Item(core.models.AbstractModel):
     text = tinymce.models.HTMLField(
         verbose_name="текст",
@@ -150,6 +192,10 @@ class Item(core.models.AbstractModel):
         default=False,
         help_text="введите принадлежит ли к главной странице товар",
     )
+
+    objects = django.db.models.Manager()
+    on_main = OnMainManager()
+    published = PublishedManager()
 
     def image_tmb(self):
         if self.main_image:
