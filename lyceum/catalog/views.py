@@ -9,7 +9,6 @@ def item_list(request):
 
     items = catalog.models.Item.published.all()
 
-
     context = {
         "items": items,
     }

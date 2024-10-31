@@ -103,4 +103,5 @@ class CatalogURLTests(TestCase):
     #     items = response.context["items"]
     #     print(items)
 
+
 __all__ = []

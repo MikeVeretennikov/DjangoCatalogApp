@@ -131,7 +131,9 @@ class OnMainManager(django.db.models.Manager):
             super()
             .get_queryset()
             .filter(
-                is_on_main=True, category__is_published=True, is_published=True,
+                is_on_main=True,
+                category__is_published=True,
+                is_published=True,
             )
             .select_related("category", "main_image")
             .prefetch_related(
