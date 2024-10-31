@@ -8,11 +8,11 @@
   
   <div class="row m-2">
 
-    {% for item in items.all %}
+    {% for item in items %}
 
-      {% ifchanged item.category %}
+      {% ifchanged item.category.name %}
 
-        <h3>{{ item.category }}</h3>
+        <h3>{{ item.category.name }}</h3>
         
       {% endifchanged %}
 

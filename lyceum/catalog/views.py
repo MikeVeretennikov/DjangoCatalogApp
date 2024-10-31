@@ -7,7 +7,7 @@ import catalog.models
 def item_list(request):
     template = "catalog/item_list.html"
 
-    items = catalog.models.Item.published.all()
+    items = catalog.models.Item.objects.published()
 
     context = {
         "items": items,

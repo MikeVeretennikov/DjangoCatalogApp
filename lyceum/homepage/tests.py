@@ -116,5 +116,13 @@ class HomepageURLTests(TestCase):
             "Status code should be 418",
         )
 
+    def test_no_extra_fields(self):
+        response = Client().get(reverse("homepage:index-page"))
+        item = response.context["items"].first()
+        self.assertNotIn("is_published", item.__dict__)
+        self.assertNotIn("is_published", item.category.__dict__)
+        for tag in item.tags.all():
+            self.assertNotIn("is_published", tag.__dict__)
+
 
 __all__ = []
