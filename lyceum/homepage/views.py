@@ -10,7 +10,7 @@ def index(request):
     template = "homepage/main.html"
     items = catalog.models.Item.objects.on_main()
 
-    context = {"items": items}
+    context = {"items": items, "title": "Главная страница"}
 
     return django.shortcuts.render(
         request,

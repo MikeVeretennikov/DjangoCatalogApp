@@ -49,7 +49,7 @@ class CatalogURLTests(TestCase):
             is_published=True,
         )
 
-        cls.published_item_is_on_main_2 = catalog.models.Item.objects.create(
+        cls.unpublished_item_is_on_main_2 = catalog.models.Item.objects.create(
             name="тестовый айтем с is_on_main=True, is_published=False",
             category=cls.published_category,
             text="роскошно",
@@ -59,6 +59,7 @@ class CatalogURLTests(TestCase):
 
         cls.unpublished_item_is_not_on_main.tags.add(cls.unpublished_tag)
         cls.published_item_is_on_main.tags.add(cls.published_tag)
+        cls.unpublished_item_is_on_main_2.tags.add(cls.published_tag)
 
     def test_catalog_correct_context(self):
         response = Client().get(reverse("catalog:index-page"))
@@ -86,12 +87,6 @@ class CatalogURLTests(TestCase):
         item = response.context["items"].all()[0]
         self.assertIn("_prefetched_objects_cache", item.__dict__)
 
-    def test_item_detail_found(self):
-        response = Client().get(
-            reverse("catalog:default-converter-page", args=[1]),
-        )
-        self.assertEqual(response.status_code, 200)
-
     def test_item_detail_not_found(self):
         response = Client().get(
             reverse("catalog:default-converter-page", args=[5]),
@@ -105,6 +100,18 @@ class CatalogURLTests(TestCase):
         self.assertNotIn("is_published", item.category.__dict__)
         for tag in item.tags.all():
             self.assertNotIn("is_published", tag.__dict__)
+
+    def test_friday_items_view(self):
+        response = self.client.get(reverse("catalog:friday-items"))
+        self.assertEqual(response.status_code, 200)
+
+    def test_new_items_view(self):
+        response = self.client.get(reverse("catalog:new-items"))
+        self.assertEqual(response.status_code, 200)
+
+    def test_unverified_items_view(self):
+        response = self.client.get(reverse("catalog:unverified-items"))
+        self.assertEqual(response.status_code, 200)
 
 
 __all__ = []

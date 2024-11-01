@@ -190,6 +190,8 @@ class Item(core.models.AbstractModel):
         default=False,
         help_text="введите принадлежит ли к главной странице товар",
     )
+    created_at = django.db.models.DateTimeField(auto_now_add=True, null=True)
+    updated_at = django.db.models.DateTimeField(auto_now=True, null=True)
 
     objects = ItemManager()
 
