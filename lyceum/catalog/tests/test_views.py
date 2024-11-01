@@ -61,6 +61,12 @@ class CatalogURLTests(TestCase):
         cls.published_item_is_on_main.tags.add(cls.published_tag)
         cls.unpublished_item_is_on_main_2.tags.add(cls.published_tag)
 
+    def test_correct_item_detail(self):
+        response = Client().get(
+            reverse("catalog:default-converter-page", kwargs={"pk": 2}),
+        )
+        self.assertEqual(response.status_code, 200)
+
     def test_catalog_correct_context(self):
         response = Client().get(reverse("catalog:index-page"))
         self.assertIn("items", response.context)

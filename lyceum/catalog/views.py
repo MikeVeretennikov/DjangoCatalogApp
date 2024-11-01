@@ -23,9 +23,6 @@ def item_list(request):
 
 
 def item_detail(request, pk):
-    if pk in (0, 1, 100):
-        return django.http.HttpResponse("костыль")
-
     template = "catalog/item.html"
     item = django.shortcuts.get_object_or_404(
         catalog.models.Item.objects.only("name", "text", "category")
@@ -41,6 +38,7 @@ def item_detail(request, pk):
         .prefetch_related("images"),
         pk=pk,
     )
+
     context = {"item": item, "title": item.name}
 
     return django.shortcuts.render(

@@ -7,7 +7,9 @@
 <div class="card m-3 card_main ">
   <img class="card-img-top" src="{{ item.main_image.image.url }}">
 
-  <a href="{% url 'download:download' item.main_image.image %}" class="btn btn-primary m-2">Скачать основную картинку</a>
+  {% if item.main_image %}
+    <a href="{% url 'download:download-page' item.main_image.image %}" class="btn btn-primary m-2">Скачать основную картинку</a>
+  {% endif %}
 
   <div class="card-body">
     
@@ -39,18 +41,19 @@
 
 </div>
 
-<div style="display: flex; justify-content: space-around;">
+{% if item.images %}
+  <div style="display: flex; justify-content: space-around;">
 
-  {% for image in item.images.all %}
+    {% for image in item.images.all %}
 
-    <div class="row" >
-        <img src="{{ image.image.url }}" alt="Image 1" style="width: 150px; height: auto;">
-        <a href="{% url 'download:download' image.image %}" class="btn btn-primary">Загрузить изображение</a>
-    </div>
+      <div class="row" >
+          <img src="{{ image.image.url }}" alt="Image 1" style="width: 150px; height: auto;">
+          <a href="{% url 'download:download-page' image.image %}" class="btn btn-primary">Загрузить изображение</a>
+      </div>
 
-  {% endfor %}
+    {% endfor %}
 
-</div>
-
+  </div>
+{% endif %}
 
 {% endblock %}

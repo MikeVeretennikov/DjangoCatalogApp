@@ -6,5 +6,9 @@ import download.views
 app_name = "download"
 
 urlpatterns = [
-    path("", download.views.download_image, name="download"),
+    path(
+        "<path:path_to_file>/",
+        download.views.download_image,
+        name="download-page",
+    ),
 ]
