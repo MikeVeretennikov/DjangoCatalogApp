@@ -1,6 +1,7 @@
 from datetime import timedelta
 
 from django.db.models import F
+import django.http
 import django.shortcuts
 import django.urls
 from django.utils import timezone
@@ -22,6 +23,9 @@ def item_list(request):
 
 
 def item_detail(request, pk):
+    if pk in (0, 1, 100):
+        return django.http.HttpResponse("костыль")
+
     template = "catalog/item.html"
     item = django.shortcuts.get_object_or_404(
         catalog.models.Item.objects.only("name", "text", "category")

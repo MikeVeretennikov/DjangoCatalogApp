@@ -14,3 +14,6 @@ def download_image(request, path):
         return response
     else:
         return HttpResponse(status=404)
+
+
+__all__ = []
