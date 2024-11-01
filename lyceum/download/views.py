@@ -1,19 +1,18 @@
-import os
-
 from django.conf import settings
-from django.http import HttpResponse
+from django.http import FileResponse, HttpResponseNotFound
 
 
 def download_image(request, path):
     file_path = settings.MEDIA_ROOT / path
 
     if file_path.exists():
-        filename = os.path.basename(file_path)
-        response = HttpResponse(file_path.open("rb"), content_type="image")
-        response["Content-Disposition"] = f'attachment; filename="{filename}"'
-        return response
-    else:
-        return HttpResponse(status=404)
+        return FileResponse(
+            file_path.open("rb"),
+            content_type="image",
+            as_attachment=True,
+        )
+
+    return HttpResponseNotFound()
 
 
 __all__ = []

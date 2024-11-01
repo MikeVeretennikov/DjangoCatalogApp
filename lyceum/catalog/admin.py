@@ -22,6 +22,10 @@ class ItemAdmin(admin.ModelAdmin):
     list_display_links = [models.Item.name.field.name]
     filter_horizontal = (models.Item.tags.field.name,)
     inlines = [MainImageInline, GalleryImageInline]
+    readonly_fields = (
+        models.Item.created_at.field.name,
+        models.Item.updated_at.field.name,
+    )
 
 
 admin.site.register(models.Category)
