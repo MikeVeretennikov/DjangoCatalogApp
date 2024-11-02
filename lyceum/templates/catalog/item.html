@@ -42,18 +42,38 @@
 </div>
 
 {% if item.images %}
-  <div style="display: flex; justify-content: space-around;">
+
+
+
+
+  <div class="row">
 
     {% for image in item.images.all %}
 
-      <div class="row" >
+      {% comment %} <div class="row" >
           <img src="{{ image.image.url }}" alt="Image 1" style="width: 150px; height: auto;">
           <a href="{% url 'download:download-page' image.image %}" class="btn btn-primary">Загрузить изображение</a>
+      </div> {% endcomment %}
+
+      <div class="col-md-4">
+        <div class="thumbnail">
+          
+            <img class="img-thumbnail rounded" src="{{ image.image.url }}">
+            <div class="caption">
+              <a href="{% url 'download:download-page' image.image %}" class="btn btn-primary">Загрузить изображение</a>
+            </div>
+          </a>
+
+        </div>
       </div>
+
 
     {% endfor %}
 
   </div>
+
+
+
 {% endif %}
 
 {% endblock %}

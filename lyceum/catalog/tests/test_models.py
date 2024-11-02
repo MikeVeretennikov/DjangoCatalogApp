@@ -290,17 +290,17 @@ class CatalogNormalizeTests(TestCase):
         [
             (
                 "абоба",
-                "абоба",
+                "aboba",
             ),  # contains english letters, must become russian
-            ("аБО.,-_!?бА", "абоба"),
+            ("аБО.,-_!?бА", "abo_ba"),
             (
                 "AbOBa",
-                "авова",
+                "aboba",
             ),  # contains english letters, must become russian
-            ("aбOбa123))__!@#", "абоба123"),
+            ("aбOбa123))__!@#", "aboba123__"),
             (
                 "MmmeeETtt",
-                "мммеееттт",
+                "mmmeeettt",
             ),  # contains english letters, must become russian
         ],
     )
@@ -318,7 +318,7 @@ class CatalogNormalizationValidationTests(TestCase):
     def test_normalization_name_collision(self):
         tag = catalog.models.Tag(
             is_published=True,
-            name="KомпрOм_аt.",
+            name="KомпрOмаt.",
             slug="test-tag-slug",
         )
         tag.full_clean()

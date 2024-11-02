@@ -10,7 +10,7 @@ import catalog.models
 
 
 def item_list(request):
-    template = "catalog/item_list.html"
+    template = "catalog/new_item_list.html"
 
     items = catalog.models.Item.objects.published()
 
@@ -68,7 +68,7 @@ def new_items(request):
     #  ведь у нас потом идет рандомная сортировка
 
     new_random_items = (
-        catalog.models.Item.objects.published()
+        catalog.models.Item.objects.published()        
         .filter(created_at__gte=week_ago)
         .order_by("?")[:5]
     )

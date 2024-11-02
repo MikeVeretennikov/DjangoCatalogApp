@@ -1,4 +1,5 @@
 import re
+import transliterate
 
 import django.conf
 import django.core.exceptions
@@ -8,45 +9,32 @@ import django.utils.safestring
 import sorl.thumbnail
 import tinymce
 import tinymce.models
+import transliterate.exceptions
 
 
+import catalog.managers
+import catalog.models
 import catalog.validators
 import core.models
 
 
+ONLY_LETTERS_REGEX = re.compile(r"[^\w]")
+
+
 def normalize(text):
-    text = text.lower()
-    first_part = r"(-|\.|,|-|!|\?|\(|\)|\\|%|#|@|^|&|_|\*|\+|"
-    second_part = r"\$|\"|'|\;|\:|\[|\]|\{|\}| )"
-    pattern = first_part + second_part
-    text = re.sub(
-        pattern,
+    try:
+        transliterated = transliterate.translit(
+            text.lower(),
+            reversed=True,
+            language_code="ru",
+        )
+    except transliterate.exceptions.LanguageDetectionError:
+        transliterated = text.lower()
+
+    return ONLY_LETTERS_REGEX.sub(
         "",
-        text,
+        transliterated,
     )
-    new_text = ""
-    for char in text:
-        if char == "a":
-            new_text += "а"
-        elif char == "c":
-            new_text += "с"
-        elif char == "k":
-            new_text += "к"
-        elif char == "o":
-            new_text += "о"
-        elif char == "b":
-            new_text += "в"
-        elif char == "t":
-            new_text += "т"
-        elif char == "y":
-            new_text += "у"
-        elif char == "m":
-            new_text += "м"
-        elif char == "e":
-            new_text += "е"
-        else:
-            new_text += char
-    return new_text
 
 
 class Tag(core.models.AbstractModel):
@@ -125,45 +113,6 @@ class Category(core.models.AbstractModel):
             )
 
 
-class ItemManager(django.db.models.Manager):
-    def published(self):
-        return (
-            self.get_queryset()
-            .filter(category__is_published=True, is_published=True)
-            .select_related("category", "main_image")
-            .prefetch_related(
-                django.db.models.Prefetch(
-                    "tags",
-                    queryset=catalog.models.Tag.objects.filter(
-                        is_published=True,
-                    ).only("name"),
-                ),
-            )
-            .only("name", "category__name", "main_image__image", "text")
-            .order_by("category__name", "name")
-        )
-
-    def on_main(self):
-        return (
-            self.get_queryset()
-            .filter(
-                is_on_main=True,
-                category__is_published=True,
-                is_published=True,
-            )
-            .select_related("category", "main_image")
-            .prefetch_related(
-                django.db.models.Prefetch(
-                    "tags",
-                    queryset=catalog.models.Tag.objects.filter(
-                        is_published=True,
-                    ).only("name"),
-                ),
-            )
-            .only("name", "category__name", "main_image__image", "text")
-            .order_by("name")
-        )
-
 
 class Item(core.models.AbstractModel):
     text = tinymce.models.HTMLField(
@@ -193,7 +142,7 @@ class Item(core.models.AbstractModel):
     created_at = django.db.models.DateTimeField(auto_now_add=True, null=True)
     updated_at = django.db.models.DateTimeField(auto_now=True, null=True)
 
-    objects = ItemManager()
+    objects = catalog.managers.ItemManager()
 
     def image_tmb(self):
         if self.main_image:
