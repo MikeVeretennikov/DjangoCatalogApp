@@ -3,6 +3,7 @@ from django.http import FileResponse, HttpResponseNotFound
 
 
 def download_image(request, path_to_file):
+
     file_path = settings.MEDIA_ROOT / path_to_file
 
     if file_path.exists():

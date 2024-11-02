@@ -1,5 +1,4 @@
 import re
-import transliterate
 
 import django.conf
 import django.core.exceptions
@@ -9,6 +8,7 @@ import django.utils.safestring
 import sorl.thumbnail
 import tinymce
 import tinymce.models
+import transliterate
 import transliterate.exceptions
 
 
@@ -111,7 +111,6 @@ class Category(core.models.AbstractModel):
             raise django.core.exceptions.ValidationError(
                 "Категория с похожим названием уже существует",
             )
-
 
 
 class Item(core.models.AbstractModel):

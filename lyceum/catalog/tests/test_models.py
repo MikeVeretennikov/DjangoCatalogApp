@@ -337,7 +337,7 @@ class CatalogNormalizationValidationTests(TestCase):
     def test_no_normalization_name_collision(self):
         tag = catalog.models.Tag(
             is_published=True,
-            name="KомпрOм_аt.",
+            name="KомпрOмаt.",
             slug="test-tag-slug",
         )
         tag.full_clean()

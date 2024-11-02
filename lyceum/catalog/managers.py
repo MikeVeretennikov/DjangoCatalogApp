@@ -41,3 +41,6 @@ class ItemManager(django.db.models.Manager):
             .only("name", "category__name", "main_image__image", "text")
             .order_by("name")
         )
+
+
+__all__ = []

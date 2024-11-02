@@ -1,6 +1,6 @@
-from datetime import timedelta
+import datetime
 
-from django.db.models import F
+from django.db.models import DurationField, ExpressionWrapper, F
 import django.http
 import django.shortcuts
 import django.urls
@@ -62,13 +62,13 @@ def friday_items(request):
 
 
 def new_items(request):
-    week_ago = timezone.now() - timedelta(weeks=1)
+    week_ago = timezone.now() - datetime.timedelta(weeks=1)
     template = "homepage/main.html"
     # потому что иначе полетит правильное разбиение по категориям,
     #  ведь у нас потом идет рандомная сортировка
 
     new_random_items = (
-        catalog.models.Item.objects.published()        
+        catalog.models.Item.objects.published()
         .filter(created_at__gte=week_ago)
         .order_by("?")[:5]
     )
@@ -80,9 +80,17 @@ def new_items(request):
 def unverified_items(request):
     template = "catalog/item_list.html"
 
-    unverified_items = catalog.models.Item.objects.published().filter(
-        created_at=F("updated_at"),
+    unverified_items = (
+        catalog.models.Item.objects.published()
+        .annotate(
+            time_difference=ExpressionWrapper(
+                F("updated_at") - F("created_at"),
+                output_field=DurationField(),
+            ),
+        )
+        .filter(time_difference__lte=datetime.timedelta(seconds=1))
     )
+
     context = {"items": unverified_items, "title": "Непроверенное"}
 
     return django.shortcuts.render(request, template, context)
