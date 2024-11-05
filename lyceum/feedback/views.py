@@ -25,7 +25,7 @@ def feedback(request):
         )
 
         django.contrib.messages.success(request, "Все прошло успешно")
-        return django.shortcuts.redirect("feedback:feedback-page")
+        return django.shortcuts.redirect("feedback:feedback")
 
     context = {"form": form, "title": "Обратная связь"}
 

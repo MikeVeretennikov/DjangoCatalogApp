@@ -10,6 +10,8 @@ class FeedbackForm(django.forms.ModelForm):
         for field in self.visible_fields():
             field.field.widget.attrs["class"] = "form-control"
 
+        self.fields["name"].required = False
+
     class Meta:
         model = feedback.models.Feedback
         exclude = ("created_on",)

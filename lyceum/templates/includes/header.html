@@ -21,7 +21,7 @@
           <a class="nav-link {% if view_name == 'catalog:index-page' %}disabled{% endif %}" href="{% url 'catalog:index-page' %}">{% trans 'CatalogHeading' %}</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link {% if view_name == 'feedback:feedback-page' %}disabled{% endif %}" href="{% url 'feedback:feedback-page' %}">Обратная связь</a>
+          <a class="nav-link {% if view_name == 'feedback:feedback' %}disabled{% endif %}" href="{% url 'feedback:feedback' %}">Обратная связь</a>
         </li>
         <li class="nav-item">
           <a class="nav-link {% if view_name == 'catalog:friday-page' %}disabled{% endif %}" href="{% url 'catalog:friday-page' %}">Пятница</a>
