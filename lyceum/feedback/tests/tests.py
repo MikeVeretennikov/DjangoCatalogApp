@@ -45,7 +45,10 @@ class FeedbackTests(django.test.TestCase):
         response = django.test.Client().post(url, data)
 
         self.assertRedirects(
-            response, url, status_code=302, target_status_code=200,
+            response,
+            url,
+            status_code=302,
+            target_status_code=200,
         )
 
     def test_feedback_model_save(self):
