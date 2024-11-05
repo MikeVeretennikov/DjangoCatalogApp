@@ -108,15 +108,15 @@ class CatalogURLTests(TestCase):
             self.assertNotIn("is_published", tag.__dict__)
 
     def test_friday_items_view(self):
-        response = self.client.get(reverse("catalog:friday-items"))
+        response = self.client.get(reverse("catalog:friday-page"))
         self.assertEqual(response.status_code, 200)
 
     def test_new_items_view(self):
-        response = self.client.get(reverse("catalog:new-items"))
+        response = self.client.get(reverse("catalog:new-page"))
         self.assertEqual(response.status_code, 200)
 
     def test_unverified_items_view(self):
-        response = self.client.get(reverse("catalog:unverified-items"))
+        response = self.client.get(reverse("catalog:unverified-page"))
         self.assertEqual(response.status_code, 200)
 
 

@@ -25,6 +25,7 @@ ALLOW_REVERSE = ALLOW_REVERSE_ENV in ("true", "yes", "1", "y", "t", "")
 
 
 INSTALLED_APPS = [
+    "feedback.apps.FeedbackConfig",
     "about.apps.AboutConfig",
     "catalog.apps.CatalogConfig",
     "core.apps.CoreConfig",
@@ -37,8 +38,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "sorl.thumbnail",
-    "django_cleanup.apps.CleanupConfig",
     "tinymce",
+    "django_cleanup.apps.CleanupConfig",
 ]
 
 
@@ -148,3 +149,10 @@ MEDIA_URL = "media/"
 
 
 UPLOAD_TO_PATH = "uploads/"
+
+
+MAIL = os.getenv("DJANGO_MAIL", default="defaultmail@yandex.ru")
+
+EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+
+EMAIL_FILE_PATH = BASE_DIR / "send_email"

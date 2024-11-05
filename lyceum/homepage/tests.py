@@ -124,5 +124,17 @@ class HomepageURLTests(TestCase):
         for tag in item.tags.all():
             self.assertNotIn("is_published", tag.__dict__)
 
+    def test_echo_submit_page(self):
+        response = Client().get(reverse("homepage:echo-submit-page"))
+        self.assertEqual(
+            response.status_code,
+            http.HTTPStatus.METHOD_NOT_ALLOWED,
+        )
+
+    def test_echo_page(self):
+        data = {"text": "test text"}
+        response = Client().post(reverse("homepage:echo-page"), data)
+        self.assertEqual(response.status_code, 200)
+
 
 __all__ = []

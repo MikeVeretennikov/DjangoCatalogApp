@@ -14,11 +14,11 @@ urlpatterns = [
         catalog.views.item_detail,
         name="default-converter-page",
     ),
-    path("new/", catalog.views.new_items, name="new-items"),
-    path("friday/", catalog.views.friday_items, name="friday-items"),
+    path("new/", catalog.views.new_items, name="new-page"),
+    path("friday/", catalog.views.friday_items, name="friday-page"),
     path(
         "unverified/",
         catalog.views.unverified_items,
-        name="unverified-items",
+        name="unverified-page",
     ),
 ]
