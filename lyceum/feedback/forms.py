@@ -14,8 +14,12 @@ class FeedbackForm(django.forms.ModelForm):
 
     class Meta:
         model = feedback.models.Feedback
-        fields = ("name", "text", "mail")
-        exclude = ("created_on",)
+        fields = (
+            feedback.models.Feedback.name.field.name,
+            feedback.models.Feedback.text.field.name,
+            feedback.models.Feedback.mail.field.name,
+        )
+        exclude = (feedback.models.Feedback.created_on.field.name,)
 
         labels = {
             "name": "Имя",

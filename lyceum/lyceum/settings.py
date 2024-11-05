@@ -155,4 +155,4 @@ MAIL = os.getenv("DJANGO_MAIL", default="defaultmail@yandex.ru")
 
 EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 
-EMAIL_FILE_PATH = BASE_DIR / "send_email"
+EMAIL_FILE_PATH = BASE_DIR / "send_mail"
