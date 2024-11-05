@@ -5,7 +5,7 @@ from parameterized import parameterized
 import feedback.models
 
 
-class FeedbackFormTests(django.test.TestCase):
+class FeedbackTests(django.test.TestCase):
 
     def test_form_in_context(self):
         response = django.test.Client().get(
@@ -22,6 +22,19 @@ class FeedbackFormTests(django.test.TestCase):
         form = response.context["form"]
         self.assertEqual(form[field].label, label)
 
+    @parameterized.expand(
+        [
+            ("name", "Ваше имя"),
+            ("text", "Введите текст обращения"),
+            ("mail", "Введите вашу почту"),
+        ],
+    )
+    def test_correct_help_text(self, field, help_text):
+        url = django.urls.reverse("feedback:feedback-page")
+        response = django.test.Client().get(url)
+        form = response.context["form"]
+        self.assertEqual(form[field].help_text, help_text)
+
     def test_feedback_redirects(self):
         url = django.urls.reverse("feedback:feedback-page")
         data = {
@@ -31,7 +44,9 @@ class FeedbackFormTests(django.test.TestCase):
         }
         response = django.test.Client().post(url, data)
 
-        self.assertRedirects(response, url)
+        self.assertRedirects(
+            response, url, status_code=302, target_status_code=200,
+        )
 
     def test_feedback_model_save(self):
         feedback_model_count = feedback.models.Feedback.objects.count()
@@ -46,6 +61,21 @@ class FeedbackFormTests(django.test.TestCase):
         self.assertEqual(
             feedback_model_count + 1,
             feedback.models.Feedback.objects.count(),
+        )
+
+    def test_feedback_form_error(self):
+        url = django.urls.reverse("feedback:feedback-page")
+        data = {
+            "name": "Mike",
+            "text": "Test",
+            "mail": "test@incorrect",
+        }
+        response = django.test.Client().post(url, data)
+
+        self.assertFormError(
+            response.context["form"],
+            "mail",
+            ["Введите правильный адрес электронной почты."],
         )
 
 
