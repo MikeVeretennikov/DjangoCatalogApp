@@ -50,6 +50,7 @@ class CatalogModelItemTests(TestCase):
             self.item.full_clean()
             self.item.save()
             self.item.tags.add(CatalogModelItemTests.tag)
+
         self.assertEqual(catalog.models.Item.objects.count(), item_count)
 
     def test_validator_error_not_string_item_create(self):
@@ -64,6 +65,7 @@ class CatalogModelItemTests(TestCase):
             self.item.full_clean()
             self.item.save()
             self.item.tags.add(CatalogModelItemTests.tag)
+
         self.assertEqual(catalog.models.Item.objects.count(), item_count)
 
 
@@ -332,6 +334,7 @@ class CatalogNormalizationValidationTests(TestCase):
         with self.assertRaises(django.core.exceptions.ValidationError):
             not_unique_tag.full_clean()
             not_unique_tag.save()
+
         self.assertEqual(item_count, catalog.models.Tag.objects.count())
 
     def test_no_normalization_name_collision(self):

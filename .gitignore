@@ -8,6 +8,7 @@ static
 migrations/__pycache__/
 */__pycache__/
 */catalog/scripts/
+send_mail/
 # Tranlsation
 django.mo
 

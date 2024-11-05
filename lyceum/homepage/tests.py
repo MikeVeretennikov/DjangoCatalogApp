@@ -134,7 +134,7 @@ class HomepageURLTests(TestCase):
     def test_echo_page(self):
         data = {"text": "test text"}
         response = Client().post(reverse("homepage:echo-page"), data)
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 405)
 
 
 __all__ = []

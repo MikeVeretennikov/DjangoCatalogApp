@@ -148,6 +148,7 @@ class Item(core.models.AbstractModel):
             return django.utils.safestring.mark_safe(
                 f"<img src='{self.main_image.image.url}' width='50'>",
             )
+
         return "Нет изображения"
 
     image_tmb.short_description = "превью"
