@@ -44,7 +44,7 @@ def friday_items(request):
 
     published_items = catalog.models.Item.objects.published()
     friday_items = published_items.filter(updated_at__week_day=6).order_by(
-        "-updated_at"
+        "-updated_at",
     )[:5]
     context = {"items": friday_items, "title": "Пятница"}
 
@@ -59,7 +59,7 @@ def new_items(request):
 
     published_items = catalog.models.Item.objects.published()
     new_random_items = published_items.filter(
-        created_at__gte=week_ago
+        created_at__gte=week_ago,
     ).order_by("?")[:5]
     context = {"items": new_random_items, "title": "Новинки"}
 
