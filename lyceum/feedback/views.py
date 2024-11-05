@@ -12,10 +12,10 @@ def feedback(request):
     form = FeedbackForm(request.POST or None)
 
     if request.method == "POST" and form.is_valid():
-        form.save()
-        name = form.cleaned_data.get("name")
-        text = form.cleaned_data.get("text")
-        mail = form.cleaned_data.get("text")
+        name = form.cleaned_data["name"]
+        text = form.cleaned_data["text"]
+        mail = form.cleaned_data["mail"]
+
         django.core.mail.send_mail(
             name,
             text,
@@ -23,6 +23,7 @@ def feedback(request):
             [mail],
             fail_silently=False,
         )
+        form.save()
 
         django.contrib.messages.success(request, "Все прошло успешно")
         return django.shortcuts.redirect("feedback:feedback")

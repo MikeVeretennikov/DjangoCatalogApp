@@ -47,7 +47,7 @@ def echo(request):
 @django.views.decorators.http.require_POST
 def echo_submit(request):
     form = homepage.forms.EchoForm(request.POST)
-    if request.method == "POST" and form.is_valid():
+    if form.is_valid():
         text = form.cleaned_data["text"]
         return django.http.HttpResponse(text)
 

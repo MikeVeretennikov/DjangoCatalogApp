@@ -9,7 +9,7 @@ class Feedback(django.db.models.Model):
 
     class Meta:
         verbose_name = "обратная связь"
-        verbose_name = "обратная связь"
+        verbose_name_plural = "обратная связь"
 
 
 __all__ = []

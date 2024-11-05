@@ -72,5 +72,20 @@ class FeedbackTests(django.test.TestCase):
             feedback.models.Feedback.objects.count(),
         )
 
+    def test_feedback_form_error(self):
+        url = django.urls.reverse("feedback:feedback")
+        data = {
+            "name": "Mike",
+            "text": "Test",
+            "mail": "test@incorrect",
+        }
+        response = django.test.Client().post(url, data)
+
+        self.assertFormError(
+            response.context["form"],
+            "mail",
+            ["Введите правильный адрес электронной почты."],
+        )
+
 
 __all__ = []
