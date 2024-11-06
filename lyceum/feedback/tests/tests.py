@@ -71,6 +71,11 @@ class FeedbackTests(django.test.TestCase):
             feedback_model_count + 1,
             feedback.models.Feedback.objects.count(),
         )
+        feedback_item = feedback.models.Feedback.objects.first()
+        self.assertEqual(feedback_item.name, "Mike")
+        self.assertEqual(feedback_item.email, "test@yandex.ru")
+        self.assertEqual(feedback_item.text, "Test")
+        self.assertEqual(feedback_item.status, "received")
 
     def test_feedback_form_error(self):
         url = django.urls.reverse("feedback:feedback")
