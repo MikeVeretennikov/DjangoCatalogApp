@@ -73,7 +73,7 @@ class FeedbackTests(django.test.TestCase):
         )
         feedback_item = feedback.models.Feedback.objects.first()
         self.assertEqual(feedback_item.name, "Mike")
-        self.assertEqual(feedback_item.email, "test@yandex.ru")
+        self.assertEqual(feedback_item.mail, "test@yandex.ru")
         self.assertEqual(feedback_item.text, "Test")
         self.assertEqual(feedback_item.status, "received")
 
