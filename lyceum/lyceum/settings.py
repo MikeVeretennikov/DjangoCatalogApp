@@ -115,6 +115,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTH_USER_MODEL = "auth.User"
 
 LANGUAGE_CODE = "ru"
 

@@ -1,3 +1,4 @@
+import django.conf
 import django.contrib.auth.models
 import django.db.models
 
@@ -36,12 +37,12 @@ class StatusLog(django.db.models.Model):
         on_delete=django.contrib.auth.models.models.CASCADE,
     )
     user = django.db.models.ForeignKey(
-        django.contrib.auth.models.User,
+        django.conf.settings.AUTH_USER_MODEL,
         on_delete=django.contrib.auth.models.models.CASCADE,
     )
     timestamp = django.db.models.DateTimeField(auto_now_add=True)
-    from_status = django.db.models.CharField(max_length=20)
-    to_status = django.db.models.CharField(max_length=20)
+    from_status = django.db.models.CharField(max_length=20, db_column="from")
+    to_status = django.db.models.CharField(max_length=20, db_column="to")
 
     class Meta:
         verbose_name = "статус лог"
