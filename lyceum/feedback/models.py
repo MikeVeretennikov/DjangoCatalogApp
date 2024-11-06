@@ -42,7 +42,7 @@ class StatusLog(django.db.models.Model):
     )
     timestamp = django.db.models.DateTimeField(auto_now_add=True)
     from_status = django.db.models.CharField(max_length=20, db_column="from")
-    to_status = django.db.models.CharField(max_length=20, db_column="to")
+    to = django.db.models.CharField(max_length=20, db_column="to")
 
     class Meta:
         verbose_name = "статус лог"
