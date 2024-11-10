@@ -10,12 +10,18 @@ class Migration(migrations.Migration):
 
     replaces = [
         ("catalog", "0007_alter_item_text"),
-        ("catalog", "0008_remove_item_images_remove_item_main_image_and_more"),
+        (
+            "catalog",
+            "0008_remove_item_images_remove_item_main_image_and_more",
+        ),
         ("catalog", "0009_galleryimage"),
     ]
 
     dependencies = [
-        ("catalog", "0005_alter_item_images_squashed_0006_alter_item_images"),
+        (
+            "catalog",
+            "0005_alter_item_images_squashed_0006_alter_item_images",
+        ),
     ]
 
     operations = [

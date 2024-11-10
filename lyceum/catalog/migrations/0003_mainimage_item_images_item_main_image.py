@@ -7,7 +7,10 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("catalog", "0001_initial_squashed_0002_category_normalized_name"),
+        (
+            "catalog",
+            "0001_initial_squashed_0002_category_normalized_name",
+        ),
     ]
 
     operations = [
@@ -26,7 +29,8 @@ class Migration(migrations.Migration):
                 (
                     "image",
                     models.ImageField(
-                        upload_to="uploads/", verbose_name="изображение"
+                        upload_to="uploads/",
+                        verbose_name="изображение",
                     ),
                 ),
                 (

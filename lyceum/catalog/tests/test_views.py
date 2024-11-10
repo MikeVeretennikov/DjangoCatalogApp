@@ -63,7 +63,10 @@ class CatalogURLTests(TestCase):
 
     def test_correct_item_detail(self):
         response = Client().get(
-            reverse("catalog:default-converter-page", kwargs={"pk": 2}),
+            reverse(
+                "catalog:default-converter-page",
+                kwargs={"pk": 2},
+            ),
         )
         self.assertEqual(response.status_code, 200)
 
@@ -78,7 +81,9 @@ class CatalogURLTests(TestCase):
             django.db.models.query.QuerySet,
         )
 
-    def test_catalog_correct_context_content(self):
+    def test_catalog_correct_context_content(
+        self,
+    ):
         response = Client().get(reverse("catalog:index-page"))
         self.assertEqual(len(response.context["items"]), 1)
         item = response.context["items"].first()
@@ -91,11 +96,17 @@ class CatalogURLTests(TestCase):
     def test_correct_prefetch_context(self):
         response = Client().get(reverse("catalog:index-page"))
         item = response.context["items"].all()[0]
-        self.assertIn("_prefetched_objects_cache", item.__dict__)
+        self.assertIn(
+            "_prefetched_objects_cache",
+            item.__dict__,
+        )
 
     def test_item_detail_not_found(self):
         response = Client().get(
-            reverse("catalog:default-converter-page", args=[5]),
+            reverse(
+                "catalog:default-converter-page",
+                args=[5],
+            ),
         )
         self.assertEqual(response.status_code, 404)
 

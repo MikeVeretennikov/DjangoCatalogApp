@@ -7,7 +7,10 @@ class Migration(migrations.Migration):
 
     replaces = [
         ("feedback", "0002_alter_feedback_name"),
-        ("feedback", "0003_alter_feedback_options"),
+        (
+            "feedback",
+            "0003_alter_feedback_options",
+        ),
     ]
 
     dependencies = [
@@ -18,7 +21,11 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="feedback",
             name="name",
-            field=models.CharField(blank=True, max_length=150, null=True),
+            field=models.CharField(
+                blank=True,
+                max_length=150,
+                null=True,
+            ),
         ),
         migrations.AlterModelOptions(
             name="feedback",

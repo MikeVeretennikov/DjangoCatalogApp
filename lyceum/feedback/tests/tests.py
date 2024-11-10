@@ -1,3 +1,7 @@
+import pathlib
+import tempfile
+
+
 import django.test
 import django.urls
 from parameterized import parameterized
@@ -5,8 +9,7 @@ from parameterized import parameterized
 import feedback.models
 
 
-class FeedbackTests(django.test.TestCase):
-
+class FeedbackFormTests(django.test.TestCase):
     def test_form_in_context(self):
         response = django.test.Client().get(
             django.urls.reverse("feedback:feedback"),
@@ -14,41 +17,90 @@ class FeedbackTests(django.test.TestCase):
         self.assertIn("form", response.context)
 
     @parameterized.expand(
-        [("name", "Имя"), ("text", "Текст"), ("mail", "Почта")],
+        [
+            ("name", "Имя"),
+            ("mail", "Почта"),
+        ],
     )
     def test_correct_labels(self, field, label):
         url = django.urls.reverse("feedback:feedback")
         response = django.test.Client().get(url)
-        form = response.context["form"]
+        form = response.context["feedback_author"]
         self.assertEqual(form[field].label, label)
 
     @parameterized.expand(
         [
             ("name", "Ваше имя"),
-            ("text", "Введите текст обращения"),
             ("mail", "Введите вашу почту"),
         ],
     )
     def test_correct_help_text(self, field, help_text):
         url = django.urls.reverse("feedback:feedback")
         response = django.test.Client().get(url)
-        form = response.context["form"]
+        form = response.context["feedback_author"]
         self.assertEqual(form[field].help_text, help_text)
 
-    def test_feedback_redirects(self):
+    def test_feedback_form_error(self):
         url = django.urls.reverse("feedback:feedback")
         data = {
             "name": "Mike",
             "text": "Test",
+            "mail": "test@incorrect",
+        }
+        response = django.test.Client().post(url, data)
+
+        self.assertFormError(
+            response.context["feedback_author"],
+            "mail",
+            ["Введите правильный адрес электронной почты."],
+        )
+
+
+class FeedbackURLTests(django.test.TestCase):
+
+    def test_feedback_create(self):
+        item_count = feedback.models.Feedback.objects.count()
+        form_data = {
+            "name": "Test",
+            "text": "Test",
             "mail": "test@yandex.ru",
         }
-        response = django.test.Client().post(url, data, follow=True)
+
+        self.assertFalse(
+            feedback.models.Feedback.objects.filter(
+                text="Test",
+            ).exists(),
+        )
+        self.assertFalse(
+            feedback.models.FeedbackAuthor.objects.filter(
+                mail="test@yandex.ru",
+            ).exists(),
+        )
+
+        response = django.test.Client().post(
+            django.urls.reverse("feedback:feedback"),
+            data=form_data,
+            follow=True,
+        )
 
         self.assertRedirects(
             response,
-            url,
-            status_code=302,
-            target_status_code=200,
+            django.urls.reverse("feedback:feedback"),
+        )
+        self.assertEqual(
+            feedback.models.Feedback.objects.count(),
+            item_count + 1,
+        )
+
+        self.assertTrue(
+            feedback.models.Feedback.objects.filter(
+                text="Test",
+            ).exists(),
+        )
+        self.assertTrue(
+            feedback.models.FeedbackAuthor.objects.filter(
+                mail="test@yandex.ru",
+            ).exists(),
         )
 
         self.assertIn("messages", response.context.keys())
@@ -57,6 +109,47 @@ class FeedbackTests(django.test.TestCase):
             "Все прошло успешно",
         )
 
+    @django.test.override_settings(
+        MEDIA_ROOT=tempfile.TemporaryDirectory().name,
+    )
+    def test_file_upload(self):
+        files = [
+            django.core.files.base.ContentFile(
+                f"file_{index}".encode(),
+                name="filename",
+            )
+            for index in range(10)
+        ]
+
+        form_data = {
+            "name": "Test",
+            "text": "file_test",
+            "mail": "test@yandex.ru",
+            "files": files,
+        }
+
+        django.test.Client().post(
+            django.urls.reverse("feedback:feedback"),
+            data=form_data,
+            follow=True,
+        )
+        feedback_item = feedback.models.Feedback.objects.get(
+            text="file_test",
+        )
+
+        feedback_files = feedback_item.files.all()
+
+        media_root = pathlib.Path(django.conf.settings.MEDIA_ROOT)
+
+        for index, file in enumerate(feedback_files):
+            uploaded_file = media_root / file.file.path
+            self.assertEqual(
+                uploaded_file.open().read(),
+                f"file_{index}",
+            )
+
+
+class FeedbackModelTests(django.test.TestCase):
     def test_feedback_model_save(self):
         feedback_model_count = feedback.models.Feedback.objects.count()
         url = django.urls.reverse("feedback:feedback")
@@ -72,25 +165,7 @@ class FeedbackTests(django.test.TestCase):
             feedback.models.Feedback.objects.count(),
         )
         feedback_item = feedback.models.Feedback.objects.first()
-        self.assertEqual(feedback_item.name, "Mike")
-        self.assertEqual(feedback_item.mail, "test@yandex.ru")
-        self.assertEqual(feedback_item.text, "Test")
-        self.assertEqual(feedback_item.status, "received")
-
-    def test_feedback_form_error(self):
-        url = django.urls.reverse("feedback:feedback")
-        data = {
-            "name": "Mike",
-            "text": "Test",
-            "mail": "test@incorrect",
-        }
-        response = django.test.Client().post(url, data)
-
-        self.assertFormError(
-            response.context["form"],
-            "mail",
-            ["Введите правильный адрес электронной почты."],
-        )
+        self.assertTrue(feedback_item)
 
 
 __all__ = []

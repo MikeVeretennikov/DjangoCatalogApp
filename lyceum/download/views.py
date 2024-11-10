@@ -1,5 +1,8 @@
 from django.conf import settings
-from django.http import FileResponse, HttpResponseNotFound
+from django.http import (
+    FileResponse,
+    HttpResponseNotFound,
+)
 
 
 def download_image(request, path_to_file):

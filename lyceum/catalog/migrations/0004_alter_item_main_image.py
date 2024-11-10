@@ -7,7 +7,10 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("catalog", "0003_mainimage_item_images_item_main_image"),
+        (
+            "catalog",
+            "0003_mainimage_item_images_item_main_image",
+        ),
     ]
 
     operations = [

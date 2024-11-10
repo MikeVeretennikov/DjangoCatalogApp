@@ -1,6 +1,10 @@
 import datetime
 
-from django.db.models import DurationField, ExpressionWrapper, F
+from django.db.models import (
+    DurationField,
+    ExpressionWrapper,
+    F,
+)
 import django.http
 import django.shortcuts
 import django.urls
@@ -15,7 +19,10 @@ def item_list(request):
 
     items = catalog.models.Item.objects.published()
 
-    context = {"items": items, "title": "Список товаров"}
+    context = {
+        "items": items,
+        "title": "Список товаров",
+    }
     return django.shortcuts.render(
         request,
         template,
@@ -46,7 +53,10 @@ def friday_items(request):
     friday_items = published_items.filter(updated_at__week_day=6).order_by(
         "-updated_at",
     )[:5]
-    context = {"items": friday_items, "title": "Пятница"}
+    context = {
+        "items": friday_items,
+        "title": "Пятница",
+    }
 
     return django.shortcuts.render(request, template, context)
 
@@ -61,7 +71,10 @@ def new_items(request):
     new_random_items = published_items.filter(
         created_at__gte=week_ago,
     ).order_by("?")[:5]
-    context = {"items": new_random_items, "title": "Новинки"}
+    context = {
+        "items": new_random_items,
+        "title": "Новинки",
+    }
 
     return django.shortcuts.render(request, template, context)
 
@@ -77,7 +90,10 @@ def unverified_items(request):
         ),
     ).filter(time_difference__lte=datetime.timedelta(seconds=1))
 
-    context = {"items": unverified_items, "title": "Непроверенное"}
+    context = {
+        "items": unverified_items,
+        "title": "Непроверенное",
+    }
 
     return django.shortcuts.render(request, template, context)
 

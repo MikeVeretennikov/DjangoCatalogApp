@@ -13,10 +13,13 @@
             {% endfor %}
 
         {% endif %}
-    <form method="post", action="">
+    <form method="post", action="" enctype="multipart/form-data">
         {% csrf_token %}
         
-        {{ form.as_p }}
+        {{ feedback_form.as_p }}
+        {{ feedback_author.as_p }}
+        {{ files_form.as_p }}
+
         <button type="submit" class="btn btn-primary">Отправить</button>
     </form>
     </div>

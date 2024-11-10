@@ -7,8 +7,14 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     replaces = [
-        ("catalog", "0013_alter_item_category_alter_item_tags"),
-        ("catalog", "0014_alter_category_normalized_name_and_more"),
+        (
+            "catalog",
+            "0013_alter_item_category_alter_item_tags",
+        ),
+        (
+            "catalog",
+            "0014_alter_category_normalized_name_and_more",
+        ),
     ]
 
     dependencies = [
@@ -42,11 +48,19 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="category",
             name="normalized_name",
-            field=models.CharField(blank=True, default=None, max_length=150),
+            field=models.CharField(
+                blank=True,
+                default=None,
+                max_length=150,
+            ),
         ),
         migrations.AlterField(
             model_name="tag",
             name="normalized_name",
-            field=models.CharField(blank=True, default=None, max_length=150),
+            field=models.CharField(
+                blank=True,
+                default=None,
+                max_length=150,
+            ),
         ),
     ]

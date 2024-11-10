@@ -1,7 +1,9 @@
 import os
 from pathlib import Path
 
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import (
+    gettext_lazy as _,
+)
 import dotenv
 
 
@@ -14,14 +16,27 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", default="aboba")
 
 DEBUG_ENV = os.getenv("DJANGO_DEBUG", default="false").lower()
-DEBUG = DEBUG_ENV in ("true", "yes", "1", "y", "t")
+DEBUG = DEBUG_ENV in (
+    "true",
+    "yes",
+    "1",
+    "y",
+    "t",
+)
 
 
 ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", default="*").split(",")
 
 
 ALLOW_REVERSE_ENV = os.getenv("DJANGO_ALLOW_REVERSE", default="true").lower()
-ALLOW_REVERSE = ALLOW_REVERSE_ENV in ("true", "yes", "1", "y", "t", "")
+ALLOW_REVERSE = ALLOW_REVERSE_ENV in (
+    "true",
+    "yes",
+    "1",
+    "y",
+    "t",
+    "",
+)
 
 
 INSTALLED_APPS = [

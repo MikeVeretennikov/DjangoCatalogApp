@@ -77,9 +77,14 @@ class HomepageURLTests(TestCase):
     def test_correct_prefetch_context(self):
         response = Client().get(reverse("homepage:index-page"))
         item = response.context["items"].all()[0]
-        self.assertIn("_prefetched_objects_cache", item.__dict__)
+        self.assertIn(
+            "_prefetched_objects_cache",
+            item.__dict__,
+        )
 
-    def test_homepage_correct_context_content(self):
+    def test_homepage_correct_context_content(
+        self,
+    ):
         response = Client().get(reverse("homepage:index-page"))
 
         self.assertEqual(len(response.context["items"]), 2)
@@ -106,9 +111,15 @@ class HomepageURLTests(TestCase):
                 "because ALLOW_REVERSE is True",
             )
         else:
-            self.assertIn("Я чайник", responses, "Text should be 'Я чайник'")
+            self.assertIn(
+                "Я чайник",
+                responses,
+                "Text should be 'Я чайник'",
+            )
 
-    def test_coffee_endpoint_correct_status_code(self):
+    def test_coffee_endpoint_correct_status_code(
+        self,
+    ):
         response = Client().get(reverse("homepage:coffee-page"))
         self.assertEqual(
             response.status_code,

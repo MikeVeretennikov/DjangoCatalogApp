@@ -2,7 +2,9 @@ from django.test import Client, TestCase
 from django.test.utils import override_settings
 from parameterized import parameterized
 
-from lyceum.middleware import reverse_russian_words
+from lyceum.middleware import (
+    reverse_russian_words,
+)
 
 
 class ReverseResponseMiddlewareTests(TestCase):
@@ -36,7 +38,9 @@ class ReverseResponseMiddlewareTests(TestCase):
             "When ALLOW_REVERSE is False, MW should not work",
         )
 
-    def test_correct_default_reverse_behaviour(self):
+    def test_correct_default_reverse_behaviour(
+        self,
+    ):
         responses = []
 
         for _ in range(31):

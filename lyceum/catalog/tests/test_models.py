@@ -36,9 +36,14 @@ class CatalogModelItemTests(TestCase):
         item.full_clean()
         item.save()
         item.tags.add(CatalogModelItemTests.tag)
-        self.assertEqual(catalog.models.Item.objects.count(), item_count + 1)
+        self.assertEqual(
+            catalog.models.Item.objects.count(),
+            item_count + 1,
+        )
 
-    def test_validator_error_no_perfect_item_create(self):
+    def test_validator_error_no_perfect_item_create(
+        self,
+    ):
         item_count = catalog.models.Item.objects.count()
         with self.assertRaises(django.core.exceptions.ValidationError):
             self.item = catalog.models.Item(
@@ -51,9 +56,14 @@ class CatalogModelItemTests(TestCase):
             self.item.save()
             self.item.tags.add(CatalogModelItemTests.tag)
 
-        self.assertEqual(catalog.models.Item.objects.count(), item_count)
+        self.assertEqual(
+            catalog.models.Item.objects.count(),
+            item_count,
+        )
 
-    def test_validator_error_not_string_item_create(self):
+    def test_validator_error_not_string_item_create(
+        self,
+    ):
         item_count = catalog.models.Item.objects.count()
         with self.assertRaises(django.core.exceptions.ValidationError):
             self.item = catalog.models.Item(
@@ -66,7 +76,10 @@ class CatalogModelItemTests(TestCase):
             self.item.save()
             self.item.tags.add(CatalogModelItemTests.tag)
 
-        self.assertEqual(catalog.models.Item.objects.count(), item_count)
+        self.assertEqual(
+            catalog.models.Item.objects.count(),
+            item_count,
+        )
 
 
 class CatalogModelCatalogTests(TestCase):
@@ -103,7 +116,9 @@ class CatalogModelCatalogTests(TestCase):
             category_count + 1,
         )
 
-    def test_validator_error_slug_category_create(self):
+    def test_validator_error_slug_category_create(
+        self,
+    ):
         category_count = catalog.models.Category.objects.count()
 
         with self.assertRaises(django.core.exceptions.ValidationError):
@@ -121,7 +136,9 @@ class CatalogModelCatalogTests(TestCase):
             category_count,
         )
 
-    def test_validator_error_weight_category_create(self):
+    def test_validator_error_weight_category_create(
+        self,
+    ):
 
         category_count = catalog.models.Category.objects.count()
 
@@ -164,9 +181,14 @@ class CatalogModelTagTests(TestCase):
         tag = catalog.models.Tag(name="name", slug="text-slug")
         tag.full_clean()
         tag.save()
-        self.assertEqual(catalog.models.Tag.objects.count(), tag_count + 1)
+        self.assertEqual(
+            catalog.models.Tag.objects.count(),
+            tag_count + 1,
+        )
 
-    def test_validator_error_slug_tag_create(self):
+    def test_validator_error_slug_tag_create(
+        self,
+    ):
         tag_count = catalog.models.Tag.objects.count()
 
         with self.assertRaises(django.core.exceptions.ValidationError):
@@ -174,7 +196,10 @@ class CatalogModelTagTests(TestCase):
             tag.full_clean()
             tag.save()
 
-        self.assertEqual(catalog.models.Category.objects.count(), tag_count)
+        self.assertEqual(
+            catalog.models.Category.objects.count(),
+            tag_count,
+        )
 
 
 class CatalogValidatorPositiveIntTests(TestCase):
@@ -307,13 +332,19 @@ class CatalogNormalizeTests(TestCase):
         ],
     )
     def test_normalize_correct(self, text, expected):
-        self.assertEqual(catalog.models.normalize(text), expected)
+        self.assertEqual(
+            catalog.models.normalize(text),
+            expected,
+        )
 
     @parameterized.expand(
         [("bBb", "бБб"), ("абоба123", "абоба")],
     )
     def test_normalize_incorrect(self, text, expected):
-        self.assertNotEqual(catalog.models.normalize(text), expected)
+        self.assertNotEqual(
+            catalog.models.normalize(text),
+            expected,
+        )
 
 
 class CatalogNormalizationValidationTests(TestCase):
@@ -335,9 +366,14 @@ class CatalogNormalizationValidationTests(TestCase):
             not_unique_tag.full_clean()
             not_unique_tag.save()
 
-        self.assertEqual(item_count, catalog.models.Tag.objects.count())
+        self.assertEqual(
+            item_count,
+            catalog.models.Tag.objects.count(),
+        )
 
-    def test_no_normalization_name_collision(self):
+    def test_no_normalization_name_collision(
+        self,
+    ):
         tag = catalog.models.Tag(
             is_published=True,
             name="KомпрOмаt.",
@@ -354,7 +390,10 @@ class CatalogNormalizationValidationTests(TestCase):
 
         unique_tag.full_clean()
         unique_tag.save()
-        self.assertEqual(item_count + 1, catalog.models.Tag.objects.count())
+        self.assertEqual(
+            item_count + 1,
+            catalog.models.Tag.objects.count(),
+        )
 
 
 __all__ = []

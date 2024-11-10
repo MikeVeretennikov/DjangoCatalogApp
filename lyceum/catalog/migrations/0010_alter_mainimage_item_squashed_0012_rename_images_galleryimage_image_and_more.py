@@ -9,11 +9,17 @@ class Migration(migrations.Migration):
     replaces = [
         ("catalog", "0010_alter_mainimage_item"),
         ("catalog", "0011_item_is_on_main"),
-        ("catalog", "0012_rename_images_galleryimage_image_and_more"),
+        (
+            "catalog",
+            "0012_rename_images_galleryimage_image_and_more",
+        ),
     ]
 
     dependencies = [
-        ("catalog", "0007_alter_item_text_squashed_0009_galleryimage"),
+        (
+            "catalog",
+            "0007_alter_item_text_squashed_0009_galleryimage",
+        ),
     ]
 
     operations = [

@@ -41,9 +41,18 @@ class Migration(migrations.Migration):
                         verbose_name="ID",
                     ),
                 ),
-                ("timestamp", models.DateTimeField(auto_now_add=True)),
-                ("from_status", models.CharField(max_length=20)),
-                ("to_status", models.CharField(max_length=20)),
+                (
+                    "timestamp",
+                    models.DateTimeField(auto_now_add=True),
+                ),
+                (
+                    "from_status",
+                    models.CharField(max_length=20),
+                ),
+                (
+                    "to_status",
+                    models.CharField(max_length=20),
+                ),
                 (
                     "feedback",
                     models.ForeignKey(

@@ -8,12 +8,18 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     replaces = [
-        ("feedback", "0004_feedback_status_statuslog"),
+        (
+            "feedback",
+            "0004_feedback_status_statuslog",
+        ),
         (
             "feedback",
             "0005_alter_statuslog_options_alter_statuslog_from_status_and_more",
         ),
-        ("feedback", "0006_rename_to_status_statuslog_to"),
+        (
+            "feedback",
+            "0006_rename_to_status_statuslog_to",
+        ),
     ]
 
     dependencies = [
@@ -50,12 +56,24 @@ class Migration(migrations.Migration):
                         verbose_name="ID",
                     ),
                 ),
-                ("timestamp", models.DateTimeField(auto_now_add=True)),
+                (
+                    "timestamp",
+                    models.DateTimeField(auto_now_add=True),
+                ),
                 (
                     "from_status",
-                    models.CharField(db_column="from", max_length=20),
+                    models.CharField(
+                        db_column="from",
+                        max_length=20,
+                    ),
                 ),
-                ("to", models.CharField(db_column="to", max_length=20)),
+                (
+                    "to",
+                    models.CharField(
+                        db_column="to",
+                        max_length=20,
+                    ),
+                ),
                 (
                     "feedback",
                     models.ForeignKey(

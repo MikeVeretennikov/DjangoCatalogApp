@@ -13,7 +13,10 @@ def translate_names(apps, schema_editor):
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("catalog", "0017_item_created_at_item_updated_at"),
+        (
+            "catalog",
+            "0017_item_created_at_item_updated_at",
+        ),
     ]
 
     operations = [

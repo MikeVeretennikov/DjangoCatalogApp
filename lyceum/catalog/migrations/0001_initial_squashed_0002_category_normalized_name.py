@@ -11,7 +11,10 @@ class Migration(migrations.Migration):
 
     replaces = [
         ("catalog", "0001_initial"),
-        ("catalog", "0002_category_normalized_name"),
+        (
+            "catalog",
+            "0002_category_normalized_name",
+        ),
     ]
 
     dependencies = []
@@ -76,7 +79,10 @@ class Migration(migrations.Migration):
                 (
                     "normalized_name",
                     models.CharField(
-                        blank=True, default=None, max_length=150, unique=True
+                        blank=True,
+                        default=None,
+                        max_length=150,
+                        unique=True,
                     ),
                 ),
             ],
@@ -133,7 +139,10 @@ class Migration(migrations.Migration):
                 (
                     "normalized_name",
                     models.CharField(
-                        blank=True, default=None, max_length=150, unique=True
+                        blank=True,
+                        default=None,
+                        max_length=150,
+                        unique=True,
                     ),
                 ),
             ],
@@ -177,7 +186,8 @@ class Migration(migrations.Migration):
                         help_text="введите текст",
                         validators=[
                             catalog.validators.ValidateMustContain(
-                                "роскошно", "превосходно"
+                                "роскошно",
+                                "превосходно",
                             )
                         ],
                         verbose_name="текст",
@@ -192,7 +202,10 @@ class Migration(migrations.Migration):
                         to="catalog.category",
                     ),
                 ),
-                ("tags", models.ManyToManyField(to="catalog.tag")),
+                (
+                    "tags",
+                    models.ManyToManyField(to="catalog.tag"),
+                ),
             ],
             options={
                 "verbose_name": "товар",

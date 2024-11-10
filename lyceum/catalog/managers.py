@@ -7,7 +7,10 @@ class ItemManager(django.db.models.Manager):
     def published(self):
         prefetched_queryset = (
             self.get_queryset()
-            .filter(category__is_published=True, is_published=True)
+            .filter(
+                category__is_published=True,
+                is_published=True,
+            )
             .select_related("category", "main_image")
             .prefetch_related(
                 django.db.models.Prefetch(

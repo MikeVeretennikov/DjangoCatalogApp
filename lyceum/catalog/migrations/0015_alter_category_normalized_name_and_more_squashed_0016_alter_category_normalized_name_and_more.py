@@ -6,8 +6,14 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     replaces = [
-        ("catalog", "0015_alter_category_normalized_name_and_more"),
-        ("catalog", "0016_alter_category_normalized_name_and_more"),
+        (
+            "catalog",
+            "0015_alter_category_normalized_name_and_more",
+        ),
+        (
+            "catalog",
+            "0016_alter_category_normalized_name_and_more",
+        ),
     ]
 
     dependencies = [
@@ -21,25 +27,39 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="category",
             name="normalized_name",
-            field=models.CharField(default=None, max_length=150, null=True),
-        ),
-        migrations.AlterField(
-            model_name="tag",
-            name="normalized_name",
-            field=models.CharField(default=None, max_length=150, null=True),
-        ),
-        migrations.AlterField(
-            model_name="category",
-            name="normalized_name",
             field=models.CharField(
-                blank=True, default=None, max_length=150, null=True
+                default=None,
+                max_length=150,
+                null=True,
             ),
         ),
         migrations.AlterField(
             model_name="tag",
             name="normalized_name",
             field=models.CharField(
-                blank=True, default=None, max_length=150, null=True
+                default=None,
+                max_length=150,
+                null=True,
+            ),
+        ),
+        migrations.AlterField(
+            model_name="category",
+            name="normalized_name",
+            field=models.CharField(
+                blank=True,
+                default=None,
+                max_length=150,
+                null=True,
+            ),
+        ),
+        migrations.AlterField(
+            model_name="tag",
+            name="normalized_name",
+            field=models.CharField(
+                blank=True,
+                default=None,
+                max_length=150,
+                null=True,
             ),
         ),
     ]

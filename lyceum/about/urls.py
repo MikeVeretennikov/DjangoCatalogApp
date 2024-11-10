@@ -5,5 +5,9 @@ import about.views
 app_name = "about"
 
 urlpatterns = [
-    path("", about.views.description, name="index-page"),
+    path(
+        "",
+        about.views.description,
+        name="index-page",
+    ),
 ]
