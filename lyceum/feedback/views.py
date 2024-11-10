@@ -32,23 +32,25 @@ def index(request):
             fail_silently=False,
         )
 
-        feedback_item = feedback.models.Feedback.objects.create(
-            **feedback_form.cleaned_data,
-        )
-        feedback_item.save()
-        feedback.models.FeedbackAuthor.objects.create(
-            feedback=feedback_item,
-            **feedback_author.cleaned_data,
-        )
+        feedback_item = feedback_form.save()
+
+
+        author = feedback_author.save(commit=False)
+        author.feedback = feedback_item
+        author.save()
 
         for file in request.FILES.getlist(
             feedback.models.FeedbackFile.file.field.name,
         ):
-            feedback.models.FeedbackFile.objects.create(
+            
+            feedback_file = feedback.models.FeedbackFile(
                 file=file,
                 feedback=feedback_item,
             )
-
+            feedback_file.save()
+            print(feedback_file)
+    
+            
         django.contrib.messages.success(request, "Все прошло успешно")
 
         return django.shortcuts.redirect("feedback:feedback")

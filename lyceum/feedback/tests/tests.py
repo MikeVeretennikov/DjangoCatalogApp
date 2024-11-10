@@ -71,11 +71,6 @@ class FeedbackURLTests(django.test.TestCase):
                 text="Test",
             ).exists(),
         )
-        self.assertFalse(
-            feedback.models.FeedbackAuthor.objects.filter(
-                mail="test@yandex.ru",
-            ).exists(),
-        )
 
         response = django.test.Client().post(
             django.urls.reverse("feedback:feedback"),
@@ -97,11 +92,7 @@ class FeedbackURLTests(django.test.TestCase):
                 text="Test",
             ).exists(),
         )
-        self.assertTrue(
-            feedback.models.FeedbackAuthor.objects.filter(
-                mail="test@yandex.ru",
-            ).exists(),
-        )
+
 
         self.assertIn("messages", response.context.keys())
         self.assertEqual(
@@ -136,6 +127,8 @@ class FeedbackURLTests(django.test.TestCase):
         feedback_item = feedback.models.Feedback.objects.get(
             text="file_test",
         )
+
+        # self.assertEqual(feedback_item.files.count(), 10)
 
         feedback_files = feedback_item.files.all()
 

@@ -39,7 +39,7 @@ class FeedbackAuthor(django.db.models.Model):
         related_name="author",
         on_delete=django.db.models.CASCADE,
     )
-    name = django.db.models.CharField(help_text="имя", max_length=150)
+    name = django.db.models.CharField(help_text="имя", max_length=150, null=True, blank=True)
     mail = django.db.models.EmailField(help_text="почта", max_length=150)
 
 
