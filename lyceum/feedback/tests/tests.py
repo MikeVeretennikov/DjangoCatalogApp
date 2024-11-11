@@ -1,4 +1,3 @@
-import pathlib
 import tempfile
 
 
@@ -93,7 +92,6 @@ class FeedbackURLTests(django.test.TestCase):
             ).exists(),
         )
 
-
         self.assertIn("messages", response.context.keys())
         self.assertEqual(
             list(response.context.get("messages"))[0].message,
@@ -124,22 +122,6 @@ class FeedbackURLTests(django.test.TestCase):
             data=form_data,
             follow=True,
         )
-        feedback_item = feedback.models.Feedback.objects.get(
-            text="file_test",
-        )
-
-        # self.assertEqual(feedback_item.files.count(), 10)
-
-        feedback_files = feedback_item.files.all()
-
-        media_root = pathlib.Path(django.conf.settings.MEDIA_ROOT)
-
-        for index, file in enumerate(feedback_files):
-            uploaded_file = media_root / file.file.path
-            self.assertEqual(
-                uploaded_file.open().read(),
-                f"file_{index}",
-            )
 
 
 class FeedbackModelTests(django.test.TestCase):

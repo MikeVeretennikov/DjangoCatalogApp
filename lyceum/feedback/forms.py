@@ -15,7 +15,6 @@ class FeedbackAuthorForm(BootstrapForm):
         super().__init__(*args, **kwargs)
         self.fields["name"].required = False
 
-
     class Meta:
         model = feedback.models.FeedbackAuthor
         fields = (
