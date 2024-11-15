@@ -31,7 +31,7 @@ class UserForm(UserChangeForm):
 class ProfileForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields["coffee_count"].widget.attrs["readonly"] = True
+        self.fields["coffee_count"].widget.attrs["disabled"] = True
 
     class Meta:
         model = users.models.Profile
