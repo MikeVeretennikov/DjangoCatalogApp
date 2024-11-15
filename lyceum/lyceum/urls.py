@@ -13,6 +13,7 @@ urlpatterns = [
     path("tinymce/", include("tinymce.urls")),
     path("download/", include("download.urls")),
     path("feedback/", include("feedback.urls")),
+    path("auth/", include("users.urls")),
 ]
 
 

@@ -13,7 +13,7 @@ urlpatterns = [
     path(
         "coffee/",
         homepage.views.coffee,
-        name="coffee-page",
+        name="coffee",
     ),
     path(
         "echo/",

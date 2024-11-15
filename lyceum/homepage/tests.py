@@ -100,7 +100,7 @@ class HomepageURLTests(TestCase):
 
         for _ in range(10):
             responses.append(
-                Client().get(reverse("homepage:coffee-page")).content.decode(),
+                Client().get(reverse("homepage:coffee")).content.decode(),
             )
 
         if django.conf.settings.ALLOW_REVERSE:
@@ -120,7 +120,7 @@ class HomepageURLTests(TestCase):
     def test_coffee_endpoint_correct_status_code(
         self,
     ):
-        response = Client().get(reverse("homepage:coffee-page"))
+        response = Client().get(reverse("homepage:coffee"))
         self.assertEqual(
             response.status_code,
             http.HTTPStatus.IM_A_TEAPOT,

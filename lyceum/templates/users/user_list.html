@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+  
+  <br>
+  
+  <div class="row m-2">
+    
+    {% for user in users %}
+
+      {% include "includes/user_card.html" with user=user %}
+    
+    {% endfor %}
+
+  </div>
+
+  
+
+{% endblock content %}

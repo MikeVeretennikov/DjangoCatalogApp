@@ -2,8 +2,6 @@ import django.conf
 from django.contrib.auth.models import User
 from django.db import models
 
-import catalog.models
-
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -13,13 +11,15 @@ class Profile(models.Model):
         null=True,
     )
     image = models.ImageField(
-        catalog.models.MainImage,
         help_text="аватарка",
         upload_to=f"{django.conf.settings.UPLOAD_TO_PATH}profile_images/",
         blank=True,
         null=True,
     )
-    coffee_count = models.IntegerField(help_text="счетчик кофе", default=0)
+    coffee_count = models.PositiveIntegerField(
+        help_text="счетчик кофе",
+        default=0,
+    )
 
     class Meta:
         verbose_name = "профиль"

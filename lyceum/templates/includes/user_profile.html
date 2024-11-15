@@ -1,0 +1,35 @@
+{% load static %}
+{% load i18n %}
+
+
+<div class="card card_main me-2">
+  <img class="card-img-top" src="{{ user.profile.image.url }}">
+  
+  <div class="card-body">
+    
+    <h5 class="card-title">{{ user.email }}</h5>
+
+    <h5>Имя</h5>
+    {% if user.name %}
+        <h6 class="card-title">{{ user.name }}</h6>
+    {% else %}
+        <h6 class="card-title">Не указано</h6>
+    {% endif %}
+
+    <h5>Фамилия</h5>
+    {% if user.surname %}
+        <h6 class="card-title">{{ user.surname }}</h6>
+    {% else %}
+        <h6 class="card-title">Не указано</h6>
+    {% endif %}
+
+
+    <h5>Дата рождения</h5>
+    <h6 class="card-title">{{ user.profile.birthday }}</h6>
+
+    <h5>Выпил кофе</h5>
+    <h6 class="card-title">{{ user.profile.coffee_count }} раз</h6>
+
+
+  </div>
+</div>

@@ -39,6 +39,26 @@ ALLOW_REVERSE = ALLOW_REVERSE_ENV in (
 )
 
 
+if DEBUG:
+    DEFAULT_USER_IS_ACTIVE_ENV = os.getenv(
+        "DJANGO_DEFAULT_USER_IS_ACTIVE",
+        default="True",
+    ).lower()
+else:
+    DEFAULT_USER_IS_ACTIVE_ENV = os.getenv(
+        "DJANGO_DEFAULT_USER_IS_ACTIVE",
+        default="False",
+    ).lower()
+
+DEFAULT_USER_IS_ACTIVE = DEFAULT_USER_IS_ACTIVE_ENV in (
+    "true",
+    "yes",
+    "1",
+    "y",
+    "t",
+    "",
+)
+
 INSTALLED_APPS = [
     "feedback.apps.FeedbackConfig",
     "about.apps.AboutConfig",
@@ -132,6 +152,11 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 AUTH_USER_MODEL = "auth.User"
+
+LOGIN_URL = "/auth/login/"
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/auth/login/"
+
 
 LANGUAGE_CODE = "ru"
 
