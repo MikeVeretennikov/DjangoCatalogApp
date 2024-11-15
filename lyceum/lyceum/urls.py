@@ -14,6 +14,7 @@ urlpatterns = [
     path("download/", include("download.urls")),
     path("feedback/", include("feedback.urls")),
     path("auth/", include("users.urls")),
+    path("auth/", include("django.contrib.auth.urls")),
 ]
 
 

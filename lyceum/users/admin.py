@@ -9,6 +9,7 @@ class ProfileInline(admin.StackedInline):
     model = users.models.Profile
     can_delete = False
     verbose_name_plural = "Профили"
+    readonly_fields = ("coffee_count",)
 
 
 class CustomUserAdmin(UserAdmin):
