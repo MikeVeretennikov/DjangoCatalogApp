@@ -43,4 +43,4 @@ def validate_int_from_1_to_32767(num):
         )
 
 
-__all__ = []
+__all__ = ()

@@ -19,4 +19,4 @@ def download_image(request, path_to_file):
     return HttpResponseNotFound()
 
 
-__all__ = []
+__all__ = ()

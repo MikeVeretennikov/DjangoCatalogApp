@@ -77,4 +77,4 @@ class RegexReverseRussianWordsTests(TestCase):
         )
 
 
-__all__ = []
+__all__ = ()

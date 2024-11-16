@@ -29,4 +29,4 @@ class Profile(models.Model):
         return self.user.username
 
 
-__all__ = []
+__all__ = ()

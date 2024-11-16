@@ -74,4 +74,4 @@ class FeedbackForm(BootstrapForm):
         }
 
 
-__all__ = []
+__all__ = ()

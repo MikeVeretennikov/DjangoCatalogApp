@@ -61,4 +61,4 @@ def index(request):
     return django.shortcuts.render(request, "feedback/feedback.html", context)
 
 
-__all__ = []
+__all__ = ()

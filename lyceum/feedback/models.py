@@ -92,4 +92,4 @@ class StatusLog(django.db.models.Model):
         )
 
 
-__all__ = []
+__all__ = ()

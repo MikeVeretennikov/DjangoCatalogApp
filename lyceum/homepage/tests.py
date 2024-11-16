@@ -148,4 +148,4 @@ class HomepageURLTests(TestCase):
         self.assertEqual(response.status_code, 405)
 
 
-__all__ = []
+__all__ = ()

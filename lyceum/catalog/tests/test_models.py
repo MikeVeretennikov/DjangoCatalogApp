@@ -396,4 +396,4 @@ class CatalogNormalizationValidationTests(TestCase):
         )
 
 
-__all__ = []
+__all__ = ()

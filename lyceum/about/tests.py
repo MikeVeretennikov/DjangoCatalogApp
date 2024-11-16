@@ -14,4 +14,4 @@ class StaticURLTests(TestCase):
         )
 
 
-__all__ = []
+__all__ = ()

@@ -42,4 +42,4 @@ class ProfileForm(forms.ModelForm):
         )
 
 
-__all__ = []
+__all__ = ()

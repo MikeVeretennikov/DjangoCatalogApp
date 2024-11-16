@@ -131,4 +131,4 @@ class CatalogURLTests(TestCase):
         self.assertEqual(response.status_code, 200)
 
 
-__all__ = []
+__all__ = ()

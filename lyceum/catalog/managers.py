@@ -54,4 +54,4 @@ class ItemManager(django.db.models.Manager):
         ).order_by("name")
 
 
-__all__ = []
+__all__ = ()

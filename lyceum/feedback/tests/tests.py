@@ -143,4 +143,4 @@ class FeedbackModelTests(django.test.TestCase):
         self.assertTrue(feedback_item)
 
 
-__all__ = []
+__all__ = ()

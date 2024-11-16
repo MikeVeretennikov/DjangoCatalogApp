@@ -54,4 +54,4 @@ class FeedbackAdmin(django.contrib.admin.ModelAdmin):
 django.contrib.admin.site.register(feedback.models.StatusLog)
 
 
-__all__ = []
+__all__ = ()

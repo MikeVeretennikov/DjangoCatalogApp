@@ -8,4 +8,4 @@ class EchoForm(django.forms.Form):
     )
 
 
-__all__ = []
+__all__ = ()

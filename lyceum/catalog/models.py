@@ -214,4 +214,4 @@ class GalleryImage(django.db.models.Model):
         return self.image.name
 
 
-__all__ = []
+__all__ = ()

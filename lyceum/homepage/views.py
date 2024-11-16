@@ -61,4 +61,4 @@ def echo_submit(request):
     return django.http.HttpResponseNotAllowed()
 
 
-__all__ = []
+__all__ = ()

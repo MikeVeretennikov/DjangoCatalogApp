@@ -7,4 +7,4 @@ class CatalogConfig(AppConfig):
     verbose_name = "Каталог"
 
 
-__all__ = []
+__all__ = ()

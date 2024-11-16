@@ -7,8 +7,8 @@ from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 
-
 import users.forms
+import users.models
 
 
 def signup(request):
@@ -19,20 +19,29 @@ def signup(request):
         user = form.save(commit=False)
         user.is_active = django.conf.settings.DEFAULT_USER_IS_ACTIVE
         user.save()
+        user.profile = users.models.Profile.objects.create(user=user)
+        user.profile.save()
 
-        activation_link = (
-            f"http://127.0.0.1:8000/auth/activate/{user.username}/"
-        )
+        if not user.is_active:
+            activation_link = (
+                f"http://127.0.0.1:8000/auth/activate/{user.username}/"
+            )
 
-        send_mail(
-            subject="Активация",
-            message=activation_link,
-            from_email=django.conf.settings.MAIL,
-            recipient_list=[user.email],
-            fail_silently=True,
-        )
+            send_mail(
+                subject="Активация",
+                message=activation_link,
+                from_email=django.conf.settings.MAIL,
+                recipient_list=[user.email],
+                fail_silently=True,
+            )
 
-        return render(request, "users/activation_sent.html", {"form": form})
+            return render(
+                request,
+                "users/activation_sent.html",
+                {"form": form},
+            )
+
+        return redirect("/")
 
     return render(request, "users/signup.html", {"form": form})
 
@@ -58,7 +67,19 @@ def activate(request, username):
 
 
 def user_list(request):
-    users = User.objects.filter(is_active=True).all()
+    users = (
+        User.objects.filter(is_active=True)
+        .select_related("profile")
+        .only(
+            "username",
+            "first_name",
+            "last_name",
+            "email",
+            "profile__birthday",
+            "profile__image",
+            "profile__coffee_count",
+        )
+    )
 
     return render(
         request,
@@ -68,17 +89,29 @@ def user_list(request):
 
 
 def user_detail(request, pk):
-    user = get_object_or_404(User, pk=pk)
+
+    user = get_object_or_404(
+        User.objects.only(
+            "username",
+            "first_name",
+            "last_name",
+            "email",
+            "is_staff",
+        ),
+        pk=pk,
+    )
 
     return render(
         request,
         "users/user_detail.html",
-        {"user": user, "title": user.username},
+        {"user": user},
     )
 
 
 @login_required
 def profile(request):
+    print("\n" * 100)
+    print(request.user)
     user_form = users.forms.UserForm(
         request.POST or None,
         instance=request.user,
@@ -106,4 +139,4 @@ def profile(request):
     )
 
 
-__all__ = []
+__all__ = ()

@@ -49,4 +49,4 @@ class FeedbackFormTests(django.test.TestCase):
         )
 
 
-__all__ = []
+__all__ = ()

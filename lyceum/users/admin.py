@@ -20,4 +20,4 @@ admin.site.unregister(User)
 admin.site.register(User, CustomUserAdmin)
 
 
-__all__ = []
+__all__ = ()

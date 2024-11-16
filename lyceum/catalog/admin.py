@@ -35,4 +35,4 @@ admin.site.register(models.Category)
 admin.site.register(models.Tag)
 
 
-__all__ = []
+__all__ = ()

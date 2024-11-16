@@ -33,4 +33,4 @@ class ReverseResponseMiddleware:
         return response
 
 
-__all__ = []
+__all__ = ()
