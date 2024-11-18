@@ -32,14 +32,14 @@ msgstr "Русский"
 msgid "MoreButton"
 msgstr "Подробнее"
 
-#: .\templates\includes\header.html:15
+#: .\templates\includes\header.html:23
 msgid "MainPageHeading"
 msgstr "Главная"
 
-#: .\templates\includes\header.html:18
-msgid "AboutProjectHeading"
-msgstr "О проекте"
-
-#: .\templates\includes\header.html:21
+#: .\templates\includes\header.html:26
 msgid "CatalogHeading"
 msgstr "Список товаров"
+
+#: .\templates\includes\header.html:30
+msgid "AboutProjectHeading"
+msgstr "О проекте"

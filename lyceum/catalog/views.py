@@ -7,9 +7,9 @@ from django.db.models import (
 )
 import django.http
 import django.shortcuts
-import django.views.generic
 import django.urls
-from django.utils import timezone
+import django.utils
+import django.views.generic
 
 import catalog.managers
 import catalog.models
@@ -53,7 +53,7 @@ def friday_items(request):
 
 
 def new_items(request):
-    week_ago = timezone.now() - datetime.timedelta(weeks=1)
+    week_ago = django.utils.timezone.now() - datetime.timedelta(weeks=1)
     template = "homepage/main.html"
     # потому что иначе полетит правильное разбиение по категориям,
     #  ведь у нас потом идет рандомная сортировка

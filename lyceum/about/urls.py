@@ -9,7 +9,8 @@ urlpatterns = [
         "",
         TemplateView.as_view(
             template_name="about/about.html",
-            extra_context={"title": "О проекте"}),
+            extra_context={"title": "О проекте"},
+        ),
         name="index-page",
     ),
 ]
