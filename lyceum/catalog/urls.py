@@ -13,12 +13,12 @@ app_name = "catalog"
 urlpatterns = [
     path(
         "",
-        catalog.views.item_list,
+        catalog.views.ItemListView.as_view(),
         name="index-page",
     ),
     path(
         "<int:pk>/",
-        catalog.views.item_detail,
+        catalog.views.ItemDetailView.as_view(),
         name="default-converter-page",
     ),
     path(

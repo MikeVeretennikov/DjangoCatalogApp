@@ -7,6 +7,7 @@ from django.db.models import (
 )
 import django.http
 import django.shortcuts
+import django.views.generic
 import django.urls
 from django.utils import timezone
 
@@ -14,36 +15,26 @@ import catalog.managers
 import catalog.models
 
 
-def item_list(request):
-    template = "catalog/item_list.html"
+class ItemListView(django.views.generic.ListView):
+    template_name = "catalog/item_list.html"
+    context_object_name = "items"
+    queryset = catalog.models.Item.objects.published()
 
-    items = catalog.models.Item.objects.published()
-
-    context = {
-        "items": items,
-        "title": "Список товаров",
-    }
-    return django.shortcuts.render(
-        request,
-        template,
-        context,
-    )
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "Список товаров"
+        return context
 
 
-def item_detail(request, pk):
-    template = "catalog/item.html"
-    item = django.shortcuts.get_object_or_404(
-        catalog.models.Item.objects.published(),
-        pk=pk,
-    )
+class ItemDetailView(django.views.generic.DetailView):
+    template_name = "catalog/item.html"
+    context_object_name = "item"
+    queryset = catalog.models.Item.objects.published()
 
-    context = {"item": item, "title": item.name}
-
-    return django.shortcuts.render(
-        request,
-        template,
-        context,
-    )
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "Товар детально"
+        return context
 
 
 def friday_items(request):
