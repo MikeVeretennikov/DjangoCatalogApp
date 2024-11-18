@@ -4,7 +4,7 @@
 {% load i18n %}
 
 {% block content %}
-  <br>
+  {% comment %} <br>
   
   <div class="row m-2">
 
@@ -20,5 +20,55 @@
       
     {% endfor %}
 
+  </div> {% endcomment %}
+
+
+  <section class="py-5 text-center container">
+    <div class="row py-lg-5">
+      <div class="col-lg-6 col-md-8 mx-auto">
+        <h1 class="fw-light">Каталог категорий</h1>
+        <p class="lead text-muted">Это каталог категоий товаров</p>
+      </div>
+    </div>
+  </section>
+  <div class="album py-5 bg-light">
+    <div class="container">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        {% for item_category in items %}
+        {% ifchanged item_category.category.name %}
+        <div class="col">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">{{ item_category.category.name|capfirst }}</h5>
+            </div>
+            <ul class="list-group list-group-flush">
+              {% for item in items %}
+              
+              {% if item.category.name == item_category.category.name %}
+              <li class="list-group-item">
+                <b>Товар:</b>
+                <span class="border border-3 border-info bg-info rounded-2 text-white"
+                  >{{ item.name }}</span
+                >
+                <p class="card-text"><b>Описание:</b> {{ item.text|safe|truncatewords_html:10 }}</p>
+                <p>
+                Тег: {% for i in item.tags.all %}<span
+                  class="border border-3 border-primary bg-primary rounded-2 text-white"
+                  >{{ i }}</span
+                >{% endfor %}
+                </p>
+                <p><a href="{% url 'catalog:default-converter-page' item.id %}" class="card-link"
+                  >Подробнее</a
+                ></p>
+              </li>
+              {% endif %}
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+        {% endifchanged %}
+        {% empty %} Пустой список, ошибка!!! {% endfor %}
+      </div>    
+    </div>
   </div>
 {% endblock content %}

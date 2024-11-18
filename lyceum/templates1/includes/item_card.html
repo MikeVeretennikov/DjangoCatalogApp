@@ -1,5 +1,4 @@
 {% load static %}
-{% load i18n %}
 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
   {% for item in items %}
   <div class="col">
@@ -16,15 +15,15 @@
           >
         </li>
         <li class="list-group-item">
-          Тег: {% for tag in item.tags.all %}<span
+          Тег: {% for i in item.tags.all %}<span
             class="border border-3 border-primary bg-primary rounded-2 text-white"
-            >{{ tag }}</span
+            >{{ i }}</span
           >{% endfor %}
         </li>
       </ul>
       <div class="card-body">
-        <a href="{% url 'catalog:default-converter-page' item.id %}" class="card-link"
-          >{% trans "MoreButton" %}</a
+        <a href="{% url 'catalog:item-detail' item.id %}" class="card-link"
+          >Подробнее</a
         >
       </div>
     </div>

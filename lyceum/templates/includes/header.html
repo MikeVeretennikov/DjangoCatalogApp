@@ -1,67 +1,58 @@
 {% load static %}
 {% load i18n %}
-
-<header>
-  <nav class="navbar navbar-light bg-light">
-    
-      {% with request.resolver_match.view_name as view_name %}
-      <ul class="nav justify-content-center">
-
-        <a href="{% url 'homepage:index-page' %}">
-          <img src="{% static 'files/favicon-48x48.png' %}"  class="d-inline-block align-right" alt="">
-        </a>
-
-        <li class="nav-item">
-          <a class="nav-link {% if view_name == 'homepage:index-page' %}disabled{% endif %}" href="{% url 'homepage:index-page' %}">{% trans 'MainPageHeading' %}</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link {% if view_name == 'about:index-page' %}disabled{% endif %}" href="{% url 'about:index-page' %}">{% trans 'AboutProjectHeading' %}</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link {% if view_name == 'catalog:index-page' %}disabled{% endif %}" href="{% url 'catalog:index-page' %}">{% trans 'CatalogHeading' %}</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link {% if view_name == 'feedback:feedback' %}disabled{% endif %}" href="{% url 'feedback:feedback' %}">Обратная связь</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link {% if view_name == 'catalog:friday-page' %}disabled{% endif %}" href="{% url 'catalog:friday-page' %}">Пятница</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link {% if view_name == 'users:user-list' %}disabled{% endif %}" href="{% url 'users:user-list' %}">Список пользователей</a>
-        </li>
-
-
-        {% if user.is_authenticated %}
-
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'users:user-profile' %}">Профиль</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'users:logout' %}">Выйти</a>
-          </li>
-
-          {% if user.is_staff %}
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'admin:index' %}">Админка</a>
-            </li>
-          {% endif %}
-          
-        {% else %}
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'users:signup' %}">Создать аккаунт</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'users:login' %}">Войти</a>
-        </li>
-        {% endif %}
-
-      </ul>
-      {% endwith %}
-
-
-  </nav>
-  
-
-  
-
+<div class="container">
+<header
+class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom"
+>
+    <a
+    href="{% url 'homepage:index-page' %}"
+    class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none"
+    >
+    <img
+    class="bi me-2"
+    width="40"
+    height="32"
+    role="img"
+    alt="Icon"
+    src="{% static 'img/favicon.svg' %}"
+    />
+    </a>
+  {% with request.resolver_match.view_name as view_name %}
+  <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+    <li>
+      <a {% if view_name != "homepage:index-page" %} href="{% url 'homepage:index-page' %}"{% endif %} class="nav-link px-2 link{% if view_name == 'homepage:index-page' %}-secondary active{% endif %}">{% trans 'MainPageHeading' %}</a>
+    </li>
+    <li>
+      <a {% if view_name != "catalog:index-page" %} href="{% url 'catalog:index-page' %}"{% endif %} class="nav-link px-2 link{% if view_name == 'catalog:index-page' %}-secondary active{% endif %}">{% trans 'CatalogHeading' %}</a
+      >
+    </li>
+    <li>
+      <a {% if view_name != "about:index-page" %} href="{% url 'about:index-page' %}"{% endif %} class="nav-link px-2 link{% if view_name == 'about:index-page' %}-secondary active{% endif %}">{% trans 'AboutProjectHeading' %}</a>
+    </li>
+    <li>
+      <a {% if view_name != "feedback:feedback" %} href="{% url 'feedback:feedback' %}"{% endif %} class="nav-link px-2 link{% if view_name == 'feedback:feedback' %}-secondary active{% endif %}">Обратная связь</a>
+    </li>
+    <li>
+      <a {% if view_name != "catalog:friday-page" %} href="{% url 'catalog:friday-page' %}"{% endif %} class="nav-link px-2 link{% if view_name == 'catalog:friday-page' %}-secondary active{% endif %}">Пятница</a>
+    </li>
+    <li>
+      <a {% if view_name != "users:user-list" %} href="{% url 'users:user-list' %}"{% endif %} class="nav-link px-2 link{% if view_name == 'users:user-list' %}-secondary active{% endif %}">Список пользователей</a>
+    </li>
+    {% if request.user.is_authenticated %}
+    <li>
+      <a {% if view_name != "users:user-profile" %} href="{% url 'users:user-profile' %}"{% endif %} class="nav-link px-2 link{% if view_name == 'users:user-profile' %}-secondary active{% endif %}">Профиль</a>
+    </li>
+    {% else %}
+    <li>
+      <a {% if view_name != "users:login" %} href="{% url 'users:login' %}"{% endif %} class="nav-link px-2 link{% if view_name == 'users:login' %}-secondary active{% endif %}">Вход</a>
+    </li>
+    {% endif %}
+    {% if request.user.is_superuser %}
+    <li>
+      <a href="{% url 'admin:index' %}" role="button" class="btn btn-outline-primary">Админка</a>
+    </li>
+    {% endif %}
+  </ul>
+  {% endwith %}
 </header>
+</div>

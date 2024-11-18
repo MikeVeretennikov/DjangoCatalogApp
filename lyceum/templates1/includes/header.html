@@ -1,0 +1,54 @@
+{% load static %}
+<div class="container">
+  <header
+    class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom"
+  >
+    <a
+      href="{% url 'homepage:home' %}"
+      class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none"
+    >
+      <img
+        class="bi me-2"
+        width="40"
+        height="32"
+        role="img"
+        alt="Icon"
+        src="{% static 'img/favicon.svg' %}"
+      />
+    </a>
+    {% with request.resolver_match.view_name as view_name %}
+    <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+      <li>
+        <a {% if view_name != "homepage:home" %} href="{% url 'homepage:home' %}"{%endif%} class="nav-link px-2 link{% if view_name == 'homepage:home' %}-secondary active{% endif %}">На главную</a>
+      </li>
+      <li>
+        <a {% if view_name != "catalog:item-list" %} href="{% url 'catalog:item-list' %}"{% endif %} class="nav-link px-2 link{% if view_name == 'catalog:item-list' %}-secondary active{% endif %}">Список товаров</a
+        >
+      </li>
+      <li>
+        <a {% if view_name != "about:description" %} href="{% url 'about:description' %}"{% endif %} class="nav-link px-2 link{% if view_name == 'about:description' %}-secondary active{% endif %}">О проекте</a>
+      </li>
+      <li>
+        <a {% if view_name != "feedback:feedback" %} href="{% url 'feedback:feedback' %}"{% endif %} class="nav-link px-2 link{% if view_name == 'feedback:feedback' %}-secondary active{% endif %}">Обратная связь</a>
+      </li>
+      <li>
+        <a {% if view_name != "users:user-list" %} href="{% url 'users:user-list' %}"{% endif %} class="nav-link px-2 link{% if view_name == 'users:user-list' %}-secondary active{% endif %}">Список пользователей</a>
+      </li>
+      {% if request.user.is_authenticated %}
+      <li>
+        <a {% if view_name != "users:profile" %} href="{% url 'users:profile' %}"{% endif %} class="nav-link px-2 link{% if view_name == 'users:profile' %}-secondary active{% endif %}">Профиль</a>
+      </li>
+      {% else %}
+      <li>
+        <a {% if view_name != "users:login" %} href="{% url 'users:login' %}"{% endif %} class="nav-link px-2 link{% if view_name == 'users:login' %}-secondary active{% endif %}">Вход</a>
+      </li>
+      {% endif %}
+      {% if request.user.is_superuser %}
+      <li>
+        <a href="/admin/" role="button" class="btn btn-outline-primary">Админская панель</a>
+      </li>
+      {% endif %}
+    </ul>
+    {% endwith %}
+  </header>
+</div>

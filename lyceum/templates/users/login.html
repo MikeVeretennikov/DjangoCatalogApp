@@ -1,6 +1,6 @@
 {% extends "base.html" %}
-
 {% block content %}
+<div class="w-25 p-3 mx-auto">
     {% for message in messages %}
         <div class="alert alert-success">
             {{ message }}
@@ -9,7 +9,9 @@
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Войти</button>
+        <button class="btn btn-primary" type="submit">Войти</button>
         <a href="{% url 'users:password_reset' %}">Забыли пароль?</a>
+        <p>Нет аккаунта? <a href="{% url 'users:signup' %}">Зарегистрироваться</a></p>
     </form>
+</div>
 {% endblock %}

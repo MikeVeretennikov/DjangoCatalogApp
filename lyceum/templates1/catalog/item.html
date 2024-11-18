@@ -1,0 +1,40 @@
+{% extends "base.html" %} {% load static %} {% block content %}
+<div class="container col-xxl-8 px-4 py-5">
+  <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+    <div class="col-10 col-sm-8 col-lg-6">
+      <img
+        src="{{ item.main_image.image.url }}"
+        class="d-block mx-lg-auto img-fluid"
+        alt="{{item.name}}"
+        width="700"
+        height="500"
+        loading="lazy"
+      />
+    </div>
+    <div class="col-lg-6">
+      <h1 class="display-5 fw-bold lh-1 mb-3">{{item.name|capfirst}}</h1>
+      <p class="lead">{{item.text|capfirst}}</p>
+      <p class="lead fw-bolder">Категория: {{item.category.name|capfirst}}</p>
+      <p class="lead fw-bolder">
+        Тег: {% for tag in item.tags.all %} {{tag.name|capfirst}}{% if not forloop.last %},{% endif %} {% empty %} Список тегов пуст! {% endfor %}
+      </p>
+    </div>
+  </div>
+  {% if item.images.all %}
+  <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+    <p class="fs-2">Дополнительные изображения</p>
+    <div class="text-left">
+      {% for img in item.images.all %}
+      <img
+        src="{{ img.image.url }}"
+        class="rounded border"
+        alt="test_preview.png"
+        width="200x"
+        height="200px"
+      />
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}
