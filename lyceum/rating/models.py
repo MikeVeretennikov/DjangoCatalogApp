@@ -1,5 +1,5 @@
-from django.db import models
 from django.contrib.auth.models import User
+from django.db import models
 
 import catalog.models
 
@@ -31,14 +31,20 @@ class Rating(models.Model):
     )
 
     created_at = models.DateTimeField(
-        help_text="дата создания", auto_now_add=True, null=True,
+        help_text="дата создания",
+        auto_now_add=True,
+        null=True,
     )
     updated_at = models.DateTimeField(
-        help_text="дата последнего изменения", auto_now=True, null=True,
+        help_text="дата последнего изменения",
+        auto_now=True,
+        null=True,
     )
 
     def __str__(self):
-        return f"{self.user.username} оценил {self.product.name} на {self.score}"
+        return (
+            f"{self.user.username} оценил {self.product.name} на {self.score}"
+        )
 
 
 __all__ = ()
