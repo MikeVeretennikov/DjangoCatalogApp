@@ -20,7 +20,6 @@ def signup(request):
         user.is_active = django.conf.settings.DEFAULT_USER_IS_ACTIVE
         user.save()
         user.profile = users.models.Profile.objects.create(user=user)
-        user.profile.save()
 
         if not user.is_active:
             activation_link = (
@@ -110,8 +109,6 @@ def user_detail(request, pk):
 
 @login_required
 def profile(request):
-    print("\n" * 100)
-    print(request.user)
     user_form = users.forms.UserForm(
         request.POST or None,
         instance=request.user,

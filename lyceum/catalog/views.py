@@ -15,7 +15,7 @@ import catalog.models
 
 
 def item_list(request):
-    template = "catalog/new_item_list.html"
+    template = "catalog/item_list.html"
 
     items = catalog.models.Item.objects.published()
 

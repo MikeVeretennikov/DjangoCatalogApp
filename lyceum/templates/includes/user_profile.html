@@ -3,8 +3,9 @@
 
 
 <div class="card card_main me-2">
-  <img class="card-img-top" src="{{ user.profile.image.url }}">
-  
+  {% if user.profile.image %}
+    <img class="card-img-top" src="{{ user.profile.image.url }}">
+  {% endif %}
   <div class="card-body">
     
     <h5 class="card-title">{{ user.email }}</h5>

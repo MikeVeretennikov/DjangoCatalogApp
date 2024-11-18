@@ -32,6 +32,8 @@ class ProfileForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["coffee_count"].widget.attrs["disabled"] = True
+        self.fields["image"].required = False
+        self.fields["coffee_count"].required = False
 
     class Meta:
         model = users.models.Profile
@@ -40,6 +42,12 @@ class ProfileForm(forms.ModelForm):
             users.models.Profile.image.field.name,
             users.models.Profile.coffee_count.field.name,
         )
+
+        widgets = {
+            "birthday": forms.DateInput(
+                format="%Y-%m-%d", attrs={"type": "date"},
+            ),
+        }
 
 
 __all__ = ()
