@@ -45,7 +45,8 @@ class ProfileForm(forms.ModelForm):
 
         widgets = {
             "birthday": forms.DateInput(
-                format="%Y-%m-%d", attrs={"type": "date"},
+                format="%Y-%m-%d",
+                attrs={"type": "date"},
             ),
         }
 

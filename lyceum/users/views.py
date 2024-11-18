@@ -19,7 +19,6 @@ def signup(request):
         user = form.save(commit=False)
         user.is_active = django.conf.settings.DEFAULT_USER_IS_ACTIVE
         user.save()
-        user.profile = users.models.Profile.objects.create(user=user)
 
         if not user.is_active:
             activation_link = (
@@ -115,12 +114,14 @@ def profile(request):
     )
     profile_form = users.forms.ProfileForm(
         request.POST or None,
+        request.FILES or None,
         instance=request.user.profile,
     )
 
     if request.method == "POST":
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
+
             profile_form.save()
 
             return redirect("users:user-profile")
