@@ -1,6 +1,7 @@
 import datetime
 
 from django.db.models import (
+    Avg,
     DurationField,
     ExpressionWrapper,
     F,
@@ -8,94 +9,158 @@ from django.db.models import (
 import django.http
 import django.shortcuts
 import django.urls
-from django.utils import timezone
+import django.utils
+import django.views.generic
+
 
 import catalog.managers
 import catalog.models
+import rating.forms
+import rating.models
 
 
-def item_list(request):
-    template = "catalog/item_list.html"
+class ItemListView(django.views.generic.ListView):
+    template_name = "catalog/item_list.html"
+    context_object_name = "items"
+    queryset = catalog.models.Item.objects.published()
 
-    items = catalog.models.Item.objects.published()
-
-    context = {
-        "items": items,
-        "title": "Список товаров",
-    }
-    return django.shortcuts.render(
-        request,
-        template,
-        context,
-    )
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "Список товаров"
+        return context
 
 
-def item_detail(request, pk):
-    template = "catalog/item.html"
-    item = django.shortcuts.get_object_or_404(
-        catalog.models.Item.objects.published(),
-        pk=pk,
-    )
+class ItemDetailView(django.views.generic.DetailView):
+    template_name = "catalog/item.html"
+    context_object_name = "item"
+    queryset = catalog.models.Item.objects.published()
 
-    context = {"item": item, "title": item.name}
+    def get(self, request, pk):
 
-    return django.shortcuts.render(
-        request,
-        template,
-        context,
-    )
+        item = django.shortcuts.get_object_or_404(catalog.models.Item, id=pk)
+
+        ratings = rating.models.Rating.objects.filter(item=item)
+        average_rating = ratings.aggregate(Avg("score"))["score__avg"] or 0
+        rating_count = ratings.count()
+        user_rating = None
+
+        if request.user.is_authenticated:
+            user_rating = ratings.filter(user=request.user).first()
+
+        default_score = 5
+
+        if user_rating:
+            form = rating.forms.RatingForm({"score": user_rating.score})
+        else:
+            form = rating.forms.RatingForm({"score": default_score})
+
+        context = {
+            "item": item,
+            "average_rating": average_rating,
+            "rating_count": rating_count,
+            "user_rating": user_rating,
+            "form": form,
+        }
+        return django.shortcuts.render(request, "catalog/item.html", context)
+
+    def post(self, request, pk):
+        item = django.shortcuts.get_object_or_404(catalog.models.Item, id=pk)
+        form = rating.forms.RatingForm(request.POST or None)
+
+        if form.is_valid():
+            score = form.cleaned_data["score"]
+            rating.models.Rating.objects.update_or_create(
+                user=request.user,
+                item=item,
+                defaults={"score": score},
+            )
+            return django.shortcuts.redirect(
+                "catalog:default-converter-page",
+                pk=pk,
+            )
+
+        # Если форма не валидна, возвращаем на страницу с ошибками
+        ratings = rating.models.Rating.objects.filter(item=item)
+        user_rating = ratings.filter(user=request.user).first()
+        average_rating = ratings.aggregate(Avg("score"))["score__avg"] or 0
+        rating_count = ratings.count()
+
+        context = {
+            "item": item,
+            "average_rating": average_rating,
+            "rating_count": rating_count,
+            "user_rating": user_rating,
+            "form": form,
+        }
+        return django.shortcuts.render(request, "catalog/item.html", context)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "Товар детально"
+        return context
 
 
-def friday_items(request):
-    template = "catalog/item_list.html"
+class RatingDeleteView(django.views.generic.DeleteView):
+    def post(self, request, pk):
 
-    published_items = catalog.models.Item.objects.published()
-    friday_items = published_items.filter(updated_at__week_day=6).order_by(
+        item = django.shortcuts.get_object_or_404(catalog.models.Item, id=pk)
+
+        if request.user.is_authenticated and request.method == "POST":
+            rating.models.Rating.objects.filter(
+                item=item,
+                user=request.user,
+            ).delete()
+
+        return django.shortcuts.redirect(
+            "catalog:default-converter-page",
+            pk=pk,
+        )
+
+
+class FridayItemDetailView(django.views.generic.ListView):
+    template_name = "catalog/item_list.html"
+    context_object_name = "items"
+    item_published = catalog.models.Item.objects.published()
+    queryset = item_published.filter(updated_at__week_day=6).order_by(
         "-updated_at",
     )[:5]
-    context = {
-        "items": friday_items,
-        "title": "Пятница",
-    }
 
-    return django.shortcuts.render(request, template, context)
-
-
-def new_items(request):
-    week_ago = timezone.now() - datetime.timedelta(weeks=1)
-    template = "homepage/main.html"
-    # потому что иначе полетит правильное разбиение по категориям,
-    #  ведь у нас потом идет рандомная сортировка
-
-    published_items = catalog.models.Item.objects.published()
-    new_random_items = published_items.filter(
-        created_at__gte=week_ago,
-    ).order_by("?")[:5]
-    context = {
-        "items": new_random_items,
-        "title": "Новинки",
-    }
-
-    return django.shortcuts.render(request, template, context)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "Пятница"
+        return context
 
 
-def unverified_items(request):
-    template = "catalog/item_list.html"
+class NewItemListView(django.views.generic.ListView):
+    template_name = "homepage/main.html"
+    context_object_name = "items"
+    week_ago = django.utils.timezone.now() - datetime.timedelta(weeks=1)
+    item_published = catalog.models.Item.objects.published()
+    queryset = item_published.filter(created_at__gte=week_ago).order_by("?")[
+        :5
+    ]
 
-    published_items = catalog.models.Item.objects.published()
-    unverified_items = published_items.annotate(
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "Новинки"
+        return context
+
+
+class UnverifiedItemListView(django.views.generic.ListView):
+    template_name = "catalog/item_list.html"
+    context_object_name = "items"
+    item_published = catalog.models.Item.objects.published()
+    queryset = item_published.annotate(
         time_difference=ExpressionWrapper(
             F("updated_at") - F("created_at"),
             output_field=DurationField(),
         ),
     ).filter(time_difference__lte=datetime.timedelta(seconds=1))
 
-    context = {
-        "items": unverified_items,
-        "title": "Непроверенное",
-    }
-
-    return django.shortcuts.render(request, template, context)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "Непроверенное"
+        return context
 
 
 __all__ = ()

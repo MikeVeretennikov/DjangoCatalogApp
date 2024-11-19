@@ -3,20 +3,21 @@ from django.http import (
     FileResponse,
     HttpResponseNotFound,
 )
+import django.views.generic
 
 
-def download_image(request, path_to_file):
+class DownloadDetailView(django.views.generic.TemplateView):
+    def get(self, request, path_to_file):
+        file_path = settings.MEDIA_ROOT / path_to_file
 
-    file_path = settings.MEDIA_ROOT / path_to_file
+        if file_path.exists():
+            return FileResponse(
+                file_path.open("rb"),
+                content_type="image",
+                as_attachment=True,
+            )
 
-    if file_path.exists():
-        return FileResponse(
-            file_path.open("rb"),
-            content_type="image",
-            as_attachment=True,
-        )
-
-    return HttpResponseNotFound()
+        return HttpResponseNotFound()
 
 
 __all__ = ()

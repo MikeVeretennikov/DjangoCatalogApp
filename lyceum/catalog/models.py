@@ -133,6 +133,7 @@ class Item(core.models.AbstractModel):
         related_name="items",
         related_query_name="item",
     )
+
     is_on_main = django.db.models.BooleanField(
         verbose_name="принадлежит к главной странице",
         default=False,

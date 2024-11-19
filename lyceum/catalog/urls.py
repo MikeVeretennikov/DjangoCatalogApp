@@ -13,27 +13,32 @@ app_name = "catalog"
 urlpatterns = [
     path(
         "",
-        catalog.views.item_list,
+        catalog.views.ItemListView.as_view(),
         name="index-page",
     ),
     path(
         "<int:pk>/",
-        catalog.views.item_detail,
+        catalog.views.ItemDetailView.as_view(),
         name="default-converter-page",
     ),
     path(
+        "<int:pk>/delete_rating",
+        catalog.views.RatingDeleteView.as_view(),
+        name="delete-rating",
+    ),
+    path(
         "new/",
-        catalog.views.new_items,
+        catalog.views.NewItemListView.as_view(),
         name="new-page",
     ),
     path(
         "friday/",
-        catalog.views.friday_items,
+        catalog.views.FridayItemDetailView.as_view(),
         name="friday-page",
     ),
     path(
         "unverified/",
-        catalog.views.unverified_items,
+        catalog.views.UnverifiedItemListView.as_view(),
         name="unverified-page",
     ),
 ]

@@ -8,57 +8,83 @@ import feedback.forms
 import feedback.models
 
 
-def index(request):
-    feedback_author = feedback.forms.FeedbackAuthorForm(request.POST or None)
-    feedback_form = feedback.forms.FeedbackForm(request.POST or None)
-    files_form = feedback.forms.FeedbackFileForm(request.POST or None)
+class FeedbackView(django.views.generic.edit.View):
+    def get(self, request):
+        feedback_author = feedback.forms.FeedbackAuthorForm(
+            request.POST or None,
+        )
+        feedback_form = feedback.forms.FeedbackForm(request.POST or None)
+        files_form = feedback.forms.FeedbackFileForm(request.POST or None)
 
-    forms = (
-        feedback_author,
-        feedback_form,
-        files_form,
-    )
+        context = {
+            "feedback_form": feedback_form,
+            "feedback_author": feedback_author,
+            "files_form": files_form,
+        }
 
-    if request.method == "POST" and all(form.is_valid() for form in forms):
-        name = feedback_author.cleaned_data["name"]
-        text = feedback_form.cleaned_data["text"]
-        mail = feedback_author.cleaned_data["mail"]
-
-        django.core.mail.send_mail(
-            name,
-            text,
-            django.conf.settings.MAIL,
-            [mail],
-            fail_silently=False,
+        return django.shortcuts.render(
+            request,
+            "feedback/feedback.html",
+            context,
         )
 
-        feedback_item = feedback_form.save()
+    def post(self, request):
+        feedback_author = feedback.forms.FeedbackAuthorForm(
+            request.POST or None,
+        )
+        feedback_form = feedback.forms.FeedbackForm(request.POST or None)
+        files_form = feedback.forms.FeedbackFileForm(request.POST or None)
 
-        author = feedback_author.save(commit=False)
-        author.feedback = feedback_item
-        author.save()
+        forms = (
+            feedback_author,
+            feedback_form,
+            files_form,
+        )
 
-        for file in request.FILES.getlist(
-            "file",
-        ):
+        if all(form.is_valid() for form in forms):
+            name = feedback_author.cleaned_data["name"]
+            text = feedback_form.cleaned_data["text"]
+            mail = feedback_author.cleaned_data["mail"]
 
-            feedback_file = feedback.models.FeedbackFile(
-                file=file,
-                feedback=feedback_item,
+            django.core.mail.send_mail(
+                name,
+                text,
+                django.conf.settings.MAIL,
+                [mail],
+                fail_silently=False,
             )
-            feedback_file.save()
 
-        django.contrib.messages.success(request, "Все прошло успешно")
+            feedback_item = feedback_form.save()
 
-        return django.shortcuts.redirect("feedback:feedback")
+            author = feedback_author.save(commit=False)
+            author.feedback = feedback_item
+            author.save()
 
-    context = {
-        "feedback_form": feedback_form,
-        "feedback_author": feedback_author,
-        "files_form": files_form,
-    }
+            for file in request.FILES.getlist(
+                "file",
+            ):
 
-    return django.shortcuts.render(request, "feedback/feedback.html", context)
+                feedback_file = feedback.models.FeedbackFile(
+                    file=file,
+                    feedback=feedback_item,
+                )
+                feedback_file.save()
+
+            django.contrib.messages.success(request, "Все прошло успешно")
+
+            return django.shortcuts.redirect("feedback:feedback")
+
+        context = {
+            "feedback_form": feedback_form,
+            "feedback_author": feedback_author,
+            "files_form": files_form,
+        }
+
+        return django.shortcuts.render(
+            request,
+            "feedback/feedback.html",
+            context,
+        )
 
 
 __all__ = ()

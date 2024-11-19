@@ -30,14 +30,14 @@ msgstr "Russian"
 msgid "MoreButton"
 msgstr "More"
 
-#: .\templates\includes\header.html:15
+#: .\templates\includes\header.html:23
 msgid "MainPageHeading"
 msgstr "Main page"
 
-#: .\templates\includes\header.html:18
-msgid "AboutProjectHeading"
-msgstr "About"
-
-#: .\templates\includes\header.html:21
+#: .\templates\includes\header.html:26
 msgid "CatalogHeading"
 msgstr "Catalog"
+
+#: .\templates\includes\header.html30
+msgid "AboutProjectHeading"
+msgstr "About"

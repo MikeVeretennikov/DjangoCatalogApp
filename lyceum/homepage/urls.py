@@ -7,22 +7,22 @@ app_name = "homepage"
 urlpatterns = [
     path(
         "",
-        homepage.views.index,
+        homepage.views.HomepageListView.as_view(),
         name="index-page",
     ),
     path(
         "coffee/",
-        homepage.views.coffee,
+        homepage.views.CoffeeListView.as_view(),
         name="coffee",
     ),
     path(
         "echo/",
-        homepage.views.echo,
+        homepage.views.EchoView.as_view(),
         name="echo-page",
     ),
     path(
         "echo/submit/",
-        homepage.views.echo_submit,
+        homepage.views.EchoSubmitView.as_view(),
         name="echo-submit-page",
     ),
 ]

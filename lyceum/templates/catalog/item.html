@@ -1,79 +1,68 @@
 {% extends 'base.html' %}
-
 {% load static %}
+{% block content %}
+<div class="container col-xxl-8 px-4 py-5">
+  <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+    <div class="col-10 col-sm-8 col-lg-6">
+      <img
+        src="{{ item.main_image.image.url }}"
+        class="d-block mx-lg-auto img-fluid"
+        alt="{{item.name}}"
+        width="700"
+        height="500"
+        loading="lazy"
+      />
+    </div>
+    <div class="col-lg-6">
+      <h1 class="display-5 fw-bold lh-1 mb-3">{{item.name|capfirst}}</h1>
+      <p class="lead">{{item.text|safe|capfirst}}</p>
+      <p class="lead fw-bolder">Категория: {{item.category.name|capfirst}}</p>
+      <p class="lead fw-bolder">
+        Тег: {% for tag in item.tags.all %} {{tag.name|capfirst}}{% if not forloop.last %},{% endif %} {% empty %} Список тегов пуст! {% endfor %}
+      </p>
+      <p class="lead fw-bolder">
+        Средняя оценка: {{ average_rating|floatformat:1 }} ({{ rating_count }} оценок)
+      </p>
 
-{% block content%}
-
-<div class="card m-3 card_main ">
-  <img class="card-img-top" src="{{ item.main_image.image.url }}">
-
-  {% if item.main_image %}
-    <a href="{% url 'download:download-page' item.main_image.image %}" class="btn btn-primary m-2">Скачать основную картинку</a>
+      {% if user.is_authenticated %}
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="btn btn-primary" type="submit">Поставить оценку</button>
+        </form>
+      {% else %}
+        <p>Для того чтобы оставить оценку, пожалуйста, <a href="{% url 'users:login' %}">войдите</a>.</p>
+      {% endif %}
+      <br>
+      {% if user_rating %}
+       <form method="post" action="{% url 'catalog:delete-rating' pk=item.id %}">
+           {% csrf_token %}
+           <button class="btn btn-outline-danger" type="submit">Удалить оценку</button>
+       </form>
+       {% endif %}
+      <br>
+      {% if item.main_image %}
+        <a href="{% url 'download:download-page' item.main_image.image %}" class="btn btn-primary">Скачать основную картинку</a>
+      {% endif %}
+    </div>
+  </div>
+  {% if item.images.all %}
+  <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+    <p class="fs-2">Дополнительные изображения</p>
+    <div class="text-left">
+      {% for img in item.images.all %}
+        <a href="{% url 'download:download-page' img.image %}">
+          <img
+            src="{{ img.image.url }}"
+            class="rounded border"
+            alt="test_preview.png"
+            width="200x"
+            height="200px"
+          />
+        </a>
+      {% endfor %}
+    </div>
+  </div>
   {% endif %}
-
-  <div class="card-body">
-    
-    <h5 class="card-title">{{ item.name }}</h5>
-    <h7 class="card-title">Категория</h5>
-
-    <ul>
-      <li>{{ item.category.name }}</li>
-    </ul>
-    
-    <p class="card-text">{{ item.text|safe }}</p>
-    
-    <h7 class="card-title">Теги</h5>
-
-    <ul>
-    {% for tag in item.tags.all %}
-        <li>{{ tag }}</li>
-    {% endfor %}
-    
-    </ul>
-
-    
-  
-  </div>
-
- 
-
 </div>
-
-</div>
-
-{% if item.images %}
-
-
-
-
-  <div class="row">
-
-    {% for image in item.images.all %}
-
-      {% comment %} <div class="row" >
-          <img src="{{ image.image.url }}" alt="Image 1" style="width: 150px; height: auto;">
-          <a href="{% url 'download:download-page' image.image %}" class="btn btn-primary">Загрузить изображение</a>
-      </div> {% endcomment %}
-
-      <div class="col-md-4">
-        <div class="thumbnail">
-          
-            <img class="img-thumbnail rounded" src="{{ image.image.url }}">
-            <div class="caption">
-              <a href="{% url 'download:download-page' image.image %}" class="btn btn-primary">Загрузить изображение</a>
-            </div>
-          </a>
-
-        </div>
-      </div>
-
-
-    {% endfor %}
-
-  </div>
-
-
-
-{% endif %}
-
 {% endblock %}
