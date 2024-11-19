@@ -1,21 +1,23 @@
 from datetime import timedelta
 
 import django.conf
-from django.contrib.auth.decorators import login_required
+import django.contrib.auth.mixins
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import render
 from django.utils import timezone
 
 import users.forms
 import users.models
 
 
-def signup(request):
-    form = users.forms.SignUpForm(request.POST or None)
+class SignupView(django.views.generic.FormView):
+    model = users.models.User
+    form_class = users.forms.SignUpForm
+    template_name = "users/signup.html"
+    success_url = django.urls.reverse_lazy("homepage:index-page")
 
-    if request.method == "POST":
-
+    def form_valid(self, form):
         user = form.save(commit=False)
         user.is_active = django.conf.settings.DEFAULT_USER_IS_ACTIVE
         user.save()
@@ -33,39 +35,34 @@ def signup(request):
                 fail_silently=True,
             )
 
+        return super().form_valid(form)
+
+
+class ActivateView(django.views.generic.TemplateView):
+    def get(self, request, username):
+        user = User.objects.get(username=username)
+
+        if user.date_joined + timedelta(hours=12) > timezone.now():
+            user.is_active = True
+            user.save()
+
             return render(
                 request,
-                "users/activation_sent.html",
-                {"form": form},
+                "users/activation_success.html",
+                {"title": "Успешная активация"},
             )
-
-        return redirect("/")
-
-    return render(request, "users/signup.html", {"form": form})
-
-
-def activate(request, username):
-    user = User.objects.get(username=username)
-
-    if user.date_joined + timedelta(hours=12) > timezone.now():
-        user.is_active = True
-        user.save()
 
         return render(
             request,
-            "users/activation_success.html",
-            {"title": "Успешная активация"},
+            "users/activation_expired.html",
+            {"title": "Ссылка просрочена"},
         )
 
-    return render(
-        request,
-        "users/activation_expired.html",
-        {"title": "Ссылка просрочена"},
-    )
 
-
-def user_list(request):
-    users = (
+class UserListView(django.views.generic.ListView):
+    template_name = "users/user_list.html"
+    context_object_name = "users"
+    queryset = (
         User.objects.filter(is_active=True)
         .select_related("profile")
         .only(
@@ -79,62 +76,85 @@ def user_list(request):
         )
     )
 
-    return render(
-        request,
-        "users/user_list.html",
-        {"users": users, "title": "Список пользователей"},
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "Список пользователей"
+        return context
+
+
+class UserDetailView(django.views.generic.DetailView):
+    template_name = "users/user_detail.html"
+    context_object_name = "user"
+    queryset = User.objects.only(
+        "username",
+        "first_name",
+        "last_name",
+        "email",
+        "is_staff",
     )
 
-
-def user_detail(request, pk):
-
-    user = get_object_or_404(
-        User.objects.only(
-            "username",
-            "first_name",
-            "last_name",
-            "email",
-            "is_staff",
-        ),
-        pk=pk,
-    )
-
-    return render(
-        request,
-        "users/user_detail.html",
-        {"user": user},
-    )
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "Пользователь детально"
+        return context
 
 
-@login_required
-def profile(request):
-    user_form = users.forms.UserForm(
-        request.POST or None,
-        instance=request.user,
-    )
-    profile_form = users.forms.ProfileForm(
-        request.POST or None,
-        request.FILES or None,
-        instance=request.user.profile,
-    )
+class ProfileView(
+    django.views.generic.DetailView,
+    django.views.generic.edit.ModelFormMixin,
+    django.contrib.auth.mixins.LoginRequiredMixin,
+):
+    model = users.models.User
+    template_name = "users/profile.html"
 
-    if request.method == "POST":
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "Профиль"
+        return context
+
+    def get(self, request):
+        user_form = users.forms.UserForm(
+            request.POST or None,
+            instance=request.user,
+        )
+        profile_form = users.forms.ProfileForm(
+            request.POST or None,
+            request.FILES or None,
+            instance=request.user.profile,
+        )
+
+        return render(
+            request,
+            self.template_name,
+            {
+                "user_form": user_form,
+                "profile_form": profile_form,
+            },
+        )
+
+    def post(self, request):
+        user_form = users.forms.UserForm(
+            request.POST or None,
+            instance=request.user,
+        )
+        profile_form = users.forms.ProfileForm(
+            request.POST or None,
+            request.FILES or None,
+            instance=request.user.profile,
+        )
+
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
-
             profile_form.save()
 
-            return redirect("users:user-profile")
-
-    return render(
-        request,
-        "users/profile.html",
-        {
-            "user_form": user_form,
-            "profile_form": profile_form,
-            "title": "Профиль",
-        },
-    )
+        return render(
+            request,
+            self.template_name,
+            {
+                "user_form": user_form,
+                "profile_form": profile_form,
+            },
+        )
 
 
 __all__ = ()

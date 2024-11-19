@@ -1,22 +1,21 @@
 {% extends "base.html" %}
-
 {% load static %}
 {% load i18n %}
-
 {% block content %}
-  
-  <br>
-  
-  <div class="row m-2">
-    
-    {% for item in items %}
-
-      {% include "includes/item_card.html" with item=item %}
-    
-    {% endfor %}
-
+<div class="text-center">
+  <h1>Главная страница</h1>
+  <img
+    src="{% static 'img/raccoon.jpg' %}"
+    class="rounded"
+    alt="Enot"
+    width="500px"
+  />
+</div>
+<div class="album py-5 bg-light">
+  <div class="container">
+    <br />
+    {% include "includes/item_card.html" %}
   </div>
-
-  
+</div>
 
 {% endblock content %}

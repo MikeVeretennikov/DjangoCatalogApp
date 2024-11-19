@@ -1,27 +1,33 @@
 {% load static %}
 {% load i18n %}
-
-
-<div class="card card_main me-2">
-  <img class="card-img-top" src="{{ item.main_image.image.url }}">
-  <div class="card-body">
-    <h5 class="card-title">{{ item.name }}</h5>
-    <h7 class="card-title">Категория</h5>
-
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item">{{ item.category.name }}</li>
-    </ul>
-    
-    <p class="card-text">{{ item.text|safe|truncatewords_html:10 }}</p>
-    
-    <h7 class="card-title">Теги</h5>
-
-    <ul class="list-group list-group-flush">
-    {% for tag in item.tags.all %}
-        <li class="list-group-item">{{ tag }}</li>
-    {% endfor %}
-    </ul>
-
-    <a href="{% url 'catalog:default-converter-page' item.id %}" class="btn btn-primary">{% trans "MoreButton" %}</a>
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+  {% for item in items %}
+  <div class="col">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">{{ item.name|capfirst }}</h5>
+        <p class="card-text">{{ item.text|safe|truncatewords_html:10 }}</p>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+          Категория:
+          <span class="border border-3 border-info bg-info rounded-2 text-white"
+            >{{ item.category.name }}</span
+          >
+        </li>
+        <li class="list-group-item">
+          Тег: {% for tag in item.tags.all %}<span
+            class="border border-3 border-primary bg-primary rounded-2 text-white"
+            >{{ tag }}</span
+          >{% endfor %}
+        </li>
+      </ul>
+      <div class="card-body">
+        <a href="{% url 'catalog:default-converter-page' item.id %}" class="card-link"
+          >{% trans "MoreButton" %}</a
+        >
+      </div>
+    </div>
   </div>
+  {% empty %} Пустой список, ошибка!!! {% endfor %}
 </div>

@@ -7,9 +7,23 @@ import users.views
 app_name = "users"
 
 urlpatterns = [
-    path("user_list/", users.views.user_list, name="user-list"),
-    path("user_detail/<int:pk>/", users.views.user_detail, name="user-detail"),
-    path("profile/", users.views.profile, name="user-profile"),
+    path("user_list/", users.views.UserListView.as_view(), name="user-list"),
+    path(
+        "user_detail/<int:pk>/",
+        users.views.UserDetailView.as_view(),
+        name="user-detail",
+    ),
+    path("profile/", users.views.ProfileView.as_view(), name="user-profile"),
+    path(
+        "signup/",
+        users.views.SignupView.as_view(),
+        name="signup",
+    ),
+    path(
+        "activate/<str:username>/",
+        users.views.ActivateView.as_view(),
+        name="activate",
+    ),
     path(
         "login/",
         auth_views.LoginView.as_view(
@@ -23,16 +37,6 @@ urlpatterns = [
             template_name="users/logout.html",
         ),
         name="logout",
-    ),
-    path(
-        "signup/",
-        users.views.signup,
-        name="signup",
-    ),
-    path(
-        "activate/<str:username>/",
-        users.views.activate,
-        name="activate",
     ),
 ]
 
