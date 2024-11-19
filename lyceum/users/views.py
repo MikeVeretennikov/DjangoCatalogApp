@@ -4,7 +4,7 @@ import django.conf
 import django.contrib.auth.mixins
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import render
 from django.utils import timezone
 
 import users.forms
@@ -34,6 +34,7 @@ class SignupView(django.views.generic.FormView):
                 recipient_list=[user.email],
                 fail_silently=True,
             )
+
         return super().form_valid(form)
 
 
@@ -61,19 +62,19 @@ class ActivateView(django.views.generic.TemplateView):
 class UserListView(django.views.generic.ListView):
     template_name = "users/user_list.html"
     context_object_name = "users"
-    queryset = User.objects.filter(
-        is_active=True
-        ).select_related(
-            "profile"
-            ).only(
-                "username",
-                "first_name",
-                "last_name",
-                "email",
-                "profile__birthday",
-                "profile__image",
-                "profile__coffee_count",
-                )
+    queryset = (
+        User.objects.filter(is_active=True)
+        .select_related("profile")
+        .only(
+            "username",
+            "first_name",
+            "last_name",
+            "email",
+            "profile__birthday",
+            "profile__image",
+            "profile__coffee_count",
+        )
+    )
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -85,12 +86,12 @@ class UserDetailView(django.views.generic.DetailView):
     template_name = "users/user_detail.html"
     context_object_name = "user"
     queryset = User.objects.only(
-            "username",
-            "first_name",
-            "last_name",
-            "email",
-            "is_staff",
-        )
+        "username",
+        "first_name",
+        "last_name",
+        "email",
+        "is_staff",
+    )
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -98,9 +99,11 @@ class UserDetailView(django.views.generic.DetailView):
         return context
 
 
-class ProfileView(django.views.generic.DetailView,
-                  django.views.generic.edit.ModelFormMixin,
-                  django.contrib.auth.mixins.LoginRequiredMixin):
+class ProfileView(
+    django.views.generic.DetailView,
+    django.views.generic.edit.ModelFormMixin,
+    django.contrib.auth.mixins.LoginRequiredMixin,
+):
     model = users.models.User
     template_name = "users/profile.html"
 
@@ -139,19 +142,19 @@ class ProfileView(django.views.generic.DetailView,
             request.FILES or None,
             instance=request.user.profile,
         )
+
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
-
             profile_form.save()
 
-            return render(
-                request,
-                self.template_name,
-                {
-                    "user_form": user_form,
-                    "profile_form": profile_form,
-                },
-            )
+        return render(
+            request,
+            self.template_name,
+            {
+                "user_form": user_form,
+                "profile_form": profile_form,
+            },
+        )
 
 
 __all__ = ()

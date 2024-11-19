@@ -50,6 +50,11 @@ class EchoView(django.views.generic.FormView):
         context["title"] = "Эхо"
         return context
 
+    def post(self, request):
+        return django.http.HttpResponse(
+            status=http.HTTPStatus.METHOD_NOT_ALLOWED,
+        )
+
 
 class EchoSubmitView(django.views.generic.TemplateView):
     def get(self, request):

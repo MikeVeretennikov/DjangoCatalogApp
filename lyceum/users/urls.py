@@ -7,18 +7,13 @@ import users.views
 app_name = "users"
 
 urlpatterns = [
-    path(
-        "user_list/",
-        users.views.UserListView.as_view(),
-        name="user-list"),
+    path("user_list/", users.views.UserListView.as_view(), name="user-list"),
     path(
         "user_detail/<int:pk>/",
         users.views.UserDetailView.as_view(),
-        name="user-detail"),
-    path(
-        "profile/",
-        users.views.ProfileView.as_view(),
-        name="user-profile"),
+        name="user-detail",
+    ),
+    path("profile/", users.views.ProfileView.as_view(), name="user-profile"),
     path(
         "signup/",
         users.views.SignupView.as_view(),

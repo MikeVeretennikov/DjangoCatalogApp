@@ -11,7 +11,8 @@ import feedback.models
 class FeedbackView(django.views.generic.edit.View):
     def get(self, request):
         feedback_author = feedback.forms.FeedbackAuthorForm(
-            request.POST or None)
+            request.POST or None,
+        )
         feedback_form = feedback.forms.FeedbackForm(request.POST or None)
         files_form = feedback.forms.FeedbackFileForm(request.POST or None)
 
@@ -21,13 +22,16 @@ class FeedbackView(django.views.generic.edit.View):
             "files_form": files_form,
         }
 
-        return django.shortcuts.render(request,
-                                       "feedback/feedback.html",
-                                       context)
+        return django.shortcuts.render(
+            request,
+            "feedback/feedback.html",
+            context,
+        )
 
     def post(self, request):
         feedback_author = feedback.forms.FeedbackAuthorForm(
-            request.POST or None)
+            request.POST or None,
+        )
         feedback_form = feedback.forms.FeedbackForm(request.POST or None)
         files_form = feedback.forms.FeedbackFileForm(request.POST or None)
 
@@ -76,9 +80,11 @@ class FeedbackView(django.views.generic.edit.View):
             "files_form": files_form,
         }
 
-        return django.shortcuts.render(request,
-                                       "feedback/feedback.html",
-                                       context)
+        return django.shortcuts.render(
+            request,
+            "feedback/feedback.html",
+            context,
+        )
 
 
 __all__ = ()

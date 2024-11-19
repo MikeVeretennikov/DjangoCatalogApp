@@ -40,8 +40,10 @@ class ItemDetailView(django.views.generic.DetailView):
 class FridayItemDetailView(django.views.generic.ListView):
     template_name = "catalog/item_list.html"
     context_object_name = "items"
-    queryset = catalog.models.Item.objects.published().filter(
-        updated_at__week_day=6).order_by("-updated_at")[:5]
+    item_published = catalog.models.Item.objects.published()
+    queryset = item_published.filter(updated_at__week_day=6).order_by(
+        "-updated_at",
+    )[:5]
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -53,8 +55,10 @@ class NewItemListView(django.views.generic.ListView):
     template_name = "homepage/main.html"
     context_object_name = "items"
     week_ago = django.utils.timezone.now() - datetime.timedelta(weeks=1)
-    queryset = catalog.models.Item.objects.published().filter(
-        created_at__gte=week_ago).order_by("?")[:5]
+    item_published = catalog.models.Item.objects.published()
+    queryset = item_published.filter(created_at__gte=week_ago).order_by("?")[
+        :5
+    ]
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -65,7 +69,8 @@ class NewItemListView(django.views.generic.ListView):
 class UnverifiedItemListView(django.views.generic.ListView):
     template_name = "catalog/item_list.html"
     context_object_name = "items"
-    queryset = catalog.models.Item.objects.published().annotate(
+    item_published = catalog.models.Item.objects.published()
+    queryset = item_published.annotate(
         time_difference=ExpressionWrapper(
             F("updated_at") - F("created_at"),
             output_field=DurationField(),

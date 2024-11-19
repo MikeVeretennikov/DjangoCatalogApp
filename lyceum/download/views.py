@@ -1,9 +1,9 @@
-import django.views.generic
 from django.conf import settings
 from django.http import (
     FileResponse,
     HttpResponseNotFound,
 )
+import django.views.generic
 
 
 class DownloadDetailView(django.views.generic.TemplateView):
