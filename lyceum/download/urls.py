@@ -8,7 +8,7 @@ app_name = "download"
 urlpatterns = [
     path(
         "<path:path_to_file>/",
-        download.views.download_image,
+        download.views.DownloadDetailView.as_view(),
         name="download-page",
     ),
 ]

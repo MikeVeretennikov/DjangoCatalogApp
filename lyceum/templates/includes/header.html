@@ -47,11 +47,11 @@ class="d-flex flex-wrap align-items-center justify-content-center justify-conten
       <a {% if view_name != "users:login" %} href="{% url 'users:login' %}"{% endif %} class="nav-link px-2 link{% if view_name == 'users:login' %}-secondary active{% endif %}">Вход</a>
     </li>
     {% endif %}
-    {% if request.user.is_superuser %}
+    {% comment %} {% if request.user.is_superuser %}
     <li>
-      <a href="{% url 'admin:index' %}" role="button" class="btn btn-outline-primary">Админка</a>
+      <a href="{% url 'admin:index' %}" class="btn btn-outline-primary btn-sm"> Админка</a>
     </li>
-    {% endif %}
+    {% endif %} {% endcomment %}
   </ul>
   {% endwith %}
 </header>
