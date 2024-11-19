@@ -22,6 +22,11 @@ urlpatterns = [
         name="default-converter-page",
     ),
     path(
+        "<int:pk>/delete_rating",
+        catalog.views.RatingDeleteView.as_view(),
+        name="delete-rating",
+    ),
+    path(
         "new/",
         catalog.views.NewItemListView.as_view(),
         name="new-page",

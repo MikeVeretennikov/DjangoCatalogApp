@@ -90,6 +90,27 @@
       <p class="lead fw-bolder">
         Тег: {% for tag in item.tags.all %} {{tag.name|capfirst}}{% if not forloop.last %},{% endif %} {% empty %} Список тегов пуст! {% endfor %}
       </p>
+      <p class="lead fw-bolder">
+        Средняя оценка: {{ average_rating|floatformat:1 }} ({{ rating_count }} оценок)
+      </p>
+
+      {% if user.is_authenticated %}
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Поставить оценку</button>
+        </form>
+      {% else %}
+        <p>Для того чтобы оставить оценку, пожалуйста, <a href="{% url 'users:login' %}">войдите</a>.</p>
+      {% endif %}
+
+      {% if user_rating %}
+       <form method="post" action="{% url 'catalog:delete-rating' pk=item.id %}">
+           {% csrf_token %}
+           <button type="submit">Удалить оценку</button>
+       </form>
+       {% endif %}
+
       {% if item.main_image %}
         <a href="{% url 'download:download-page' item.main_image.image %}" class="btn btn-primary">Скачать основную картинку</a>
       {% endif %}

@@ -42,9 +42,7 @@ class Rating(models.Model):
     )
 
     def __str__(self):
-        return (
-            f"{self.user.username} оценил {self.product.name} на {self.score}"
-        )
+        return f"{self.user.username} оценил {self.item.name} на {self.score}"
 
 
 __all__ = ()
