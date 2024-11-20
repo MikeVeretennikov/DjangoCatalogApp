@@ -20,14 +20,14 @@ class="d-flex flex-wrap align-items-center justify-content-center justify-conten
   {% with request.resolver_match.view_name as view_name %}
   <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
     <li>
-      <a {% if view_name != "homepage:index-page" %} href="{% url 'homepage:index-page' %}"{% endif %} class="nav-link px-2 link{% if view_name == 'homepage:index-page' %}-secondary active{% endif %}">{% trans 'MainPageHeading' %}</a>
+      <a {% if view_name != "homepage:index-page" %} href="{% url 'homepage:index-page' %}"{% endif %} class="nav-link px-2 link{% if view_name == 'homepage:index-page' %}-secondary active{% endif %}">Главная</a>
     </li>
     <li>
-      <a {% if view_name != "catalog:index-page" %} href="{% url 'catalog:index-page' %}"{% endif %} class="nav-link px-2 link{% if view_name == 'catalog:index-page' %}-secondary active{% endif %}">{% trans 'CatalogHeading' %}</a
+      <a {% if view_name != "catalog:index-page" %} href="{% url 'catalog:index-page' %}"{% endif %} class="nav-link px-2 link{% if view_name == 'catalog:index-page' %}-secondary active{% endif %}">Каталог</a
       >
     </li>
     <li>
-      <a {% if view_name != "about:index-page" %} href="{% url 'about:index-page' %}"{% endif %} class="nav-link px-2 link{% if view_name == 'about:index-page' %}-secondary active{% endif %}">{% trans 'AboutProjectHeading' %}</a>
+      <a {% if view_name != "about:index-page" %} href="{% url 'about:index-page' %}"{% endif %} class="nav-link px-2 link{% if view_name == 'about:index-page' %}-secondary active{% endif %}">О проекте</a>
     </li>
     <li>
       <a {% if view_name != "feedback:feedback" %} href="{% url 'feedback:feedback' %}"{% endif %} class="nav-link px-2 link{% if view_name == 'feedback:feedback' %}-secondary active{% endif %}">Обратная связь</a>
@@ -47,11 +47,11 @@ class="d-flex flex-wrap align-items-center justify-content-center justify-conten
       <a {% if view_name != "users:login" %} href="{% url 'users:login' %}"{% endif %} class="nav-link px-2 link{% if view_name == 'users:login' %}-secondary active{% endif %}">Вход</a>
     </li>
     {% endif %}
-    {% comment %} {% if request.user.is_superuser %}
+    {% if request.user.is_superuser %}
     <li>
-      <a href="{% url 'admin:index' %}" class="btn btn-outline-primary btn-sm"> Админка</a>
+      <a href="{% url 'admin:index' %}" class="btn btn-outline-primary"> Админка</a>
     </li>
-    {% endif %} {% endcomment %}
+    {% endif %}
   </ul>
   {% endwith %}
 </header>

@@ -1,76 +1,6 @@
 {% extends 'base.html' %}
-
 {% load static %}
-
-{% block content%}
-
-{% comment %} <div class="card m-3 card_main ">
-  <img class="card-img-top" src="{{ item.main_image.image.url }}">
-
-  {% if item.main_image %}
-    <a href="{% url 'download:download-page' item.main_image.image %}" class="btn btn-primary m-2">Скачать основную картинку</a>
-  {% endif %}
-
-  <div class="card-body">
-    
-    <h5 class="card-title">{{ item.name }}</h5>
-    <h7 class="card-title">Категория</h5>
-
-    <ul>
-      <li>{{ item.category.name }}</li>
-    </ul>
-    
-    <p class="card-text">{{ item.text|safe }}</p>
-    
-    <h7 class="card-title">Теги</h5>
-
-    <ul>
-    {% for tag in item.tags.all %}
-        <li>{{ tag }}</li>
-    {% endfor %}
-    
-    </ul>
-
-    
-  
-  </div>
-
- 
-
-</div>
-
-</div>
-
-{% if item.images %}
-
-
-
-
-  <div class="row">
-
-    {% for image in item.images.all %}
-
-      <div class="col-md-4">
-        <div class="thumbnail">
-          
-            <img class="img-thumbnail rounded" src="{{ image.image.url }}">
-            <div class="caption">
-              <a href="{% url 'download:download-page' image.image %}" class="btn btn-primary">Загрузить изображение</a>
-            </div>
-          </a>
-
-        </div>
-      </div>
-
-
-    {% endfor %}
-
-  </div>
-
-
-
-{% endif %} {% endcomment %}
-
+{% block content %}
 <div class="container col-xxl-8 px-4 py-5">
   <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
     <div class="col-10 col-sm-8 col-lg-6">
@@ -98,19 +28,19 @@
         <form method="post">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit">Поставить оценку</button>
+            <button class="btn btn-primary" type="submit">Поставить оценку</button>
         </form>
       {% else %}
         <p>Для того чтобы оставить оценку, пожалуйста, <a href="{% url 'users:login' %}">войдите</a>.</p>
       {% endif %}
-
+      <br>
       {% if user_rating %}
        <form method="post" action="{% url 'catalog:delete-rating' pk=item.id %}">
            {% csrf_token %}
-           <button type="submit">Удалить оценку</button>
+           <button class="btn btn-outline-danger" type="submit">Удалить оценку</button>
        </form>
        {% endif %}
-
+      <br>
       {% if item.main_image %}
         <a href="{% url 'download:download-page' item.main_image.image %}" class="btn btn-primary">Скачать основную картинку</a>
       {% endif %}
@@ -135,5 +65,4 @@
   </div>
   {% endif %}
 </div>
-
 {% endblock %}
