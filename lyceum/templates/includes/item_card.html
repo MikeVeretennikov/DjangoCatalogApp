@@ -1,8 +1,7 @@
 {% load static %}
 {% load i18n %}
-<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-  {% for item in items %}
-  <div class="col">
+
+<div class="col">
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">{{ item.name|capfirst }}</h5>
@@ -27,7 +26,10 @@
           >Подробнее</a
         >
       </div>
+      <div class="card-body">
+        <p><a href="{% url 'stats:item-stats-detail' item.id %}" class="card-link"
+          >Статистика</a
+        ></p>
+      </div>
     </div>
   </div>
-  {% empty %} Пустой список, ошибка!!! {% endfor %}
-</div>

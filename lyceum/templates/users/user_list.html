@@ -12,6 +12,7 @@
         <th scope="col">Имя</th>
         <th scope="col">День+Месяц даты рождения</th>
         <th scope="col">Изображение</th>
+        <th scope="col">Статистика</th>
       </tr>
     </thead>
     <tbody>
@@ -30,6 +31,9 @@
                 {% else %}
                     <td></td>
                 {% endif %}
+                <td>
+                  <a href={% url "stats:user-stats-detail" user.id %}>Посмотреть статистику</a>
+                </td>
             </tr>
         {% endfor %}
     </tbody>

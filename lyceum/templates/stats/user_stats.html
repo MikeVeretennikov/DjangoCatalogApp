@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+<div class="w-50 p-3 mx-auto">
+    <h2>Список оценок пользователя</h2>
+</div>
+<div class="w-50 p-3 mx-auto">
+    <p>средний: {{ avg_rating }}</p>
+    <p>колво: {{ rating_count }}</p>
+    <p>максимальный: {{ max_rating_user }}</p>
+    <p>минимальный: {{ min_rating_user }}</p>
+</div>
+{% endblock content %}

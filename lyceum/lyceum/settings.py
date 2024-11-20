@@ -68,6 +68,7 @@ INSTALLED_APPS = [
     "homepage.apps.HomepageConfig",
     "users.apps.UsersConfig",
     "rating.apps.RatingConfig",
+    "stats.apps.StatsConfig",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
