@@ -5,6 +5,15 @@ import catalog.models
 
 
 class Rating(models.Model):
+    class ScoreChoices(models.IntegerChoices):
+        hate = 1, "Ненависть"
+        dislike = 2, "Неприязнь"
+        normal = 3, "Нейтрально"
+        like = 4, "Обожание"
+        love = 5, "Любовь"
+
+        __empty__ = "Неизвестно"
+
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
@@ -18,13 +27,8 @@ class Rating(models.Model):
         related_name="ratings",
     )
     score = models.IntegerField(
-        choices=[
-            (1, "Ненависть"),
-            (2, "Неприязнь"),
-            (3, "Нейтрально"),
-            (4, "Обожание"),
-            (5, "Любовь"),
-        ],
+        choices=ScoreChoices.choices,
+        default=ScoreChoices.normal,
         help_text="оценка",
         blank=True,
         null=True,
@@ -40,6 +44,17 @@ class Rating(models.Model):
         auto_now=True,
         null=True,
     )
+
+    class Meta:
+        verbose_name = "отзыв"
+        verbose_name_plural = "отзывы"
+
+        constraints = [
+            models.UniqueConstraint(
+                fields=["user_id", "item_id"],
+                name="unique_user_item",
+            ),
+        ]
 
     def __str__(self):
         return f"{self.user.username} оценил {self.item.name} на {self.score}"

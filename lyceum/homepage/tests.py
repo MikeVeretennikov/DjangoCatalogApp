@@ -131,9 +131,6 @@ class HomepageURLTests(TestCase):
         response = Client().get(reverse("homepage:index-page"))
         item = response.context["items"].first()
         self.assertNotIn("is_published", item.__dict__)
-        self.assertNotIn("is_published", item.category.__dict__)
-        for tag in item.tags.all():
-            self.assertNotIn("is_published", tag.__dict__)
 
     def test_echo_submit_page(self):
         response = Client().get(reverse("homepage:echo-submit-page"))

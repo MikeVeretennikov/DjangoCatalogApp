@@ -2,6 +2,7 @@ import datetime
 
 from django.db.models import (
     Avg,
+    Count,
     DurationField,
     ExpressionWrapper,
     F,
@@ -11,6 +12,7 @@ import django.shortcuts
 import django.urls
 import django.utils
 import django.views.generic
+import django.views.generic.edit
 
 
 import catalog.managers
@@ -22,7 +24,11 @@ import rating.models
 class ItemListView(django.views.generic.ListView):
     template_name = "catalog/item_list.html"
     context_object_name = "items"
-    queryset = catalog.models.Item.objects.published()
+    queryset = catalog.models.Item.objects.published().only(
+        catalog.models.Item.name.field.name,
+        catalog.models.Item.text.field.name,
+        catalog.models.Item.category.field.name,
+    )
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -30,74 +36,81 @@ class ItemListView(django.views.generic.ListView):
         return context
 
 
-class ItemDetailView(django.views.generic.DetailView):
+class ItemDetailView(
+    django.views.generic.edit.FormMixin,
+    django.views.generic.DetailView,
+):
+    form_class = rating.forms.RatingForm
     template_name = "catalog/item.html"
     context_object_name = "item"
-    queryset = catalog.models.Item.objects.published()
+    queryset = catalog.models.Item.objects.item_detail_published()
 
-    def get(self, request, pk):
-
-        item = django.shortcuts.get_object_or_404(catalog.models.Item, id=pk)
-
-        ratings = rating.models.Rating.objects.filter(item=item)
-        average_rating = ratings.aggregate(Avg("score"))["score__avg"] or 0
-        rating_count = ratings.count()
-        user_rating = None
-
-        if request.user.is_authenticated:
-            user_rating = ratings.filter(user=request.user).first()
-
-        default_score = 5
-
-        if user_rating:
-            form = rating.forms.RatingForm({"score": user_rating.score})
+    def get_object(self, queryset=None):
+        self.object = super().get_object(queryset)
+        self.ratings = rating.models.Rating.objects.filter(item=self.object)
+        if self.request.user.is_authenticated:
+            self.user_rating = self.ratings.filter(
+                user=self.request.user,
+            ).first()
         else:
-            form = rating.forms.RatingForm({"score": default_score})
+            self.user_rating = None
 
-        context = {
-            "item": item,
-            "average_rating": average_rating,
-            "rating_count": rating_count,
-            "user_rating": user_rating,
-            "form": form,
-        }
-        return django.shortcuts.render(request, "catalog/item.html", context)
+        return self.object
 
-    def post(self, request, pk):
-        item = django.shortcuts.get_object_or_404(catalog.models.Item, id=pk)
-        form = rating.forms.RatingForm(request.POST or None)
-
-        if form.is_valid():
-            score = form.cleaned_data["score"]
-            rating.models.Rating.objects.update_or_create(
-                user=request.user,
-                item=item,
-                defaults={"score": score},
+    def dispatch(self, request, *args, **kwargs):
+        if request.method == "POST":
+            self.ratings = rating.models.Rating.objects.filter(
+                item=self.get_object(self.queryset),
             )
-            return django.shortcuts.redirect(
-                "catalog:default-converter-page",
-                pk=pk,
-            )
+            self.user_rating = self.ratings.filter(
+                user=self.request.user,
+            ).first()
 
-        # Если форма не валидна, возвращаем на страницу с ошибками
-        ratings = rating.models.Rating.objects.filter(item=item)
-        user_rating = ratings.filter(user=request.user).first()
-        average_rating = ratings.aggregate(Avg("score"))["score__avg"] or 0
-        rating_count = ratings.count()
-
-        context = {
-            "item": item,
-            "average_rating": average_rating,
-            "rating_count": rating_count,
-            "user_rating": user_rating,
-            "form": form,
-        }
-        return django.shortcuts.render(request, "catalog/item.html", context)
+        return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["title"] = "Товар детально"
+        rating_stats = self.ratings.aggregate(Avg("score"), Count("score"))
+        user_rating = self.user_rating
+
+        context["average_rating"] = rating_stats["score__avg"]
+        context["rating_count"] = rating_stats["score__count"]
+        context["user_rating"] = user_rating
+        context["title"] = self.object
         return context
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        user_rating = self.user_rating
+        if user_rating:
+            kwargs["initial"]["score"] = user_rating.score
+        else:
+            kwargs["initial"]["score"] = 0
+
+        return kwargs
+
+    def form_valid(self, form):
+        score = form.cleaned_data["score"]
+        rating.models.Rating.objects.update_or_create(
+            user=self.request.user,
+            item=self.object,
+            defaults={"score": score},
+        )
+        return super().form_valid(form)
+
+    def post(self, request, *args, **kwargs):
+        form = self.get_form()
+
+        if form.is_valid():
+            return self.form_valid(form)
+
+        return self.form_invalid(form)
+
+    def get_success_url(self):
+        return django.shortcuts.reverse(
+            "catalog:default-converter-page",
+            kwargs={"pk": self.object.pk},
+        )
 
 
 class RatingDeleteView(django.views.generic.DeleteView):
