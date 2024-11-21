@@ -15,7 +15,9 @@ import homepage.forms
 class HomepageListView(django.views.generic.ListView):
     template_name = "homepage/main.html"
     context_object_name = "items"
-    queryset = catalog.models.Item.objects.on_main()
+    queryset = catalog.models.Item.objects.on_main().defer(
+        catalog.models.Item.is_published.field.name,
+    )
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

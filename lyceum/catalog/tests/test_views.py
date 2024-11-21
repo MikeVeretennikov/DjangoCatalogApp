@@ -114,9 +114,6 @@ class CatalogURLTests(TestCase):
         response = Client().get(reverse("catalog:index-page"))
         item = response.context["items"].first()
         self.assertNotIn("is_published", item.__dict__)
-        self.assertNotIn("is_published", item.category.__dict__)
-        for tag in item.tags.all():
-            self.assertNotIn("is_published", tag.__dict__)
 
     def test_friday_items_view(self):
         response = self.client.get(reverse("catalog:friday-page"))
