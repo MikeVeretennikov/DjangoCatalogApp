@@ -10,6 +10,7 @@ class RatingForm(forms.Form):
             (4, "Обожание"),
             (5, "Любовь"),
         ],
+        initial="Выбрать",
         label="Ваша оценка",
     )
 
