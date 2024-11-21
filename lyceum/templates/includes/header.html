@@ -55,4 +55,14 @@ class="d-flex flex-wrap align-items-center justify-content-center justify-conten
   </ul>
   {% endwith %}
 </header>
+{% if birthday_people %}
+  <div class="alert alert-dark" role="alert">
+    Сегодня день рождения у:
+    {% for man in birthday_people %}
+    <span
+    class="border border-dark rounded-1 text-dark"
+    >Имя:{{ man.first_name }} Почта:{{ man.email }}</span>{% if not forloop.last %}, {% endif %}
+    {% endfor %}
+  </div>
+{% endif %}
 </div>
