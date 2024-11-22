@@ -1,5 +1,8 @@
+from datetime import date
+
 import django.conf
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 from django.db import models
 
 
@@ -27,6 +30,10 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.user.username
+
+    def clean(self):
+        if self.birthday > date.today():
+            raise ValidationError("Выберите дату, которая не в будущем.")
 
 
 __all__ = ()

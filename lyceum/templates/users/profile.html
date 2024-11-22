@@ -18,4 +18,8 @@
     <br>
     <a role="button" href="{% url "users:logout" %}" class="btn btn-outline-danger">Выйти</a>
 </div>
+<script>
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById("id_birthday").setAttribute('max', today);
+</script>
 {% endblock %}

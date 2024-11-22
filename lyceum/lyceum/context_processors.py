@@ -7,14 +7,10 @@ from users.models import User
 __all__ = ()
 
 
-def now_timezone_func(timezone):
-    return timezone.now()
-
-
 def birthday_context_processor(request):
     user_offset = request.COOKIES.get("user_offset")
 
-    current_time_utc = now_timezone_func(timezone)
+    current_time_utc = timezone.now()
     if user_offset:
         try:
             hours_offset = float(user_offset)

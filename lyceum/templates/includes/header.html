@@ -61,7 +61,7 @@ class="d-flex flex-wrap align-items-center justify-content-center justify-conten
     {% for man in birthday_people %}
     <span
     class="border border-dark rounded-1 text-dark"
-    >Имя:{{ man.first_name }} Почта:{{ man.email }}</span>{% if not forloop.last %}, {% endif %}
+    >{% if man.first_name %}{{ man.first_name }}{% endif %} {% if man.email %}{{ man.email }}{% endif %}</span>{% if not forloop.last %}, {% endif %}
     {% endfor %}
   </div>
 {% endif %}
