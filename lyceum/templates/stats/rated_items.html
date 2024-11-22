@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+<div class="w-50 p-3 mx-auto">
+    <h2>Список товаров, оцененных вами</h2>
+</div>
+<div class="album py-5 bg-light">
+    <div class="container">
+      <br />
+      {% for item in items %}
+
+       
+        <div class="col">
+            <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{ item.name|capfirst }}</h5>
+                <p class="card-text">{{ item.text|safe|truncatewords_html:10 }}</p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                Категория:
+                <span class="border border-3 border-info bg-info rounded-2 text-white"
+                    >{{ item.category.name }}</span
+                >
+                </li>
+                <li class="list-group-item">
+                Тег: {% for tag in item.tags.all %}<span
+                    class="border border-3 border-primary bg-primary rounded-2 text-white"
+                    >{{ tag }}</span
+                >{% endfor %}
+                </li>
+            </ul>
+            <div class="card-body">
+                <a href="{% url 'catalog:default-converter-page' item.id %}" class="card-link"
+                >Подробнее</a
+                >
+            </div>
+            <div class="card-body">
+                <p>Оценка: 
+                {% for rating in item.rating.all %}
+                    {{ rating.score }}
+                {% endfor%}
+                </p>
+            </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>  
+{% endblock content %}

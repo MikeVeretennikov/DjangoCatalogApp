@@ -22,7 +22,7 @@ urlpatterns = [
         name="default-converter-page",
     ),
     path(
-        "<int:pk>/delete_rating",
+        "<int:pk>/delete_rating/",
         catalog.views.RatingDeleteView.as_view(),
         name="delete-rating",
     ),
