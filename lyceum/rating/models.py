@@ -24,7 +24,7 @@ class Rating(models.Model):
         catalog.models.Item,
         on_delete=models.CASCADE,
         help_text="товар",
-        related_name="ratings",
+        related_name="rating",
     )
     score = models.IntegerField(
         choices=ScoreChoices.choices,

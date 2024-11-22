@@ -40,6 +40,9 @@
            <button class="btn btn-outline-danger" type="submit">Удалить оценку</button>
        </form>
        {% endif %}
+       <button class="btn btn-outline-secondary">
+          <a href={% url 'stats:item-stats-detail' pk=item.id %}>Статистика</a>
+       </button>
       <br>
       {% if item.main_image %}
         <a href="{% url 'download:download-page' item.main_image.image %}" class="btn btn-primary">Скачать основную картинку</a>

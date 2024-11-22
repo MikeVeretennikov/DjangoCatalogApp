@@ -14,7 +14,11 @@
 <div class="album py-5 bg-light">
   <div class="container">
     <br />
-    {% include "includes/item_card.html" %}
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+      {% for item in items %}
+        {% include "includes/item_card.html" with item=item%}
+      {% endfor %}
+    </div>
   </div>
 </div>
 
