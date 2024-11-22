@@ -46,8 +46,8 @@ class ItemDetailView(
     queryset = catalog.models.Item.objects.item_detail_published()
 
     def get_object(self, queryset=None):
-        self.object = super().get_object(queryset)
-        self.ratings = rating.models.Rating.objects.filter(item=self.object)
+        self.item = super().get_object(queryset)
+        self.ratings = rating.models.Rating.objects.filter(item=self.item)
         if self.request.user.is_authenticated:
             self.user_rating = self.ratings.filter(
                 user=self.request.user,
@@ -55,7 +55,7 @@ class ItemDetailView(
         else:
             self.user_rating = None
 
-        return self.object
+        return self.item
 
     def dispatch(self, request, *args, **kwargs):
         if request.method == "POST":
@@ -76,7 +76,7 @@ class ItemDetailView(
         context["average_rating"] = rating_stats["score__avg"]
         context["rating_count"] = rating_stats["score__count"]
         context["user_rating"] = user_rating
-        context["title"] = self.object
+        context["title"] = self.item
         return context
 
     def get_form_kwargs(self):
@@ -93,7 +93,7 @@ class ItemDetailView(
         score = form.cleaned_data["score"]
         rating.models.Rating.objects.update_or_create(
             user=self.request.user,
-            item=self.object,
+            item=self.item,
             defaults={"score": score},
         )
         return super().form_valid(form)
@@ -109,7 +109,7 @@ class ItemDetailView(
     def get_success_url(self):
         return django.shortcuts.reverse(
             "catalog:default-converter-page",
-            kwargs={"pk": self.object.pk},
+            kwargs={"pk": self.item.pk},
         )
 
 
