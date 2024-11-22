@@ -1,3 +1,6 @@
+from datetime import date, datetime
+
+from django.shortcuts import reverse
 from django.test import Client, TestCase
 from django.test.utils import override_settings
 from parameterized import parameterized
@@ -5,6 +8,7 @@ from parameterized import parameterized
 from lyceum.middleware import (
     reverse_russian_words,
 )
+from users.models import User
 
 
 class ReverseResponseMiddlewareTests(TestCase):
@@ -74,6 +78,57 @@ class RegexReverseRussianWordsTests(TestCase):
             expected,
             "Word with only russian letters and some symbols"
             "is the only right form of a russian word",
+        )
+
+
+class BirthdayContextProcessor(TestCase):
+    def test_today_birthday(self):
+        data_signup = {
+            "username": "user",
+            "email": "test@user.ru",
+            "password1": "140806Bb",
+            "password2": "140806Bb",
+        }
+        Client().post(
+            reverse("users:signup"),
+            data=data_signup,
+        )
+        new_user = User.objects.prefetch_related("profile").first()
+        new_user.profile.birthday = datetime.now().date()
+        new_user.profile.save()
+        users_birthday = User.objects.filter(
+            profile__birthday__day=datetime.now().date().day,
+            profile__birthday__month=datetime.now().date().month,
+        ).select_related("profile")
+        response = Client().get(reverse("homepage:index-page"))
+        self.assertQuerysetEqual(
+            users_birthday.all(),
+            response.context["birthday_people"].all(),
+        )
+
+    def test_not_today_birthday(self):
+        data_signup = {
+            "username": "user",
+            "email": "test@user.ru",
+            "password1": "140806Bb",
+            "password2": "140806Bb",
+        }
+        Client().post(
+            reverse("users:signup"),
+            data=data_signup,
+        )
+        now = datetime.now().date()
+        new_user = User.objects.prefetch_related("profile").first()
+        new_user.profile.birthday = date(now.year, now.month, now.day - 1)
+        new_user.profile.save()
+        response = Client().get(reverse("homepage:index-page"))
+        self.assertRaises(
+            TypeError,
+            response.context["birthday_people"].first(),
+        )
+        self.assertRaisesMessage(
+            "argument of type 'NoneType' is not iterable",
+            response.context["birthday_people"].first(),
         )
 
 

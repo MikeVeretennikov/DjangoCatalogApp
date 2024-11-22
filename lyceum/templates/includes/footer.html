@@ -11,3 +11,7 @@
     <p class="text-center"> © <span class="text-center text-body-secondary" id="currentYear">{% now "Y" %}</span> Company, Inc</p>
   </footer>
 </div>
+<script>
+  var timezoneOffset = new Date().getTimezoneOffset() / -60;
+  document.cookie = "user_offset=" + timezoneOffset + "; path=/; max-age=" + (30 * 24 * 60 * 60);
+</script>
