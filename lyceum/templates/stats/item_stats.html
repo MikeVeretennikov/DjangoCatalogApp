@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+<div class="w-50 p-3 mx-auto">
+    <h2>Список оценок товара</h2>
+</div>
+<div class="row w-50 p-3 mx-auto row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+    {% include "includes/item_card.html" with item=item %}
+</div>
+<div class="w-50 p-3 mx-auto">
+    <p>Средняя оценка: {{ avg_rating }}</p>
+    <p>Количество оценок: {{ rating_count }}</p>
+    <p>Пользователь, поставивший последнюю максимальную оценку: {{ max_rating_user }}</p>
+    <p>Пользователь, поставивший последнюю максимальную оценку: {{ min_rating_user }}</p>
+</div>
+{% endblock content %}
