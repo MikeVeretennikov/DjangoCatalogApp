@@ -6,7 +6,7 @@
 
 # Clone repository
 ```bash
-git clone https://gitlab.crja72.ru/django/2024/autumn/course/students/169883-mishaveret-course-1187
+git clone https://gitlab.crja72.ru/django/2024/autumn/course/students/169883-mishaveret-course-1187 repository
 ```
 
 # Commands to run the project
@@ -43,9 +43,9 @@ cp .env.example .env
 
 
 
-## Cd to lyceum/ and run server
+## Cd to working dir and run server
 ```bash
-cd lyceum
+cd repository/lyceum/
 
 python3 manage.py runserver
 ```
