@@ -1,6 +1,7 @@
 import django.forms
 
 import feedback.models
+from feedback.models import FeedbackAuthor
 
 
 class BootstrapForm(django.forms.ModelForm):
@@ -13,7 +14,7 @@ class BootstrapForm(django.forms.ModelForm):
 class FeedbackAuthorForm(BootstrapForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields["name"].required = False
+        self.fields[FeedbackAuthor.name.field.name].required = False
 
     class Meta:
         model = feedback.models.FeedbackAuthor

@@ -9,9 +9,20 @@
     <p>Количество отзывов: {{ rating_count }}</p>
     <p>Товар с максимальной оценкой: 
     {{ max_rating_user.score }}
-    {% include "includes/item_card.html" with item=max_rating_user.item %}</p>
+
+    {% if max_rating_user.item %}
+        {% include "includes/item_card.html" with item=max_rating_user.item %}</p>
+    {% else %}
+        <p>Такого товара нет</p>
+    {% endif %}
+
     <p>Товар с минимальной оценкой:
     {{ min_rating_user.score }}
-    {% include "includes/item_card.html" with item=min_rating_user.item %}</p>
-</div>
+
+    {% if min_rating_user.item %}
+        {% include "includes/item_card.html" with item=min_rating_user.item %}</p>
+    {% else %}
+        <p>Такого товара нет</p>
+    {% endif %}
+    
 {% endblock content %}

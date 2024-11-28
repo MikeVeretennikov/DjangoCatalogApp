@@ -70,7 +70,10 @@ class ItemDetailView(
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        rating_stats = self.ratings.aggregate(Avg("score"), Count("score"))
+        rating_stats = self.ratings.aggregate(
+            Avg(rating.models.Rating.score.field.name),
+            Count(rating.models.Rating.score.field.name),
+        )
         user_rating = self.user_rating
 
         context["average_rating"] = rating_stats["score__avg"]
@@ -107,9 +110,10 @@ class ItemDetailView(
         return self.form_invalid(form)
 
     def get_success_url(self):
+
         return django.shortcuts.reverse(
             "catalog:default-converter-page",
-            kwargs={"pk": self.item.pk},
+            kwargs={"pk": self.item.id},
         )
 
 
@@ -165,7 +169,8 @@ class UnverifiedItemListView(django.views.generic.ListView):
     item_published = catalog.models.Item.objects.published()
     queryset = item_published.annotate(
         time_difference=ExpressionWrapper(
-            F("updated_at") - F("created_at"),
+            F(catalog.models.Item.updated_at.field.name)
+            - F(catalog.models.Item.created_at.field.name),
             output_field=DurationField(),
         ),
     ).filter(time_difference__lte=datetime.timedelta(seconds=1))
