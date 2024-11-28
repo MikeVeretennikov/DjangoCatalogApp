@@ -1,8 +1,9 @@
 stages:
-  - linting_test
+  - linting
+  - test
 
 flake8:
-    stage: linting_test
+    stage: linting
     image: registry.gitlab.com/pipeline-components/flake8:latest
     before_script:
         - python3 -m pip install --upgrade pip
@@ -11,13 +12,13 @@ flake8:
         - flake8 --verbose --import-order-style=google
       
 black:
-    stage: linting_test
+    stage: linting
     image: registry.gitlab.com/pipeline-components/black:latest
     script:
         - black --check .
 
 django-tests:
-    stage: linting_test
+    stage: test
     image: python:3.10
     before_script:
         - python3 -m pip install --upgrade pip
