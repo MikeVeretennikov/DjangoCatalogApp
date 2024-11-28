@@ -39,16 +39,12 @@ ALLOW_REVERSE = ALLOW_REVERSE_ENV in (
 )
 
 
-if DEBUG:
-    DEFAULT_USER_IS_ACTIVE_ENV = os.getenv(
-        "DJANGO_DEFAULT_USER_IS_ACTIVE",
-        default="True",
-    ).lower()
-else:
-    DEFAULT_USER_IS_ACTIVE_ENV = os.getenv(
-        "DJANGO_DEFAULT_USER_IS_ACTIVE",
-        default="False",
-    ).lower()
+
+DEFAULT_USER_IS_ACTIVE_ENV = os.getenv(
+    "DJANGO_DEFAULT_USER_IS_ACTIVE",
+    default=str(DEBUG),
+).lower()
+
 
 DEFAULT_USER_IS_ACTIVE = DEFAULT_USER_IS_ACTIVE_ENV in (
     "true",
@@ -59,25 +55,29 @@ DEFAULT_USER_IS_ACTIVE = DEFAULT_USER_IS_ACTIVE_ENV in (
     "",
 )
 
+
 INSTALLED_APPS = [
-    "feedback.apps.FeedbackConfig",
     "about.apps.AboutConfig",
     "catalog.apps.CatalogConfig",
     "core.apps.CoreConfig",
     "download.apps.DownloadConfig",
     "homepage.apps.HomepageConfig",
-    "users.apps.UsersConfig",
     "rating.apps.RatingConfig",
     "stats.apps.StatsConfig",
+    "users.apps.UsersConfig",
+    "feedback.apps.FeedbackConfig",
+
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+
     "sorl.thumbnail",
     "tinymce",
     "django_cleanup.apps.CleanupConfig",
+
 ]
 
 
@@ -101,9 +101,7 @@ if DEBUG:
         "debug_toolbar.middleware.DebugToolbarMiddleware",
     ]
 
-INTERNAL_IPS = [
-    "127.0.0.1",
-]
+INTERNAL_IPS = os.getenv("DJANGO_INTERNAL_IPS", default="127.0.0.1").split(",")
 
 ROOT_URLCONF = "lyceum.urls"
 
@@ -170,8 +168,8 @@ USE_I18N = True
 USE_TZ = True
 
 LANGUAGES = [
-    ("en", _("English")),
-    ("ru", _("Русский")),
+    ("en-us", _("English")),
+    ("ru-ru", _("Русский")),
 ]
 
 LOCALE_PATHS = [BASE_DIR / "locale"]
