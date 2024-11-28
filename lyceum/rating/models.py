@@ -27,6 +27,7 @@ class Rating(models.Model):
         related_name="rating",
     )
     score = models.IntegerField(
+        "оценка",
         choices=ScoreChoices.choices,
         default=ScoreChoices.normal,
         help_text="оценка",
@@ -35,10 +36,12 @@ class Rating(models.Model):
     )
 
     created_at = models.DateTimeField(
+        "дата создания",
         help_text="дата создания",
         auto_now_add=True,
         null=True,
     )
+
     updated_at = models.DateTimeField(
         help_text="дата последнего изменения",
         auto_now=True,
@@ -57,7 +60,9 @@ class Rating(models.Model):
         ]
 
     def __str__(self):
-        return f"{self.user.username} оценил {self.item.name} на {self.score}"
+        return f"{self.user.username} оценил {self.item.name} на {self.score}"[
+            :150,
+        ]
 
 
 __all__ = ()

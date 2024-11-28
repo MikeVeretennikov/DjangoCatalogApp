@@ -39,14 +39,14 @@ def normalize(text):
 
 class Tag(core.models.AbstractModel):
     slug = django.db.models.SlugField(
+        "слаг",
         max_length=200,
         unique=True,
-        validators=[django.core.validators.validate_slug],
-        verbose_name="слаг",
         help_text="введите слаг",
     )
 
     normalized_name = django.db.models.CharField(
+        "нормализированное имя",
         max_length=150,
         unique=False,
         blank=True,
@@ -74,20 +74,20 @@ class Tag(core.models.AbstractModel):
 
 class Category(core.models.AbstractModel):
     slug = django.db.models.SlugField(
+        "слаг",
         max_length=200,
         unique=True,
-        validators=[django.core.validators.validate_slug],
-        verbose_name="слаг",
         help_text="введите слаг",
     )
     weight = django.db.models.PositiveSmallIntegerField(
+        "вес",
         default=100,
-        verbose_name="вес",
         validators=[catalog.validators.validate_int_from_1_to_32767],
         help_text="введите вес",
     )
 
     normalized_name = django.db.models.CharField(
+        "нормализированное имя",
         max_length=150,
         unique=False,
         blank=True,
@@ -115,7 +115,7 @@ class Category(core.models.AbstractModel):
 
 class Item(core.models.AbstractModel):
     text = tinymce.models.HTMLField(
-        verbose_name="текст",
+        "текст",
         validators=[
             catalog.validators.ValidateMustContain("роскошно", "превосходно"),
         ],
@@ -135,12 +135,20 @@ class Item(core.models.AbstractModel):
     )
 
     is_on_main = django.db.models.BooleanField(
-        verbose_name="принадлежит к главной странице",
+        "принадлежит к главной странице",
         default=False,
         help_text="введите принадлежит ли к главной странице товар",
     )
-    created_at = django.db.models.DateTimeField(auto_now_add=True, null=True)
-    updated_at = django.db.models.DateTimeField(auto_now=True, null=True)
+    created_at = django.db.models.DateTimeField(
+        "дата создания",
+        auto_now_add=True,
+        null=True,
+    )
+    updated_at = django.db.models.DateTimeField(
+        "обновлено",
+        auto_now=True,
+        null=True,
+    )
 
     objects = catalog.managers.ItemManager()
 
@@ -165,8 +173,8 @@ class Item(core.models.AbstractModel):
 
 class MainImage(django.db.models.Model):
     image = django.db.models.ImageField(
+        "изображение",
         upload_to=django.conf.settings.UPLOAD_TO_PATH,
-        verbose_name="изображение",
     )
 
     item = django.db.models.OneToOneField(
@@ -187,13 +195,13 @@ class MainImage(django.db.models.Model):
         verbose_name_plural = "изображения"
 
     def __str__(self):
-        return self.image.name
+        return self.image.name[:20]
 
 
 class GalleryImage(django.db.models.Model):
     image = django.db.models.ImageField(
+        "изображение",
         upload_to=django.conf.settings.UPLOAD_TO_PATH,
-        verbose_name="изображения",
         default=None,
     )
 
@@ -212,7 +220,7 @@ class GalleryImage(django.db.models.Model):
         verbose_name_plural = "изображения"
 
     def __str__(self):
-        return self.image.name
+        return self.image.name[:20]
 
 
 __all__ = ()

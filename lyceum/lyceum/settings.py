@@ -39,7 +39,6 @@ ALLOW_REVERSE = ALLOW_REVERSE_ENV in (
 )
 
 
-
 DEFAULT_USER_IS_ACTIVE_ENV = os.getenv(
     "DJANGO_DEFAULT_USER_IS_ACTIVE",
     default=str(DEBUG),
@@ -66,18 +65,15 @@ INSTALLED_APPS = [
     "stats.apps.StatsConfig",
     "users.apps.UsersConfig",
     "feedback.apps.FeedbackConfig",
-
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-
     "sorl.thumbnail",
     "tinymce",
     "django_cleanup.apps.CleanupConfig",
-
 ]
 
 

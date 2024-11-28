@@ -13,15 +13,18 @@ class Feedback(django.db.models.Model):
     ]
 
     text = django.db.models.TextField(
+        "текст",
         max_length=3000,
         help_text="Что вы хотели сообщить?",
     )
     created_on = django.db.models.DateTimeField(
+        "дата создания",
         auto_now_add=True,
         help_text="время создания",
         null=True,
     )
     status = django.db.models.CharField(
+        "статус",
         max_length=20,
         choices=STATUS_CHOICES,
         help_text="статус фидбека",
@@ -40,6 +43,7 @@ class FeedbackAuthor(django.db.models.Model):
         on_delete=django.db.models.CASCADE,
     )
     name = django.db.models.CharField(
+        "имя",
         help_text="имя",
         max_length=150,
         null=True,
@@ -61,6 +65,7 @@ class FeedbackFile(django.db.models.Model):
         on_delete=django.db.models.CASCADE,
     )
     file = django.db.models.FileField(
+        "файл",
         help_text="файл",
         upload_to=get_upload_path,
         blank=True,
@@ -77,9 +82,20 @@ class StatusLog(django.db.models.Model):
         django.conf.settings.AUTH_USER_MODEL,
         on_delete=django.contrib.auth.models.models.CASCADE,
     )
-    timestamp = django.db.models.DateTimeField(auto_now_add=True)
-    from_status = django.db.models.CharField(max_length=20, db_column="from")
-    to = django.db.models.CharField(max_length=20, db_column="to")
+    timestamp = django.db.models.DateTimeField(
+        "время создания",
+        auto_now_add=True,
+    )
+    from_status = django.db.models.CharField(
+        "статус до",
+        max_length=20,
+        db_column="from",
+    )
+    to = django.db.models.CharField(
+        "статус после",
+        max_length=20,
+        db_column="to",
+    )
 
     class Meta:
         verbose_name = "статус лог"
@@ -88,7 +104,7 @@ class StatusLog(django.db.models.Model):
     def __str__(self):
         return (
             f"{self.feedback}.\n статус изменился с {self.from_status} "
-            f"на {self.to_status} пользователем {self.user}"
+            f"на {self.to_status} пользователем {self.user}"[:150]
         )
 
 
