@@ -50,6 +50,37 @@ cd repository/lyceum/
 python3 manage.py runserver
 ```
 
+# Creating superuser
+### Cd to app directory
+```bash
+cd lyceum
+```
+### Create superuser
+```bash
+python manage.py createsuperuser
+```
+### Enter the Username, Email(can be left blank), Password and Password again
+### Now you can login into our Django Admin page by running the command python manage.py runserver. Then, open a Web browser and go to “/admin/” on your local domain – e.g., http://127.0.0.1:8000/admin/ and then enter the same Username and Password.
+
+
+# Fixtures
+### Cd to app directory
+```bash
+cd lyceum
+```
+### In order to load fixtures, run 
+```bash
+python manage.py loaddata fixtures/data.json
+```
+### Docs on this command: https://docs.djangoproject.com/en/5.1/ref/django-admin/#loaddata
+
+### In order to dump fixtures, run
+```bash
+python manage.py dumpdata --indent 4 > fixutes/data.json
+```
+### Docs on this command: https://docs.djangoproject.com/en/5.1/ref/django-admin/#dumpdata
+
+
 # Internalization 
 ### cd to root/lyceum and make locale dir
 ```bash
