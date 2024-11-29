@@ -1,4 +1,4 @@
-from django.urls import path, register_converter
+from django.urls import path
 
 import catalog.converters
 import catalog.views

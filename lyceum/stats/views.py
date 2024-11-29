@@ -4,7 +4,6 @@ from django.shortcuts import get_object_or_404, render
 from django.views import generic
 
 
-
 import catalog.models
 import rating.models
 
