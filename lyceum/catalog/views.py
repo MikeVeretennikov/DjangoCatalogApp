@@ -112,7 +112,7 @@ class ItemDetailView(
     def get_success_url(self):
 
         return django.shortcuts.reverse(
-            "catalog:default-converter-page",
+            "catalog:item-detail",
             kwargs={"pk": self.item.id},
         )
 
@@ -129,7 +129,7 @@ class RatingDeleteView(django.views.generic.DeleteView):
             ).delete()
 
         return django.shortcuts.redirect(
-            "catalog:default-converter-page",
+            "catalog:item-detail",
             pk=pk,
         )
 

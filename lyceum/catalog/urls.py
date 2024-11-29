@@ -3,10 +3,6 @@ from django.urls import path, register_converter
 import catalog.converters
 import catalog.views
 
-register_converter(
-    catalog.converters.PositiveIntegerConverter,
-    "posint",
-)
 
 app_name = "catalog"
 
@@ -19,7 +15,7 @@ urlpatterns = [
     path(
         "<int:pk>/",
         catalog.views.ItemDetailView.as_view(),
-        name="default-converter-page",
+        name="item-detail",
     ),
     path(
         "<int:pk>/delete_rating/",

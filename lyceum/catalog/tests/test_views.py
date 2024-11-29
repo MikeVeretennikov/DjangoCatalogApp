@@ -64,7 +64,7 @@ class CatalogURLTests(TestCase):
     def test_correct_item_detail(self):
         response = Client().get(
             reverse(
-                "catalog:default-converter-page",
+                "catalog:item-detail",
                 kwargs={"pk": 2},
             ),
         )
@@ -104,7 +104,7 @@ class CatalogURLTests(TestCase):
     def test_item_detail_not_found(self):
         response = Client().get(
             reverse(
-                "catalog:default-converter-page",
+                "catalog:item-detail",
                 args=[5],
             ),
         )
